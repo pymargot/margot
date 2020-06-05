@@ -1,8 +1,5 @@
-from distutils.core import setup
+from setuptools import setup
 import versioneer
-
-with open("README.md", "r") as fh:
-    long_description = fh.read()
 
 setup(
     name = 'margot',
@@ -11,7 +8,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
     description = 'simple to use, batteries included, tools for quantitative trading.',
-    long_description = long_description,
+    long_description = open('README.md').read(),
     long_description_content_type="text/markdown",
     author = 'Rich Atkinson',
     author_email = 'rich@airteam.com.au',
