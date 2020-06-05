@@ -1,0 +1,70 @@
+.DS_Store
+.idea/
+AdminLTE-3.0.2/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Rope
+.ropeproject
+
+# Django stuff:
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
+docs-build/
+
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+/static/
+/data/
+*.adjusted_close
+*.hd5
+*.hdf5
+webapp/strats/VIXM.hd5
+notebooks/*.hdf5
+
+.vscode

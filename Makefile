@@ -1,22 +1,16 @@
 test:
-	python -m nose $(NOSE_ARGS)
+	pytest
 
 fix:
-	autopep8 --in-place -r -a webapp
-	autopep8 --in-place -r -a algos
-	autopep8 --in-place -r -a tests
-	autopep8 --in-place -r -a examples
+	autopep8 --in-place -r -a margot
 
 coverage:
-	python -m coverage run --source=webapps -m nose
-	python -m coverage run --source=algos -m nose
+	python -m coverage run --source=margot -m nose
 	python -m coverage html
 
-dist:
-	python setup.py sdist bdist_wheel
-
 release:
-	python3 -m twine upload dist/*
+	python setup.py sdist
+	twine upload dist/*
 
 clean:
 	rm -rf build dist docs-build *.egg-info
