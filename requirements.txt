@@ -1,0 +1,14 @@
+numpy
+scipy
+matplotlib
+pandas
+sympy
+nose
+
+sphinx
+sphinx-autobuild
+recommonmark
+sphinx-rtd-theme
+
+trading-calendars
+pyfolio
