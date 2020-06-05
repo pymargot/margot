@@ -9,8 +9,7 @@ coverage:
 	python -m coverage html
 
 release:
-	python setup.py sdist
-	twine upload dist/*
+	python setup.py sdist upload
 
 clean:
 	rm -rf build dist docs-build *.egg-info

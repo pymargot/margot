@@ -1,2 +1,4 @@
 include versioneer.py
 include margot/_version.py
+include README.md
+include License.txt
