@@ -10,6 +10,7 @@ coverage:
 
 release:
 	python setup.py sdist upload
+	twine upload dist/*
 
 clean:
 	rm -rf build dist docs-build *.egg-info
