@@ -1,5 +1,7 @@
 import os
 import logging
+from pathlib import Path
+
 import pandas as pd
 
 
@@ -8,7 +10,7 @@ class BaseField(object):
 
     This could be adjusted_close, open, volume - etc.
 
-    Example: 
+    Example:
         volume = fields.AlphaVantage(function='historical_daily_adjusted', field='adjusted_close')
 
     Args:
@@ -25,14 +27,23 @@ class BaseField(object):
         self.field = field
         self.series = None
 
-    def _setup(self, symbol: str, env: dict={}):
+    def _setup(self, symbol: str, env: dict = {}):
         self.symbol = symbol
         self.env = env
-        self.hdf5_file = os.path.join(env.get('DATA_CACHE'), '{}.hdf5'.format(self.symbol))
+
+        # TODO this should be handled somewhere central in a configuration
+        # thingo.
+        data_cache = env.get('DATA_CACHE', os.environ.get('DATA_CACHE'))
+        Path(data_cache).mkdir(parents=True, exist_ok=True)
+
+        self.hdf5_file = os.path.join(
+            data_cache, '{}.hdf5'.format(
+                self.symbol))
         self.INITED = True
 
     def _load_or_update_series(self):
-        raise NotImplementedError('This is implementation specific to the data provider.')
+        raise NotImplementedError(
+            'This is implementation specific to the data provider.')
 
     def save(self):
         """Save it."""

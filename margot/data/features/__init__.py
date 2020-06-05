@@ -1,9 +1,17 @@
 import pandas as pd
 import numpy as np
 
+
 class BaseColumn(object):
-    
+
     INITED = False
+
+    def get_feature_name(self):
+        try:
+            return self.feature_name
+        except AttributeError:
+            raise AttributeError(
+                'Please declare a feature_name attribute for this feature')
 
     def __init__(self, field, **kwargs):
         self.field = field
@@ -11,15 +19,16 @@ class BaseColumn(object):
         self.series = None
 
     def get_series(self):
-        return self.series
+        return self.series.rename(self.get_feature_name())
 
 
 class SimpleReturns(BaseColumn):
-    """Simple returns are the percent change from yesterday.
+    """Simple returns are the percent change from yesterdays close to today's close.
 
     Args:
         field (pd.Series): A price time series.
     """
+    feature_name = 'simple_returns'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.pct_change().fillna(0) / 100
@@ -31,6 +40,7 @@ class LogReturns(BaseColumn):
     Args:
         field (pd.Series): A price time series.
     """
+    feature_name = 'log_returns'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = np.log(1 + base_series.pct_change().fillna(0)) / 100
@@ -47,9 +57,63 @@ class RealisedVolatility(BaseColumn):
         AttributeError: A lookback window is required.
     """
 
+    feature_name = 'realised_vol'
     window = None
 
     def _setup(self, base_series: pd.DataFrame):
         if not self.window:
-            raise AttributeError('you must supply a lookback window for RealisedVolatility')
-        self.series = base_series.multiply(100).rolling(self.window).std() * np.sqrt(252)
+            raise AttributeError(
+                'you must supply a lookback window for RealisedVolatility')
+        self.series = base_series.multiply(100).rolling(
+            self.window).std() * np.sqrt(252)
+
+
+class SimpleMovingAverage(BaseColumn):
+    """Simple moving average of lookback, window.
+
+    Args:
+        BaseColumn ([type]): [description]
+    """
+
+    window = None
+
+    def get_feature_name(self):
+        return 'sma{}'.format(self.window)
+
+    def _setup(self, base_series: pd.DataFrame):
+        if not self.window:
+            raise AttributeError(
+                'you must supply a lookback window for SimpleMovingAverage')
+        self.series = base_series.rolling(self.window).mean()
+
+
+class UpperBollingerBand(BaseColumn):
+    """Upper bollinger band of window and standard deviation.
+
+    Args:
+        window (int): lookback in trading days. Defaults to 20
+        width (float): width in standard deviations. Defaults to 2.0
+    """
+
+    window = 20
+    width = 2.0
+
+    def _setup(self, base_series: pd.DataFrame):
+        self.series = base_series.rolling(self.window).mean(
+        ) + base_series.rolling(self.window).mean().std() * self.width
+
+
+class LowerBollingerBand(BaseColumn):
+    """Lower bollinger band of window and standard deviation.
+
+    Args:
+        window (int): lookback in trading days. Defaults to 20
+        width (float): width in standard deviations. Defaults to 2.0
+    """
+
+    window = 20
+    width = 2.0
+
+    def _setup(self, base_series: pd.DataFrame):
+        self.series = base_series.rolling(self.window).mean(
+        ) - base_series.rolling(self.window).mean().std() * self.width

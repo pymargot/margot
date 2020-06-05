@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import pytz
 from alpha_vantage.timeseries import TimeSeries
@@ -8,7 +9,7 @@ from margot.data.fields import BaseField
 class Field(BaseField):
     """A single Symbol time series from AlphaVantage.
 
-    Example: 
+    Example:
         volume = fields.AlphaVantage(function='historical_daily_adjusted', field='volume')
 
     Args:
@@ -17,8 +18,13 @@ class Field(BaseField):
     """
 
     def _update(self):
-        ts = TimeSeries(key=self.env.get('ALPHAVANTAGE_API_KEY'), output_format='pandas')
-        self.data, self.metadata = ts.get_daily_adjusted(self.symbol, outputsize='full')
+        ts = TimeSeries(
+            key=self.env.get(
+                'ALPHAVANTAGE_API_KEY',
+                os.environ.get('ALPHAVANTAGE_API_KEY')),
+            output_format='pandas')
+        self.data, self.metadata = ts.get_daily_adjusted(
+            self.symbol, outputsize='full')
         self.data = self.data.sort_index()
 
         # Ensure the index is TZ aware.
@@ -34,7 +40,7 @@ class Field(BaseField):
             '6. volume': 'volume',
             '7. dividend amount': 'divident_amount',
             '8. split coefficient': 'split_coefficient'
-        }, axis='features')
+        }, axis='columns')
         self.save()
 
     def _load_or_update_series(self):
@@ -49,4 +55,3 @@ class Field(BaseField):
             self._update()
 
         return self.data[self.field]
-
