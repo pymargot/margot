@@ -1,4 +1,5 @@
 from distutils.core import setup
+import versioneer
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -6,7 +7,8 @@ with open("README.md", "r") as fh:
 setup(
     name = 'margot',
     packages = ['margot'],
-    version = '0.1.1',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
     description = 'simple to use, batteries included, tools for quantitative trading.',
     long_description = long_description,
