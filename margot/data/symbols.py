@@ -1,11 +1,11 @@
 from inspect import getmembers
 
-from margot.data.fields import BaseField
-from margot.data.features import BaseColumn
+from margot.data.column import BaseColumn
+from margot.data.feature import BaseFeature
 
 
 class Symbol(object):
-    """A Symbol, that has fields and features.
+    """A Symbol, that has columns and features.
 
     Args:
         object ([type]): [description]
@@ -21,21 +21,21 @@ class Symbol(object):
         """Initiate."""
         self.symbol = symbol
         self.env = env
-        self.fields = [
-            member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                BaseField)]
-        self.features = [
+        self.columns = [
             member for member,
             ref in getmembers(self) if isinstance(
                 ref,
                 BaseColumn)]
+        self.features = [
+            member for member,
+            ref in getmembers(self) if isinstance(
+                ref,
+                BaseFeature)]
 
-        for field in self.fields:
-            getattr(self, field)._setup(symbol=self.symbol, env=self.env)
+        for column in self.columns:
+            getattr(self, column)._setup(symbol=self.symbol, env=self.env)
 
-        for column in self.features:
-            field_name = getattr(self, column).field
-            base_series = getattr(self, field_name).get_series()
-            getattr(self, column)._setup(base_series=base_series)
+        for feature in self.features:
+            column_name = getattr(self, column).column
+            base_series = getattr(self, column_name).get_series()
+            getattr(self, feature)._setup(base_series=base_series)

@@ -5,26 +5,26 @@ from pathlib import Path
 import pandas as pd
 
 
-class BaseField(object):
-    """A Field represents a single time series of a symbol.
+class BaseColumn(object):
+    """A Column represents a single time series of a symbol.
 
     This could be adjusted_close, open, volume - etc.
 
     Example:
-        volume = fields.AlphaVantage(function='historical_daily_adjusted', field='adjusted_close')
+        volume = column.AlphaVantage(function='historical_daily_adjusted', field='adjusted_close')
 
     Args:
         function (str): the name of the function passed to the Alphavantage API
-        field (str): the name of the column that will be returned
+        column (str): the name of the column that will be returned
     """
 
     INITED = False
     data = None
 
-    def __init__(self, function, field):
+    def __init__(self, function, column):
         """Initialise; see class for usage."""
         self.function = function
-        self.field = field
+        self.column = column
         self.series = None
 
     def _setup(self, symbol: str, env: dict = {}):

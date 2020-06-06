@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-class BaseColumn(object):
+class BaseFeature(object):
 
     INITED = False
 
@@ -13,8 +13,8 @@ class BaseColumn(object):
             raise AttributeError(
                 'Please declare a feature_name attribute for this feature')
 
-    def __init__(self, field, **kwargs):
-        self.field = field
+    def __init__(self, column, **kwargs):
+        self.column = column
         self.__dict__.update(kwargs)
         self.series = None
 
@@ -22,11 +22,11 @@ class BaseColumn(object):
         return self.series.rename(self.get_feature_name())
 
 
-class SimpleReturns(BaseColumn):
+class SimpleReturns(BaseFeature):
     """Simple returns are the percent change from yesterdays close to today's close.
 
     Args:
-        field (pd.Series): A price time series.
+        column (pd.Series): A price time series.
     """
     feature_name = 'simple_returns'
 
@@ -34,7 +34,7 @@ class SimpleReturns(BaseColumn):
         self.series = base_series.pct_change().fillna(0) / 100
 
 
-class LogReturns(BaseColumn):
+class LogReturns(BaseFeature):
     """Log returns can be summed over time.
 
     Args:
@@ -46,7 +46,7 @@ class LogReturns(BaseColumn):
         self.series = np.log(1 + base_series.pct_change().fillna(0)) / 100
 
 
-class RealisedVolatility(BaseColumn):
+class RealisedVolatility(BaseFeature):
     """Realised volatility measures the variability of returns over a lookback window.
 
     Args:
@@ -68,7 +68,7 @@ class RealisedVolatility(BaseColumn):
             self.window).std() * np.sqrt(252)
 
 
-class SimpleMovingAverage(BaseColumn):
+class SimpleMovingAverage(BaseFeature):
     """Simple moving average of lookback, window.
 
     Args:
@@ -87,7 +87,7 @@ class SimpleMovingAverage(BaseColumn):
         self.series = base_series.rolling(self.window).mean()
 
 
-class UpperBollingerBand(BaseColumn):
+class UpperBollingerBand(BaseFeature):
     """Upper bollinger band of window and standard deviation.
 
     Args:
@@ -103,7 +103,7 @@ class UpperBollingerBand(BaseColumn):
         ) + base_series.rolling(self.window).mean().std() * self.width
 
 
-class LowerBollingerBand(BaseColumn):
+class LowerBollingerBand(BaseFeature):
     """Lower bollinger band of window and standard deviation.
 
     Args:

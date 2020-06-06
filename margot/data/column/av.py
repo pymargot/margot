@@ -3,18 +3,18 @@ import pandas as pd
 import pytz
 from alpha_vantage.timeseries import TimeSeries
 
-from margot.data.fields import BaseField
+from margot.data.column import BaseColumn
 
 
-class Field(BaseField):
+class Column(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 
     Example:
-        volume = fields.AlphaVantage(function='historical_daily_adjusted', field='volume')
+        volume = column.AlphaVantage(function='historical_daily_adjusted', field='volume')
 
     Args:
         function (str): the name of the function passed to the Alphavantage API
-        field (str): the name of the column that will be returned
+        column (str): the name of the column that will be returned
     """
 
     def _update(self):
@@ -54,4 +54,4 @@ class Field(BaseField):
         except FileNotFoundError:
             self._update()
 
-        return self.data[self.field]
+        return self.data[self.column]

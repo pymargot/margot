@@ -20,25 +20,27 @@ df = ds.get_pandas(start, end)
 def test_symbol():
     import os
     from margot.data import Symbol
-    from margot.data.fields import av
-    from margot.data import features
+    from margot.data.column import av
+    from margot.data import feature
 
     class Equity(Symbol):
-        adjusted_close = av.Field(
+        adjusted_close = av.Column(
             function='historical_daily_adjusted',
-            field='adjusted_close')
-        volume = av.Field(function='historical_daily_adjusted', field='volume')
+            column='adjusted_close')
+        volume = av.Column(
+            function='historical_daily_adjusted',
+            column='volume')
 
-        simple_returns = features.SimpleReturns(field='adjusted_close')
-        log_returns = features.LogReturns(field='adjusted_close')
-        realised_vol = features.RealisedVolatility(
-            field='log_returns', window=30)
+        simple_returns = feature.SimpleReturns(column='adjusted_close')
+        log_returns = feature.LogReturns(column='adjusted_close')
+        realised_vol = feature.RealisedVolatility(
+            column='log_returns', window=30)
 
-        upper_band = features.UpperBollingerBand(
-            field='adjusted_close', window=20, width=2.0)
-        sma20 = features.SimpleMovingAverage(field='adjusted_close', window=20)
-        lower_band = features.LowerBollingerBand(
-            field='adjusted_close', window=20, width=2.0)
+        upper_band = feature.UpperBollingerBand(
+            column='adjusted_close', window=20, width=2.0)
+        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
+        lower_band = feature.LowerBollingerBand(
+            column='adjusted_close', window=20, width=2.0)
 
     env = {'DATA_CACHE': os.path.join(os.getcwd(), 'data')}
     spy = Equity(symbol='SPY', env=env)
