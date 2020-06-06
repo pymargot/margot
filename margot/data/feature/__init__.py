@@ -97,6 +97,7 @@ class UpperBollingerBand(BaseFeature):
 
     window = 20
     width = 2.0
+    feature_name = 'upper_boll_band'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.rolling(self.window).mean(
@@ -113,7 +114,12 @@ class LowerBollingerBand(BaseFeature):
 
     window = 20
     width = 2.0
+    feature_name = 'lower_boll_band'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.rolling(self.window).mean(
         ) - base_series.rolling(self.window).mean().std() * self.width
+
+
+
+

@@ -3,14 +3,16 @@ class Equity(Symbol):
     log_returns = column.LogReturns(field='adjusted_close')
     3dma = column.RollingSimpleMovingAverage(field='adjusted_close', lookback=3)
     std20 = column.RollingStandardDeviation(field='log_returns', lookback=20)
-    upper = column.UpperBollingerBand(field='adjusted_close', std=2)
-    lower = columnn.LowerBollingerBand(field ='adjusted_close', std =2)
+    upper = column.UpperBollingerBand(field='adjusted_close', std=2.0)
+    lower = columnn.LowerBollingerBand(field='adjusted_close', std=2.0)
 
- class VXDataset(DataSet):
+ class VXBasis(Ensemble):
     vixm = Equity(symbol='VIXM')
     ixv = Equity(symbol='IXV')
     vix3m = Index(symbol='^VXV')
     vix = Index(symbol='^VIX')
+
+    vx_basis = feature.Ratio(numerator='vix', denominator='vix3m')
 
 ds = VXDataset()
 df = ds.get_pandas(start, end)

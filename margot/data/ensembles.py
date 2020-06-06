@@ -4,11 +4,12 @@ import pandas as pd
 
 from margot.data.column import BaseColumn
 from margot.data.feature import BaseFeature
+from margot.data.symbols import Symbol
 from margot.data.ratio import Ratio
 
 
-class Symbol(object):
-    """A Symbol, that has columns and features.
+class Ensemble(object):
+    """An Ensemble brings together symbols, columns and features.
 
     Args:
         object ([type]): [description]
@@ -20,10 +21,15 @@ class Symbol(object):
         [type]: [description]
     """
 
-    def __init__(self, symbol: str, env: dict = {}):
+    def __init__(self, env: dict = {}):
         """Initiate."""
-        self.symbol = symbol
         self.env = env
+
+        self.symbols = [
+            member for member,
+            ref in getmembers(self) if isinstance(
+                ref,
+                Symbol)]
         self.columns = [
             member for member,
             ref in getmembers(self) if isinstance(
@@ -49,11 +55,8 @@ class Symbol(object):
             base_series = getattr(self, column_name).get_series()
             getattr(self, feature)._setup(base_series=base_series)
 
-    def to_dict(self):
-        elements = self.columns + self.features + self.ratios
-        return {(self.symbol, col): getattr(self, col).get_series() for col in elements}
-
     def to_pandas(self):
-        df = pd.DataFrame(self.to_dict())
-        df.columns = pd.MultiIndex.from_tuples(df.columns)
-        return df 
+        ### Get the elements one at a time, to pandas them and ensemble.
+        df = pd.DataFrame()
+        df_list = [getattr(self, symbol).to_pandas() for symbol in self.symbols]
+        return pd.concat(df_list)
