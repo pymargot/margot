@@ -21,6 +21,9 @@ class BaseFeature(object):
     def get_series(self):
         return self.series.rename(self.get_feature_name())
 
+    def get_label(self):
+        return self.feature_name
+
 
 class SimpleReturns(BaseFeature):
     """Simple returns are the percent change from yesterdays close to today's close.

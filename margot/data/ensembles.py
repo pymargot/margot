@@ -55,8 +55,10 @@ class Ensemble(object):
             base_series = getattr(self, column_name).get_series()
             getattr(self, feature)._setup(base_series=base_series)
 
+    def _get_elements(self):
+        return self.symbols + self.columns + self.features + self.ratios
+
     def to_pandas(self):
         ### Get the elements one at a time, to pandas them and ensemble.
-        df = pd.DataFrame()
-        df_list = [getattr(self, symbol).to_pandas() for symbol in self.symbols]
-        return pd.concat(df_list)
+        df_list = [getattr(self, symbol).to_pandas() for symbol in self._get_elements()]
+        return pd.concat(df_list, axis=1)

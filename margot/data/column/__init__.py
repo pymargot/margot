@@ -27,6 +27,9 @@ class BaseColumn(object):
         self.column = column
         self.series = None
 
+    def get_label(self):
+        return self.column
+
     def _setup(self, symbol: str, env: dict = {}):
         self.symbol = symbol
         self.env = env
