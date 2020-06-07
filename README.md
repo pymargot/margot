@@ -36,24 +36,25 @@ Margot Data includes many common financial Features, and it's very easy to add m
 Often, you want to make a dataframe combining a number of these columns and features. Margot Data
 makes this very easy. e.g.
 
-class MyEquity(Symbol):
-    adjusted_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
-    log_returns = feature.LogReturns(column='adjusted_close')
-    realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
-    upper_band = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
-    sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
-    lower_band = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
+    class MyEquity(Symbol):
 
-spy = MyEquity(symbol='SPY)
+        adjusted_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
+        log_returns = feature.LogReturns(column='adjusted_close')
+        realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
+        upper_band = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
+        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
+        lower_band = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
+
+    spy = MyEquity(symbol='SPY)
 
 ## Ensembles
 
-class MyEnsemble(Ensemble):
-    spy = Equity(symbol='SPY')
-    iwm = Equity(symbol='IWM')
-    spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, denominator=iwm.adjusted_close, label='spy_iwm_ratio')
+    class MyEnsemble(Ensemble):
+        spy = Equity(symbol='SPY')
+        iwm = Equity(symbol='IWM')
+        spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, denominator=iwm.adjusted_close, label='spy_iwm_ratio')
 
-my_df = MyEnsemble().to_pandas() 
+    my_df = MyEnsemble().to_pandas() 
 
 # Margot backtest
 
@@ -67,43 +68,6 @@ using margot.data. Results of the backtest can be analysed with pyfolio.
 
 Margot live allows you to trade live using the exact same algorithm you backtested using margot.backtest.
 
-## margot wants to help you:
-
-**- Wrangle data** 
-
-- Use a simple, declarative, Django ORM inspired API to blend data from a variety of sources into a neat, consolidated time-series dataframe.
-
-**- Reuse features** 
-
-- a library of reusable financial and statistical features to apply to your data.
-
-**- Make custom features** 
-
-- easily create your own features from of preferred indicators or ratios, and incorporate them in to your algorithms in a repeatable way. 
-
-**- Write algorithms that trade** 
-
-- TODO express your idea using simple logic, without getting bogged down by the nuances of Pandas or stochastic algebra.
-
-**- Walk-forward backtest your algos** 
-
-- TODO Backtest your algorithm, generating a historical returns time-series that can be analysed using pyfolio.
-
-**- Manage risk** 
-
-- TODO Learn the expected volatility of a strategy so that you can size it into your portfolio.
-
-**- Allocate accordingly** 
-
-- TODO allocate funds to a strategy based on realised volatility.
-
-**- Trade** 
-
-- TODO execute your trades with your brokers API.
-
-**- Bookkeep** 
-
-- TODO track fees and P&L, per strategy.
 
 ## Status
 This is still an early stage software project, and should not be used for live trading.

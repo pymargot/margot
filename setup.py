@@ -1,4 +1,5 @@
 from setuptools import setup
+from m2r import parse_from_file
 import versioneer
 
 setup(
@@ -8,8 +9,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
     description = 'simple to use, batteries included, tools for quantitative trading.',
-    long_description = open('README.md').read(),
-    long_description_content_type="text/markdown",
+    long_description = parse_from_file('README.md'),
     author = 'Rich Atkinson',
     author_email = 'rich@airteam.com.au',
     url = 'https://github.com/atkinson/margot',
