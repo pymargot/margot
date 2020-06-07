@@ -1,8 +1,10 @@
-# What is margot?
+# margot is a framework for quanting with pydata.
 
-## margot wants you to be a better quant.
+Margot currently includes three components; these can be used together, or independently:
 
-Margot currently includes three components; these can be used together or independently.
+- margot.data
+- margot.backtest
+- margot.live
 
 # Margot Data
 
@@ -78,7 +80,7 @@ pip install margot
 
 ## Documentation
 
-in progress - for examples see the notebooks folder.
+in progress - for examples see the [notebooks](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
 
 ## Contributing
 
