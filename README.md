@@ -6,9 +6,9 @@ Margot is a library of two parts that may be used together or separately:
 # Margot Data
 The first component is margot.data.
 
-Margot manages data collection, cleaning and assemblance into a well organised Pandas 
-Dataframe using a clean, declarative API. If you've ever used Django you'll find this
-approach familiar.
+Margot manages data collection, cleaning and assemblance of time series into a nicely
+organised Pandas Dataframe using a clean, declarative API. If you've ever used Django
+you'll find this approach very similar to the Django ORM.
 
 ## Columns
 Margot can retreive time series data from external sources, like AlphaVantage. To add 
@@ -19,8 +19,8 @@ e.g. to get closing_price from AlphaVantage:
     adj_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
 
 ## Features
-Columns are useful, but we usually want to derived another time series from them, such
- as "returns" or "SMA20". Margot does this for you; we call them Features.
+Columns are useful, but we usually want to derived another time series from them, such 
+as "returns" or "SMA20". Margot does this for you; we call them Features.
 
     simple_returns = feature.SimpleReturns(column='adjusted_close')
     log_returns = feature.LogReturns(column='adjusted_close')
@@ -44,8 +44,8 @@ Margot makes this very easy. e.g.
     spy = MyEquity(symbol='SPY)
 
 ## Ensembles
-Usually you want to look at more than one symbol in a systematic trade. That's where ensembles
-come in and really demonstrate the value of margot.data.
+In systematic trading, you usually you want to look at more than one symbol. That's where
+ensembles come in. Ensembles really demonstrate the power of margot.data.
 
     class MyEnsemble(Ensemble):
         spy = Equity(symbol='SPY')
@@ -57,11 +57,11 @@ come in and really demonstrate the value of margot.data.
     my_df = MyEnsemble().to_pandas() 
 
 # Margot backtest
-margot.backtest isn't yet included in these releases.
+**margot.backtest isn't yet included in this release.**
 
-Margot backtest provides a base class to inherit where you define your trading algorithm, and an
-implementation of a walk-forward backetesting algorithm that produced backtests of your algorithm 
-using margot.data. 
+Margot backtest provides a base class to inherit to define your trading algorithm, an
+implementation of a walk-forward backetesting algorithm that produced backtests of
+your algorithm using margot.data. 
 
 Results from margot backtest can be analysed with pyfolio.
 
