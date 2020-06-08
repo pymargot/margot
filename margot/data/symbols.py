@@ -1,6 +1,6 @@
 from inspect import getmembers
 
-import pandas as pd 
+import pandas as pd
 
 from margot.data.column import BaseColumn
 from margot.data.feature import BaseFeature
@@ -51,9 +51,10 @@ class Symbol(object):
 
     def to_dict(self):
         elements = self.columns + self.features + self.ratios
-        return {(self.symbol, col): getattr(self, col).get_series() for col in elements}
+        return {(self.symbol, col): getattr(self, col).get_series()
+                for col in elements}
 
     def to_pandas(self):
         df = pd.DataFrame(self.to_dict())
         df.columns = pd.MultiIndex.from_tuples(df.columns)
-        return df 
+        return df

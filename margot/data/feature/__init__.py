@@ -122,7 +122,3 @@ class LowerBollingerBand(BaseFeature):
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.rolling(self.window).mean(
         ) - base_series.rolling(self.window).mean().std() * self.width
-
-
-
-

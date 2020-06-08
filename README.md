@@ -43,11 +43,11 @@ Margot makes this very easy. e.g.
 
     spy = MyEquity(symbol='SPY)
 
-## Ensembles
+## MargotDataFrames
 In systematic trading, you usually you want to look at more than one symbol. That's where
-ensembles come in. Ensembles really demonstrate the power of margot.data.
+ensembles come in. MargotDataFrame really brings power to margot.data.
 
-    class MyEnsemble(Ensemble):
+    class MyEnsemble(MargotDataFrame):
         spy = Equity(symbol='SPY')
         iwm = Equity(symbol='IWM')
         spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, 

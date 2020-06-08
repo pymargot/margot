@@ -13,18 +13,20 @@ class Ratio(object):
     """
 
     def __init__(self, numerator, denominator, label, **kwargs):
+        """Initiate. See class for args."""
         self.numerator = numerator
         self.denominator = denominator
-        self.__dict__.update(kwargs)
         self.series = None
         self.label = label
+        self.__dict__.update(kwargs)
+
         if not self.numerator and self.denominator:
-            raise AttributeError("You must supply both a numerator and denominator")
-        self.series = self.numerator.get_series() / self.denominator.get_series()
+            raise AttributeError(
+                "You must supply both a numerator and denominator")
+        self.series = self.numerator.get_series().divide(self.denominator.get_series())
 
     def get_series(self):
         return self.series.rename(self.label)
 
     def to_pandas(self):
         return self.get_series().to_frame()
- 

@@ -1,6 +1,6 @@
 from inspect import getmembers
 
-import pandas as pd 
+import pandas as pd
 
 from margot.data.column import BaseColumn
 from margot.data.feature import BaseFeature
@@ -8,7 +8,7 @@ from margot.data.symbols import Symbol
 from margot.data.ratio import Ratio
 
 
-class Ensemble(object):
+class MargotDataFrame(object):
     """An Ensemble brings together symbols, columns and features.
 
     Args:
@@ -59,6 +59,7 @@ class Ensemble(object):
         return self.symbols + self.columns + self.features + self.ratios
 
     def to_pandas(self):
-        ### Get the elements one at a time, to pandas them and ensemble.
-        df_list = [getattr(self, symbol).to_pandas() for symbol in self._get_elements()]
+        # Get the elements one at a time, to pandas them and ensemble.
+        df_list = [getattr(self, symbol).to_pandas()
+                   for symbol in self._get_elements()]
         return pd.concat(df_list, axis=1)
