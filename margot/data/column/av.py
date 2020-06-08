@@ -1,6 +1,5 @@
 import os
-import pandas as pd
-import pytz
+
 from alpha_vantage.timeseries import TimeSeries
 
 from margot.data.column import BaseColumn
@@ -17,41 +16,15 @@ class Column(BaseColumn):
         column (str): the name of the column that will be returned
     """
 
-    def _update(self):
+    def fetch(self, symbol: str):
+        """Fetch from remote - this could be the only service specific thing."""
+        print('fetching {}'.format(symbol))
         ts = TimeSeries(
             key=self.env.get(
                 'ALPHAVANTAGE_API_KEY',
                 os.environ.get('ALPHAVANTAGE_API_KEY')),
             output_format='pandas')
-        self.df, self.metadata = ts.get_daily_adjusted(
-            self.symbol, outputsize='full')
-        self.df = self.df.sort_index()
+        df, metadata = ts.get_daily_adjusted(symbol, outputsize='full')
+        return self.clean(df)
 
-        # Ensure the index is TZ aware.
-        self.df = self.df.tz_localize(pytz.UTC)
 
-        # Standardise the column names
-        self.df = self.df.rename(mapper={
-            '1. open': 'open',
-            '2. high': 'high',
-            '3. low': 'low',
-            '4. close': 'close',
-            '5. adjusted close': 'adjusted_close',
-            '6. volume': 'volume',
-            '7. dividend amount': 'divident_amount',
-            '8. split coefficient': 'split_coefficient'
-        }, axis='columns')
-        self.save()
-
-    def _load_or_update_series(self):
-        """[summary]
-
-        Returns:
-            pd.Series: time series of the field
-        """
-        try:
-            self.load()
-        except FileNotFoundError:
-            self._update()
-
-        return self.df[self.time_series]

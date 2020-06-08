@@ -43,15 +43,13 @@ class MargotDataFrame(object):
                 ref,
                 Ratio)]
 
-        # for feature in self.features:
-        #     column_name = getattr(self, column).column
-        #     base_series = getattr(self, column_name).get_series()
-        #     getattr(self, feature)._setup(base_series=base_series)
-
     def _get_elements(self):
-        return self.symbols # + self.features + self.ratios
+        return self.symbols + self.features + self.ratios
 
     def to_pandas(self):
         # Get the elements one at a time, to pandas them and ensemble.
-        df_list = [getattr(self, elt).to_pandas() for elt in self._get_elements()]
+        df_list = list()
+        for elt in self._get_elements():
+            df = getattr(self, elt).to_pandas()
+            df_list.append(df)
         return pd.concat(df_list, axis=1)
