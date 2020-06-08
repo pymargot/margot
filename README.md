@@ -1,29 +1,26 @@
 # margot is a framework for quanting with pydata.
-
-Margot currently includes three components; these can be used together, or independently:
-
+Margot is a library with two distinct components; these can be used together, or independently:
 - margot.data
 - margot.backtest
-- margot.live
 
 # Margot Data
-
 The first component is margot.data.
 
-Margot Data manages data collection, cleaning and assemblance into a well organised 
-Pandas Dataframe using a clean, declarative API inspired by Django ORM.
+Margot manages data collection, cleaning and assemblance into a well organised Pandas 
+Dataframe using a clean, declarative API. If you've ever used Django you'll find this
+approach familiar.
 
 ## Columns
-
-Data retreived from external sources, such as "closing_price" or "volume", we call Columns.
+Margot can retreive time series data from external sources, like AlphaVantage. To add 
+a time series such as "closing_price" or "volume", we declare a Column.
 
 e.g. to get closing_price from AlphaVantage:
 
     adj_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
 
 ## Features
-
-Columns can be augmented by derived time-series, such as "returns" or "SMA20", which we call, Features.
+Columns are useful, but we usually want to derived another time series from them, such
+ as "returns" or "SMA20". Margot does this for you; we call them Features.
 
 e.g.
 
@@ -34,9 +31,8 @@ e.g.
 Margot Data includes many common financial Features, and it's very easy to add more.
 
 ## Symbols
-
-Often, you want to make a dataframe combining a number of these columns and features. Margot Data
-makes this very easy. e.g.
+Often, you want to make a dataframe combining a number of these columns and features.
+Margot makes this very easy. e.g.
 
     class MyEquity(Symbol):
 
@@ -50,49 +46,43 @@ makes this very easy. e.g.
     spy = MyEquity(symbol='SPY)
 
 ## Ensembles
+Usually you want to look at more than one symbol in a systematic trade. That's where ensembles
+come in and really demonstrate the value of margot.data.
 
     class MyEnsemble(Ensemble):
         spy = Equity(symbol='SPY')
         iwm = Equity(symbol='IWM')
-        spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, denominator=iwm.adjusted_close, label='spy_iwm_ratio')
+        spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, 
+                              denominator=iwm.adjusted_close,
+                              label='spy_iwm_ratio')
 
     my_df = MyEnsemble().to_pandas() 
 
 # Margot backtest
-
-The second major component, margot.backtest isn't yet included in these releases.
+margot.backtest isn't yet included in these releases.
 
 Margot backtest provides a base class to inherit where you define your trading algorithm, and an
 implementation of a walk-forward backetesting algorithm that produced backtests of your algorithm 
-using margot.data. Results of the backtest can be analysed with pyfolio.
+using margot.data. 
 
-# Margot live
-
-Margot live allows you to trade live using the exact same algorithm you backtested using margot.backtest.
-
+Results from margot backtest can be analysed with pyfolio.
 
 ## Status
 This is still an early stage software project, and should not be used for live trading.
 
 ## Getting Started
 
-pip install margot
+    pip install margot
 
 ## Documentation
 
-in progress - for examples see the [notebooks](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
+in progress - for examples see the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
 
 ## Contributing
 
-Feel free to make a pull request; but please feel even free-er to chat about your idea first via issues.
+Feel free to make a pull request or chat about your idea first using [issues](https://github.com/atkinson/margot/issues).
 
-The general idea is to **keep things simple**. This is intended to be long-running operational software; it must be easy to maintain, and easy to understand.
-
-Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than seeking the convenience of another library. 
-
-## Resources 
-
-If you come across this, I suggest you checkout http://robotwealth.com. Kris and James taught me everything I know about trading. They're like 5th Dan blackbelts at quantitative finance. You should try one of their bootcamps.
+Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
 ## License
-This version of this software may only be used under the terms set out in [the License](License.txt).
+Margot is lecensed for use under Apache 2.0. For details see [the License](License.txt).
