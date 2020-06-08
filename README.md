@@ -1,5 +1,5 @@
-# margot is a framework for quanting with pydata.
-Margot is a library with two distinct components; these can be used together, or independently:
+# A quantitative finance framework for pydata.
+Margot is a library of two parts that may be used together or separately:
 - margot.data
 - margot.backtest
 
@@ -21,8 +21,6 @@ e.g. to get closing_price from AlphaVantage:
 ## Features
 Columns are useful, but we usually want to derived another time series from them, such
  as "returns" or "SMA20". Margot does this for you; we call them Features.
-
-e.g.
 
     simple_returns = feature.SimpleReturns(column='adjusted_close')
     log_returns = feature.LogReturns(column='adjusted_close')
@@ -85,4 +83,4 @@ Feel free to make a pull request or chat about your idea first using [issues](ht
 Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
 ## License
-Margot is lecensed for use under Apache 2.0. For details see [the License](License.txt).
+Margot is licensed for use under Apache 2.0. For details see [the License](License.txt).
