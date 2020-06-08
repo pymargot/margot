@@ -68,3 +68,4 @@ webapp/strats/VIXM.hd5
 notebooks/*.hdf5
 
 .vscode
+.ipynb_checkpoints
