@@ -1,4 +1,4 @@
-# A quantitative finance framework for pydata.
+# An algorithmic trading framework for pydata.
 Margot is a library of two parts that may be used together or separately:
 - margot.data
 - margot.backtest
