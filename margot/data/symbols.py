@@ -29,6 +29,7 @@ class Symbol(object):
             ref in getmembers(self) if isinstance(
                 ref,
                 BaseColumn)]
+
         self.features = [
             member for member,
             ref in getmembers(self) if isinstance(
@@ -45,16 +46,14 @@ class Symbol(object):
             getattr(self, column)._setup(symbol=self.symbol, env=self.env)
 
         for feature in self.features:
-            column_name = getattr(self, column).column
+            column_name = getattr(self, column).time_series
             base_series = getattr(self, column_name).get_series()
             getattr(self, feature)._setup(base_series=base_series)
 
     def to_dict(self):
         elements = self.columns + self.features + self.ratios
-        return {(self.symbol, col): getattr(self, col).get_series()
-                for col in elements}
+        return {(self.symbol, elt): getattr(self, elt).get_series()
+                for elt in elements}
 
     def to_pandas(self):
-        df = pd.DataFrame(self.to_dict())
-        df.columns = pd.MultiIndex.from_tuples(df.columns)
-        return df
+        return pd.DataFrame(self.to_dict())

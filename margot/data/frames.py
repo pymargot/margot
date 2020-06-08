@@ -30,11 +30,7 @@ class MargotDataFrame(object):
             ref in getmembers(self) if isinstance(
                 ref,
                 Symbol)]
-        self.columns = [
-            member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                BaseColumn)]
+
         self.features = [
             member for member,
             ref in getmembers(self) if isinstance(
@@ -47,19 +43,15 @@ class MargotDataFrame(object):
                 ref,
                 Ratio)]
 
-        for column in self.columns:
-            getattr(self, column)._setup(symbol=self.symbol, env=self.env)
-
-        for feature in self.features:
-            column_name = getattr(self, column).column
-            base_series = getattr(self, column_name).get_series()
-            getattr(self, feature)._setup(base_series=base_series)
+        # for feature in self.features:
+        #     column_name = getattr(self, column).column
+        #     base_series = getattr(self, column_name).get_series()
+        #     getattr(self, feature)._setup(base_series=base_series)
 
     def _get_elements(self):
-        return self.symbols + self.columns + self.features + self.ratios
+        return self.symbols # + self.features + self.ratios
 
     def to_pandas(self):
         # Get the elements one at a time, to pandas them and ensemble.
-        df_list = [getattr(self, symbol).to_pandas()
-                   for symbol in self._get_elements()]
+        df_list = [getattr(self, elt).to_pandas() for elt in self._get_elements()]
         return pd.concat(df_list, axis=1)

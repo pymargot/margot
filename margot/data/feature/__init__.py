@@ -6,12 +6,12 @@ class BaseFeature(object):
 
     INITED = False
 
-    def get_feature_name(self):
+    def get_label(self):
         try:
             return self.feature_name
         except AttributeError:
             raise AttributeError(
-                'Please declare a feature_name attribute for this feature')
+                'Please declare a label attribute for this feature')
 
     def __init__(self, column, **kwargs):
         self.column = column
@@ -19,10 +19,10 @@ class BaseFeature(object):
         self.series = None
 
     def get_series(self):
-        return self.series.rename(self.get_feature_name())
+        return self.series.rename(self.get_label())
 
     def get_label(self):
-        return self.feature_name
+        return self.label
 
 
 class SimpleReturns(BaseFeature):
@@ -31,7 +31,7 @@ class SimpleReturns(BaseFeature):
     Args:
         column (pd.Series): A price time series.
     """
-    feature_name = 'simple_returns'
+    label = 'simple_returns'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.pct_change().fillna(0) / 100
@@ -43,7 +43,7 @@ class LogReturns(BaseFeature):
     Args:
         field (pd.Series): A price time series.
     """
-    feature_name = 'log_returns'
+    label = 'log_returns'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = np.log(1 + base_series.pct_change().fillna(0)) / 100
@@ -60,7 +60,7 @@ class RealisedVolatility(BaseFeature):
         AttributeError: A lookback window is required.
     """
 
-    feature_name = 'realised_vol'
+    label = 'realised_vol'
     window = None
 
     def _setup(self, base_series: pd.DataFrame):
@@ -80,7 +80,7 @@ class SimpleMovingAverage(BaseFeature):
 
     window = None
 
-    def get_feature_name(self):
+    def get_label(self):
         return 'sma{}'.format(self.window)
 
     def _setup(self, base_series: pd.DataFrame):
@@ -100,7 +100,7 @@ class UpperBollingerBand(BaseFeature):
 
     window = 20
     width = 2.0
-    feature_name = 'upper_boll_band'
+    label = 'upper_boll_band'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.rolling(self.window).mean(
@@ -117,7 +117,7 @@ class LowerBollingerBand(BaseFeature):
 
     window = 20
     width = 2.0
-    feature_name = 'lower_boll_band'
+    label = 'lower_boll_band'
 
     def _setup(self, base_series: pd.DataFrame):
         self.series = base_series.rolling(self.window).mean(

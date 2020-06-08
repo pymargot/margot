@@ -23,15 +23,15 @@ class Column(BaseColumn):
                 'ALPHAVANTAGE_API_KEY',
                 os.environ.get('ALPHAVANTAGE_API_KEY')),
             output_format='pandas')
-        self.data, self.metadata = ts.get_daily_adjusted(
+        self.df, self.metadata = ts.get_daily_adjusted(
             self.symbol, outputsize='full')
-        self.data = self.data.sort_index()
+        self.df = self.df.sort_index()
 
         # Ensure the index is TZ aware.
-        self.data = self.data.tz_localize(pytz.UTC)
+        self.df = self.df.tz_localize(pytz.UTC)
 
         # Standardise the column names
-        self.data = self.data.rename(mapper={
+        self.df = self.df.rename(mapper={
             '1. open': 'open',
             '2. high': 'high',
             '3. low': 'low',
@@ -54,4 +54,4 @@ class Column(BaseColumn):
         except FileNotFoundError:
             self._update()
 
-        return self.data[self.column]
+        return self.df[self.time_series]

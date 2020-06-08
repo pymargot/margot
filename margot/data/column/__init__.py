@@ -21,19 +21,18 @@ class BaseColumn(object):
     INITED = False
     data = None
 
-    def __init__(self, function, column):
+    def __init__(self, function, time_series: str):
         """Initialise; see class for usage."""
         self.function = function
-        self.column = column
+        self.time_series = time_series
         self.series = None
 
     def get_label(self):
-        return self.column
+        return self.series.name
 
     def _setup(self, symbol: str, env: dict = {}):
         self.symbol = symbol
         self.env = env
-
         # TODO this should be handled somewhere central in a configuration
         # thingo.
         data_cache = env.get('DATA_CACHE', os.environ.get('DATA_CACHE'))
@@ -50,12 +49,12 @@ class BaseColumn(object):
 
     def save(self):
         """Save it."""
-        self.data.to_hdf(self.hdf5_file, key='adjusted_close')
+        self.df.to_hdf(self.hdf5_file, key='adjusted_close')
         logging.debug('Symbol {} saved'.format(self.symbol))
 
     def load(self):
         """Load it."""
-        self.data = pd.read_hdf(
+        self.df = pd.read_hdf(
             self.hdf5_file,
             key='adjusted_close').sort_index()
         logging.debug('Symbol {} loaded'.format(self.symbol))
