@@ -29,9 +29,9 @@ e.g. to get closing_price from AlphaVantage:
 Columns are useful, but we usually want to derived another time series from them, such 
 as "returns" or "SMA20". Margot does this for you; we call them Features.
 
-    simple_returns = feature.SimpleReturns(column=adjusted_close)
-    log_returns = feature.LogReturns(column=adjusted_close)
-    sma20 = feature.SimpleMovingAverage(column=adjusted_close, window=20)
+    simple_returns = feature.SimpleReturns(column='adjusted_close')
+    log_returns = feature.LogReturns(column='adjusted_close')
+    sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
 
 Margot Data includes many common financial Features, and it's very easy to add more.
 
@@ -42,13 +42,13 @@ Margot makes this very easy. e.g.
     class MyEquity(Symbol):
 
         adjusted_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
-        log_returns = feature.LogReturns(column=adjusted_close)
-        realised_vol = feature.RealisedVolatility(column=log_returns, window=30)
-        upper_band = feature.UpperBollingerBand(column=adjusted_close, window=20, width=2.0)
-        sma20 = feature.SimpleMovingAverage(column=adjusted_close, window=20)
-        lower_band = feature.LowerBollingerBand(column=adjusted_close, window=20, width=2.0)
+        log_returns = feature.LogReturns(column='adjusted_close')
+        realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
+        upper_band = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
+        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
+        lower_band = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
 
-    spy = MyEquity(symbol='SPY)
+    spy = MyEquity(symbol='SPY')
 
 ## MargotDataFrames
 In systematic trading, you usually you want to look at more than one symbol. That's where
@@ -72,12 +72,19 @@ your algorithm using margot.data.
 
 Results from margot backtest can be analysed with pyfolio.
 
-## Status
-This is still an early stage software project, and should not be used for live trading.
-
 ## Getting Started
 
     pip install margot
+
+Next you need to make sure you have a couple of environment variables set:
+
+    export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
+    export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
+
+Once you've done that, try running the code in the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
+
+## Status
+This is still an early stage software project, and should not be used for live trading.
 
 ## Documentation
 
