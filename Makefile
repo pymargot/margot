@@ -9,7 +9,7 @@ coverage:
 	python -m coverage html
 
 release:
-	python setup.py sdist upload
+	python setup.py sdist bdist_wheel upload
 	twine upload dist/*
 
 clean:
