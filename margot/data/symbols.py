@@ -26,24 +26,20 @@ class Symbol(object):
         self.env = env
         self.columns = [
             member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                BaseColumn)]
+            ref in getmembers(self, lambda m: isinstance(m, BaseColumn))]
 
         self.features = [
             member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                BaseFeature)]
+            ref in getmembers(self, lambda m: isinstance(m, BaseFeature))]
 
         self.ratios = [
             member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                Ratio)]
+            ref in getmembers(self, lambda m: isinstance(m, Ratio))]
 
         for column in self.columns:
-            getattr(self, column)._setup(symbol=self.symbol, env=self.env)
+            getattr(self, column).setup(symbol=self.symbol, env=self.env)
+
+        super().__init__()
 
     def to_dict(self):
         elements = self.columns + self.features + self.ratios

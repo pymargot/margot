@@ -24,32 +24,23 @@ class MargotDataFrame(object):
     def __init__(self, env: dict = {}):
         """Initiate."""
         self.env = env
+        super().__init__()
 
+    def get_elements(self):
         self.symbols = [
-            member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                Symbol)]
+            ref for member,
+            ref in getmembers(self, lambda m: isinstance(m, Symbol))]
 
         self.features = [
-            member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                BaseFeature)]
+            ref for member,
+            ref in getmembers(self, lambda m: isinstance(m, BaseFeature))]
 
         self.ratios = [
-            member for member,
-            ref in getmembers(self) if isinstance(
-                ref,
-                Ratio)]
-
-    def _get_elements(self):
+            ref for member,
+            ref in getmembers(self, lambda m: isinstance(m, Ratio))]
         return self.symbols + self.features + self.ratios
 
     def to_pandas(self):
         # Get the elements one at a time, to pandas them and ensemble.
-        df_list = list()
-        for elt in self._get_elements():
-            df = getattr(self, elt).to_pandas()
-            df_list.append(df)
+        df_list = [ref.to_pandas() for ref in self.get_elements()]
         return pd.concat(df_list, axis=1)

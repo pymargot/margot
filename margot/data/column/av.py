@@ -26,5 +26,3 @@ class Column(BaseColumn):
             output_format='pandas')
         df, metadata = ts.get_daily_adjusted(symbol, outputsize='full')
         return self.clean(df)
-
-
