@@ -1,7 +1,7 @@
 [![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 ![python](https://img.shields.io/pypi/pyversions/margot)
 ![wheel](https://img.shields.io/pypi/wheel/margot)
-[![license](https://img.shields.io/pypi/l/margot)](https://github.com/atkinson/margot/blob/master/License.txt)
+[![license](https://img.shields.io/pypi/l/margot?color=green)](https://github.com/atkinson/margot/blob/master/License.txt)
 [![build](https://img.shields.io/travis/tr11/margot)](https://travis-ci.org/tr11/margot)
 [![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
 
