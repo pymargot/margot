@@ -1,10 +1,10 @@
-[![version](https://img.shields.io/pypi/v/python-configuration)](https://pypi.org/project/python-configuration/)
-![python](https://img.shields.io/pypi/pyversions/python-configuration)
-![wheel](https://img.shields.io/pypi/wheel/python-configuration)
-![license](https://img.shields.io/pypi/l/python-configuration)
-[![build](https://img.shields.io/travis/tr11/python-configuration)](https://travis-ci.org/tr11/python-configuration)
-[![codecov](https://codecov.io/gh/tr11/python-configuration/branch/master/graph/badge.svg)](https://codecov.io/gh/tr11/python-configuration)
-[![Documentation Status](https://readthedocs.org/projects/python-configuration/badge/?version=latest)](https://python-configuration.readthedocs.io/en/latest/?badge=latest)
+[![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+![python](https://img.shields.io/pypi/pyversions/margot)
+![wheel](https://img.shields.io/pypi/wheel/margot)
+![license](https://img.shields.io/pypi/l/margot)
+[![build](https://img.shields.io/travis/tr11/margot)](https://travis-ci.org/tr11/margot)
+[![codecov](https://codecov.io/gh/tr11/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/tr11/margot)
+[![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
 
 # An algorithmic trading framework for pydata.
 Margot is a library of two parts that may be used together or separately:
@@ -30,9 +30,9 @@ e.g. to get closing_price from AlphaVantage:
 Columns are useful, but we usually want to derived another time series from them, such 
 as "returns" or "SMA20". Margot does this for you; we call them Features.
 
-    simple_returns = feature.SimpleReturns(column='adjusted_close')
-    log_returns = feature.LogReturns(column='adjusted_close')
-    sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
+    simple_returns = feature.SimpleReturns(column=adjusted_close)
+    log_returns = feature.LogReturns(column=adjusted_close)
+    sma20 = feature.SimpleMovingAverage(column=adjusted_close, window=20)
 
 Margot Data includes many common financial Features, and it's very easy to add more.
 
@@ -43,11 +43,11 @@ Margot makes this very easy. e.g.
     class MyEquity(Symbol):
 
         adjusted_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
-        log_returns = feature.LogReturns(column='adjusted_close')
-        realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
-        upper_band = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
-        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
-        lower_band = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
+        log_returns = feature.LogReturns(column=adjusted_close)
+        realised_vol = feature.RealisedVolatility(column=log_returns, window=30)
+        upper_band = feature.UpperBollingerBand(column=adjusted_close, window=20, width=2.0)
+        sma20 = feature.SimpleMovingAverage(column=adjusted_close, window=20)
+        lower_band = feature.LowerBollingerBand(column=adjusted_close, window=20, width=2.0)
 
     spy = MyEquity(symbol='SPY)
 

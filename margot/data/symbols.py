@@ -41,7 +41,15 @@ class Symbol(object):
             new_col = getattr(self, col).clone()
             setattr(self, col, new_col)
             getattr(self, col).setup(symbol=symbol, env=self.env)
-            
+
+        for feature in self.features:
+            base_series_name = getattr(self, feature).get_column_name()
+            new_feat = getattr(self, feature).clone()
+            setattr(self, feature, new_feat)
+            base_col = getattr(self, base_series_name)
+            getattr(self, feature).set_column(base_col)
+
+
         super().__init__()
 
     def to_dict(self):

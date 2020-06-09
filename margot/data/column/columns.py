@@ -84,15 +84,15 @@ class BaseColumn(object):
         raise NotImplementedError(
             'This is implementation specific to the data provider.')
 
-    def save(self, df, symbol):
-        """Save it."""
-        df.to_hdf(self.hdf5_file, key=symbol)
-
     def load(self, symbol: str):
         """Load it."""
         return pd.read_hdf(
             self.hdf5_file,
             key=symbol)
+
+    def save(self, df, symbol):
+        """Save it."""
+        df.to_hdf(self.hdf5_file, key=symbol)
 
     def get_series(self):
         """Get the data series as a pandas series.

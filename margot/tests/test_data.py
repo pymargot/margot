@@ -13,16 +13,16 @@ def test_symbol():
             function='historical_daily_adjusted',
             time_series='volume')
 
-        simple_returns = feature.SimpleReturns(column=adjusted_close)
-        log_returns = feature.LogReturns(column=adjusted_close)
+        simple_returns = feature.SimpleReturns(column='adjusted_close')
+        log_returns = feature.LogReturns(column='adjusted_close')
         realised_vol = feature.RealisedVolatility(
-            column=log_returns, window=30)
+            column='log_returns', window=30)
 
         upper_band = feature.UpperBollingerBand(
-            column=adjusted_close, window=20, width=2.0)
-        sma20 = feature.SimpleMovingAverage(column=adjusted_close, window=20)
+            column='adjusted_close', window=20, width=2.0)
+        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
         lower_band = feature.LowerBollingerBand(
-            column=adjusted_close, window=20, width=2.0)
+            column='adjusted_close', window=20, width=2.0)
 
     env = {'DATA_CACHE': os.path.join(os.getcwd(), 'data')}
     spy = Equity(symbol='SPY', env=env)
