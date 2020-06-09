@@ -1,5 +1,4 @@
 import os
-
 from alpha_vantage.timeseries import TimeSeries
 
 from margot.data.column import BaseColumn

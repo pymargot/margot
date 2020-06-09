@@ -24,6 +24,7 @@ class Symbol(object):
         """Initiate."""
         self.symbol = symbol
         self.env = env
+
         self.columns = [
             member for member,
             ref in getmembers(self, lambda m: isinstance(m, BaseColumn))]
@@ -36,9 +37,11 @@ class Symbol(object):
             member for member,
             ref in getmembers(self, lambda m: isinstance(m, Ratio))]
 
-        for column in self.columns:
-            getattr(self, column).setup(symbol=self.symbol, env=self.env)
-
+        for col in self.columns:
+            new_col = getattr(self, col).clone()
+            setattr(self, col, new_col)
+            getattr(self, col).setup(symbol=symbol, env=self.env)
+            
         super().__init__()
 
     def to_dict(self):

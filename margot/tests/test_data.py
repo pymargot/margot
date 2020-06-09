@@ -1,6 +1,6 @@
+import os
 
 def test_symbol():
-    import os
     from margot.data import Symbol
     from margot.data.column import av
     from margot.data import feature
@@ -29,7 +29,6 @@ def test_symbol():
 
 
 def test_frame():
-    import os
     from margot.data import MargotDataFrame, Symbol, Ratio
     from margot.data.column import av
     from margot.data import feature
@@ -42,8 +41,6 @@ def test_frame():
     class VXBasis(MargotDataFrame):
         vixm = Index(symbol='VIXM')
         vix3m = Index(symbol='^VXV')
-        vix = Index(symbol='^VIX')
-        ziv = Index(symbol='ZIV')
         # vx_basis = Ratio(numerator=vix.adjusted_close, denominator=vix3m.adjusted_close, label='vx_basis_ratio')
 
     vxbasis = VXBasis()
@@ -54,3 +51,22 @@ def test_frame():
             'adjusted_close'].sum() == Index('^VXV').to_pandas().tail()[
             '^VXV',
             'adjusted_close'].sum())
+
+
+def test_constructors():
+    from margot.data import MargotDataFrame, Symbol, Ratio
+    from margot.data.column import av
+
+    class Index(Symbol):
+        adjusted_close = av.Column(
+            function='historical_daily_adjusted',
+            time_series='adjusted_close')
+
+    spy = Index(symbol='SPY')
+    vtwo = Index(symbol='VTWO')
+
+    assert(
+        spy.to_pandas().tail()[
+            'SPY', 'adjusted_close'].sum() != vtwo.to_pandas().tail()[
+            'VTWO', 'adjusted_close'].sum()
+    )
