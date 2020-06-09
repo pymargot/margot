@@ -1,9 +1,8 @@
 [![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 ![python](https://img.shields.io/pypi/pyversions/margot)
 ![wheel](https://img.shields.io/pypi/wheel/margot)
-![license](https://img.shields.io/pypi/l/margot)
+[![license](https://github.com/atkinson/margot/blob/master/License.txt)](https://img.shields.io/pypi/l/margot)
 [![build](https://img.shields.io/travis/tr11/margot)](https://travis-ci.org/tr11/margot)
-[![codecov](https://codecov.io/gh/tr11/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/tr11/margot)
 [![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
 
 # An algorithmic trading framework for pydata.
@@ -91,4 +90,4 @@ Feel free to make a pull request or chat about your idea first using [issues](ht
 Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
 ## License
-Margot is licensed for use under Apache 2.0. For details see [the License](License.txt).
+Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/License.txt).
