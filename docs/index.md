@@ -1,10 +1,10 @@
-[![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
-![python](https://img.shields.io/pypi/pyversions/margot)
-![wheel](https://img.shields.io/pypi/wheel/margot)
-[![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
-[![build](https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
-[![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
-[![codecov](https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
+[(https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+(https://img.shields.io/pypi/pyversions/margot)
+(https://img.shields.io/pypi/wheel/margot)
+[(https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
+[(https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
+[(https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
+[(https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
 
 # An algorithmic trading framework for pydata.
 Margot is a library of components that may be used together or separately. The first
@@ -126,7 +126,7 @@ Dependencies are kept to a minimum. Generally if there's a way to do something i
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
 
-
+```eval_rst
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -138,3 +138,4 @@ Margot is licensed for use under Apache 2.0. For details see [the License](https
 .. automodule:: margot
   :members:
   margot
+```

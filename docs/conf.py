@@ -74,6 +74,8 @@ autodoc_member_order = 'bysource'
 
 # Markdown support -----------------------------------------------------------
 
+source_suffix = ['.rst', '.md']
+
 github_doc_root = 'https://github.com/atkinson/margot/tree/master/docs'
 
 def setup(app):
