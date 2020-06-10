@@ -99,4 +99,4 @@ Feel free to make a pull request or chat about your idea first using [issues](ht
 Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
 ## License
-Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/License.txt).
+Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
