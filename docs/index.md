@@ -1,18 +1,18 @@
 [![](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
-![python](https://img.shields.io/pypi/pyversions/margot)
-![wheel](https://img.shields.io/pypi/wheel/margot)
-[![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
-[![build](https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
-[![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
-[![codecov](https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
+![](https://img.shields.io/pypi/pyversions/margot)
+![](https://img.shields.io/pypi/wheel/margot)
+[![](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
+[![](https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
+[![](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
+[![](https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
 
-# intro to margot
+# What is margot?
 Margot is a library of components that may be used together or separately. The first
 major component is now availble for public preview. It should be considered early-beta.
 
 - margot.data
 
-# Margot Data
+# Margot data
 Margot data makes it easy to create neat and tidy dataframes.
 
 Margot manages data collection, caching, cleaning, time-series feature generation and
@@ -90,7 +90,7 @@ The above code creates a Pandas DataFrame of both equities, and an additional
 feature that calculates a time-series of the ratio of their respective
 adjusted close prices.
 
-# Margot's other parts
+## Margot's other parts
 **not yet released.**
 
 Margot also provides a simple framework for writing and backtesting trading
@@ -98,7 +98,7 @@ signal generation algorithms using margot.data.
 
 Results from margot's trading algorithms can be analysed with pyfolio.
 
-## Getting Started
+# Getting Started
 
     pip install margot
 
@@ -109,20 +109,20 @@ Next you need to make sure you have a couple of environment variables set:
 
 Once you've done that, try running the code in the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
 
-## Status
+# Status
 This is still an early stage software project, and should not be used for live trading.
 
-## Documentation
+# Documentation
 
 in progress - for examples see the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
 
-## Contributing
+# Contributing
 
 Feel free to make a pull request or chat about your idea first using [issues](https://github.com/atkinson/margot/issues).
 
 Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
-## License
+# License
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
 
