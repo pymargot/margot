@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+[![](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 ![python](https://img.shields.io/pypi/pyversions/margot)
 ![wheel](https://img.shields.io/pypi/wheel/margot)
 [![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
