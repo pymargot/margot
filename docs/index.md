@@ -125,9 +125,6 @@ Dependencies are kept to a minimum. Generally if there's a way to do something i
 ## License
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
-
-* [margot.data](margot.data.rst)
-* [notebooks](notebooks.md)
   
 ```eval_rst
 
