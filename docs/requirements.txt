@@ -1,0 +1,4 @@
+margot
+recommonmark
+versioneer
+sphinx-rtd-theme
