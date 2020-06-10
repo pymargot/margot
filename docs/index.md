@@ -106,14 +106,14 @@ Next you need to make sure you have a couple of important environment variables 
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
 
-Once you've done that, try running the code in the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
+Once you've done that, try running the code in the [notebook](notebook.margot.data).
 
 # Status
 This is still an early stage software project, and should not be used for live trading.
 
 # Documentation
 
-in progress - for examples see the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
+in progress - for examples see the [notebook](notebook.margot.data).
 
 # Contributing
 

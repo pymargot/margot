@@ -8,7 +8,7 @@
 
 # An algorithmic trading framework for pydata.
 Margot is a library of components that may be used together or separately. The first
-major component is now availble for public preview. It should be considered early-beta.
+major component is now available for public preview. It should be considered early-beta.
 
 - margot.data
 
@@ -107,14 +107,14 @@ Next you need to make sure you have a couple of environment variables set:
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
 
-Once you've done that, try running the code in the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
+Once you've done that, try running the code in the [notebook](https://margot.readthedocs.io/en/latest/notebook.margot.data.html).
 
 ## Status
 This is still an early stage software project, and should not be used for live trading.
 
 ## Documentation
 
-in progress - for examples see the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
+in progress - for examples see the [notebook](https://margot.readthedocs.io/en/latest/notebook.margot.data.html).
 
 ## Contributing
 
