@@ -43,7 +43,8 @@ release = margot.__version__
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'recommonmark'
+    'nbsphinx',
+    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
