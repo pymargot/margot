@@ -72,9 +72,7 @@ master_doc = 'index'
 autodoc_member_order = 'bysource'
 
 
-# MArkdown support -----------------------------------------------------------
-source_parsers = {'.md': CommonMarkParser}
-source_suffix = ['.rst', '.md']
+# Markdown support -----------------------------------------------------------
 
 github_doc_root = 'https://github.com/atkinson/margot/tree/master/docs'
 
