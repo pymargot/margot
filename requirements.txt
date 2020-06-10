@@ -6,6 +6,7 @@ matplotlib
 pandas
 sympy
 nose
+tables
 
 sphinx
 sphinx-autobuild
