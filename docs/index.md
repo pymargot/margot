@@ -8,33 +8,35 @@
 
 # What is margot?
 Margot is a library of components that may be used together or separately. The first
-major component. _margot.data_ is now available for public preview. It should be
-considered early-beta. It works, but will have sharp edges.
+major component; _margot.data_ is now available for public preview. It should be
+considered an early-beta. It works, but may still have sharp edges.
 
-# Margot data
-Margot data makes it easy to create neat and tidy Pandas dataframes for time-series.
+# What is margot data?
+Margot data makes it super easy to create neat and tidy Pandas dataframes for 
+time-series analysis.
 
-Margot aims to manage data collection, caching, cleaning, feature generation,
+Margot data aims to manage data collection, caching, cleaning, feature generation,
 management and persistence using a clean, declarative API. If you've ever used
 Django you'll find this approach similar to the Django ORM.
 
 ## Columns
-The heart of a time-series dataframe is the original data. Margot can retrieve
-time series data from external sources (currently AlphaVantage). To add a time
-series such as "closing_price" or "volume", we declare a Column.
+The heart of any time-series dataframe is the original data. Margot can retrieve
+time-series data from external sources (currently AlphaVantage). To add a time
+series from an original source, such as "closing_price" or "volume", we declare
+a *Column*:
 
-e.g. to get closing_price and volume from AlphaVantage:
+e.g. Let's get closing_price and volume from AlphaVantage:
 
     adjusted_close = av.Column(function='historical_daily_adjusted', 
-                               column='adjusted_close')
+                               time_series='adjusted_close')
 
     daily_volume = av.Column(function='historical_daily_adjusted',
-                             column='volume')
+                             time_series='volume')
 
 ## Features
-Columns are useful, but we usually want to derive new time series from them, such 
+Columns are useful, but we usually want to derive new time-series from them, such 
 as "log_returns" or "SMA20". Margot does this for you; we've called these derived
-time-series, Features.
+time-series, *Features*.
 
     simple_returns = feature.SimpleReturns(column='adjusted_close')
     log_returns = feature.LogReturns(column='adjusted_close')
@@ -57,7 +59,7 @@ Margot makes this very easy by providing the Symbol class e.g.
     class MyEquity(Symbol):
 
         adjusted_close = av.Column(function='historical_daily_adjusted', 
-                                   column='adjusted_close')
+                                   time_series='adjusted_close')
         log_returns = feature.LogReturns(column='adjusted_close')
         realised_vol = feature.RealisedVolatility(column='log_returns', 
                                                   window=30)
