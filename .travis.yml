@@ -11,6 +11,7 @@ install:
 
 script:
   - pytest
+  - py.test --cov-report=xml --cov=margot
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

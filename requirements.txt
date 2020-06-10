@@ -19,3 +19,4 @@ pytz
 
 m2r
 versioneer
+pytest-cov
