@@ -44,6 +44,7 @@ def test_frame():
         vx_basis = Ratio(numerator=vixm.adjusted_close, denominator=vix3m.adjusted_close, label='vx_basis_ratio')
 
     vxbasis = VXBasis()
+    vxbasis.to_pandas()
 
     assert(
         vxbasis.vix3m.to_pandas().tail()[
