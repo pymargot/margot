@@ -1,4 +1,4 @@
-[!(https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+[![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 ![python](https://img.shields.io/pypi/pyversions/margot)
 ![wheel](https://img.shields.io/pypi/wheel/margot)
 [![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
@@ -6,7 +6,7 @@
 [![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
 
-# An algorithmic trading framework for pydata.
+# intro to margot
 Margot is a library of components that may be used together or separately. The first
 major component is now availble for public preview. It should be considered early-beta.
 
@@ -125,19 +125,19 @@ Dependencies are kept to a minimum. Generally if there's a way to do something i
 ## License
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
+
+* [margot.data API](margot.data.html)
+* [notebooks](notebooks.md)
   
 ```eval_rst
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+   index
    margot
    notebooks
    modules
-
-
-.. automodule:: margot
-  :members:
-  margot
 
 ```

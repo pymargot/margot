@@ -1,4 +1,4 @@
-margot
+margot API
 ======
 
 .. toctree::
