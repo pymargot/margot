@@ -1,3 +1,5 @@
+alpha_vantage
+
 numpy
 scipy
 matplotlib
