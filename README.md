@@ -108,14 +108,14 @@ Next you need to make sure you have a couple of important environment variables 
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
 
-Once you've done that, try running the code in the [notebook](notebook.margot.data).
+Once you've done that, try running the code in the [notebook](https://margot.readthedocs.io/en/latest/notebook.margot.data.html).
 
 # Status
 This is still an early stage software project, and should not be used for live trading.
 
 # Documentation
 
-in progress - for examples see the [notebook](notebook.margot.data).
+in progress - for examples see the [notebook](https://margot.readthedocs.io/en/latest/notebook.margot.data.html).
 
 # Contributing
 
