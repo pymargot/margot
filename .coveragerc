@@ -27,4 +27,4 @@ directory = coverage_html_report
 
 [omit]
 omit =
-    _version.py
+    */_version.py
