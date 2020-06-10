@@ -74,11 +74,19 @@ autodoc_member_order = 'bysource'
 
 # Markdown support -----------------------------------------------------------
 
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
+
 github_doc_root = 'https://github.com/atkinson/margot/tree/master/docs'
 
 def setup(app):
     app.add_config_value('recommonmark_config', {
             'url_resolver': lambda url: github_doc_root + url,
             'auto_toc_tree_section': 'Contents',
+            'enable_eval_rst': True,
+            'url_resolver': True
             }, True)
     app.add_transform(AutoStructify)

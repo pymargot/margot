@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+[!(https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 ![python](https://img.shields.io/pypi/pyversions/margot)
 ![wheel](https://img.shields.io/pypi/wheel/margot)
 [![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
@@ -126,7 +126,11 @@ Dependencies are kept to a minimum. Generally if there's a way to do something i
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
 
+* [margot.data](margot.data.rst)
+* [notebooks](notebooks.md)
+  
 ```eval_rst
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -138,4 +142,5 @@ Margot is licensed for use under Apache 2.0. For details see [the License](https
 .. automodule:: margot
   :members:
   margot
+
 ```
