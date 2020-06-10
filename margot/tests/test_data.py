@@ -70,3 +70,25 @@ def test_constructors():
             'SPY', 'adjusted_close'].sum() != vtwo.to_pandas().tail()[
             'VTWO', 'adjusted_close'].sum()
     )
+
+
+def test_features():
+    from margot.data import MargotDataFrame, Symbol, Ratio
+    from margot.data.column import av
+    from margot.data import feature
+
+    class Index(Symbol):
+        adjusted_close = av.Column(
+            function='historical_daily_adjusted',
+            time_series='adjusted_close')
+
+        simple_returns = feature.SimpleReturns(column='adjusted_close')
+        log_returns = feature.LogReturns(column='adjusted_close')
+        real_vol = feature.RealisedVolatility(column='log_returns', window=20)
+        sma = feature.SimpleMovingAverage(column='adjusted_close', window=10)
+        upper = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
+        lower = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
+
+    spy = Index(symbol='SPY')
+
+    spy.to_pandas()

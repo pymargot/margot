@@ -10,7 +10,6 @@ install:
 
 
 script:
-  - pytest
   - py.test --cov-report=xml --cov=margot
 
 after_success:
