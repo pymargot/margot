@@ -41,7 +41,7 @@ def test_frame():
     class VXBasis(MargotDataFrame):
         vixm = Index(symbol='VIXM')
         vix3m = Index(symbol='^VXV')
-        # vx_basis = Ratio(numerator=vix.adjusted_close, denominator=vix3m.adjusted_close, label='vx_basis_ratio')
+        vx_basis = Ratio(numerator=vixm.adjusted_close, denominator=vix3m.adjusted_close, label='vx_basis_ratio')
 
     vxbasis = VXBasis()
 
