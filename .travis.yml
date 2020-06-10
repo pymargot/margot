@@ -10,7 +10,7 @@ install:
 
 
 script:
-  - py.test --cov-report=xml --cov=margot --omit=_version.py
+  - py.test --cov-report=xml --cov=margot
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
