@@ -1,10 +1,10 @@
-[(https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
-(https://img.shields.io/pypi/pyversions/margot)
-(https://img.shields.io/pypi/wheel/margot)
-[(https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
-[(https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
-[(https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
-[(https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
+![(https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+!(https://img.shields.io/pypi/pyversions/margot)
+!(https://img.shields.io/pypi/wheel/margot)
+![(https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
+![(https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
+![(https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
+![(https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
 
 # An algorithmic trading framework for pydata.
 Margot is a library of components that may be used together or separately. The first
