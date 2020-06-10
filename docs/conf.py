@@ -13,6 +13,12 @@
 import os
 import sys
 
+import recommonmark
+from recommonmark.transform import AutoStructify
+from recommonmark.parser import CommonMarkParser
+
+import margot
+
 # before pulling hair out, see: https://pypi.org/project/sphinxcontrib-apidoc/
 # and also: https://samnicholls.net/2016/06/15/how-to-sphinx-readthedocs/
 sys.path.insert(0, os.path.abspath('..'))
@@ -21,12 +27,12 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Trading'
+project = 'margot'
 copyright = '2020, Rich Atkinson'
 author = 'Rich Atkinson'
 
 # The full version, including alpha/beta/rc tags
-release = '0.01'
+release = margot.__version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -64,3 +70,17 @@ html_static_path = ['_static']
 autoclass_content = "both"
 master_doc = 'index'
 autodoc_member_order = 'bysource'
+
+
+# MArkdown support -----------------------------------------------------------
+source_parsers = {'.md': CommonMarkParser}
+source_suffix = ['.rst', '.md']
+
+github_doc_root = 'https://github.com/atkinson/margot/tree/master/docs'
+
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'url_resolver': lambda url: github_doc_root + url,
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)

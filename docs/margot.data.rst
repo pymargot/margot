@@ -7,11 +7,28 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   margot.data.features
-   margot.data.fields
+   margot.data.column
+   margot.data.feature
+   margot.data.store
 
 Submodules
 ----------
+
+margot.data.frames module
+-------------------------
+
+.. automodule:: margot.data.frames
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+margot.data.ratio module
+------------------------
+
+.. automodule:: margot.data.ratio
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 margot.data.symbols module
 --------------------------

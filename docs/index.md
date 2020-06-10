@@ -1,69 +1,140 @@
-# What is margot?
+[![version](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+![python](https://img.shields.io/pypi/pyversions/margot)
+![wheel](https://img.shields.io/pypi/wheel/margot)
+[![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
+[![build](https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
+[![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
+[![codecov](https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
 
-## margot wants you to be a better quant.
+# An algorithmic trading framework for pydata.
+Margot is a library of components that may be used together or separately. The first
+major component is now availble for public preview. It should be considered early-beta.
 
-margot is a "batteries included" library for systematic trading with an emphasis on ease of use.
+- margot.data
 
-## margot wants to help you:
+# Margot Data
+Margot data makes it easy to create neat and tidy dataframes.
 
-**- Wrangle data** - use a simple Django ORM inspired API to blend data from a variety of sources into a consolidated time-series dataframe.
+Margot manages data collection, caching, cleaning, time-series feature generation and
+Pandas Dataframe organisaiton and management using a clean, declarative API. If you've
+ever used Django you'll find this approach similar to the Django ORM.
 
-**- Reuse features** - a library of reusable features to apply to your data.
+## Columns
+The heart of a time-series dataframe is the original data. Margot can retreive time series
+data from external sources (currently AlphaVantage). To add a time series such as
+"closing_price" or "volume", we declare a Column.
 
-**- Make custom features** - easily create features out of your preferred indicators or ratios, and incorporate them in to your algorithms in a repeatable way. 
+e.g. to get closing_price and volume from AlphaVantage:
 
-**- Write algorithms that trade** - TODO express your idea using simple logic, without getting bogged down by the nuances of Pandas or stochastic algebra.
+    adjusted_close = av.Column(function='historical_daily_adjusted', 
+                               column='adjusted_close')
 
-**- Walk-forward backtest your algos** - TODO Backtest your algorithm, generating a historical returns time-series that can be analysed using pyfolio.
+    daily_volume = av.Column(function='historical_daily_adjusted',
+                             column='volume')
 
-**- Manage risk** - TODO Learn the expected volatility of a strategy so that you can size it into your portfolio.
+## Features
+Columns are useful, but we usually want to derive new time series from them, such 
+as "log_returns" or "SMA20". Margot does this for you; we've called these derived
+time-series, Features.
 
-**- Allocate accordingly** - TODO allocate funds to a strategy based on realised volatility.
+    simple_returns = feature.SimpleReturns(column='adjusted_close')
+    log_returns = feature.LogReturns(column='adjusted_close')
+    sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
 
-**- Trade** - TODO execute your trades with your brokers API.
+Features can be piled on top of one another. For example, to create a time series of
+realised volatility based on log_returns with a lookback of 30 trading days, simply
+add the following feature:
 
-**- Bookkeep** - TODO track fees and P&L, per strategy.
+    realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
+
+Margot includes many common financial Features, and we'll be adding more soon. It's 
+also very easy to add your own.
+
+
+## Symbols
+Often, you want to make a dataframe combining a number of columns and features.
+Margot makes this very easy by providing the Symbol class e.g.
+
+    class MyEquity(Symbol):
+
+        adjusted_close = av.Column(function='historical_daily_adjusted', 
+                                   column='adjusted_close')
+        log_returns = feature.LogReturns(column='adjusted_close')
+        realised_vol = feature.RealisedVolatility(column='log_returns', 
+                                                  window=30)
+        upper_band = feature.UpperBollingerBand(column='adjusted_close', 
+                                                window=20, 
+                                                width=2.0)
+        sma20 = feature.SimpleMovingAverage(column='adjusted_close', 
+                                            window=20)
+        lower_band = feature.LowerBollingerBand(column='adjusted_close', 
+                                                window=20, 
+                                                width=2.0)
+
+    spy = MyEquity(symbol='SPY')
+
+## MargotDataFrames
+You usually you want to look at more than one symbol. That's where
+ensembles come in. MargotDataFrame really brings power to margot.data.
+
+    class MyEnsemble(MargotDataFrame):
+        spy = Equity(symbol='SPY')
+        iwm = Equity(symbol='IWM')
+        spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, 
+                              denominator=iwm.adjusted_close,
+                              label='spy_iwm_ratio')
+
+    my_df = MyEnsemble().to_pandas() 
+
+The above code creates a Pandas DataFrame of both equities, and an additional
+feature that calculates a time-series of the ratio of their respective
+adjusted close prices.
+
+# Margot's other parts
+**not yet released.**
+
+Margot also provides a simple framework for writing and backtesting trading
+signal generation algorithms using margot.data.
+
+Results from margot's trading algorithms can be analysed with pyfolio.
+
+## Getting Started
+
+    pip install margot
+
+Next you need to make sure you have a couple of environment variables set:
+
+    export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
+    export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
+
+Once you've done that, try running the code in the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
 
 ## Status
 This is still an early stage software project, and should not be used for live trading.
 
-## Getting Started
-
-pip install margot
-
 ## Documentation
 
-in progress - for examples see the notebooks folder.
+in progress - for examples see the [notebook](https://github.com/atkinson/margot/blob/master/notebooks/margot.ipynb).
 
 ## Contributing
-Feel free to make a pull request; but please feel even free-er to chat about your idea first via issues.
 
-The general idea is to **keep things simple**. This is intended to be long-running operational software; it must be easy to maintain, and easy to understand.
+Feel free to make a pull request or chat about your idea first using [issues](https://github.com/atkinson/margot/issues).
 
-Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than seeking the convenience of another library. 
-
-## Resources 
-
-If you come across this, I suggest you checkout http://robotwealth.com. Kris and James taught me everything I know about trading. They're like 5th Dan blackbelts at quantitative finance. You should try one of their bootcamps.
+Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
 ## License
-This version of this software may only be used under the terms set out in [the License](License.txt).
+Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
+
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-      
-   getting-started
    margot
    notebooks
+   modules
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-.. automodule:: algos
+.. automodule:: margot
   :members:
+  margot

@@ -35,7 +35,7 @@ class BaseFeature(object):
 
     def get_series(self):
         if self.series is None:
-            ## TODO - we need to pass in base_column to feature
+            ## TODO - consider set_column - used after cloning.
             series = self.feature(self.base_column.get_series())
             self.series = series.rename(self.get_label())
         return self.series

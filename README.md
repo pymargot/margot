@@ -7,52 +7,74 @@
 [![codecov](https://codecov.io/gh/atkinson/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/atkinson/margot)
 
 # An algorithmic trading framework for pydata.
-Margot is a library of two parts that may be used together or separately:
+Margot is a library of components that may be used together or separately. The first
+major component is now availble for public preview. It should be considered early-beta.
+
 - margot.data
-- margot.backtest
 
 # Margot Data
-The first component is margot.data.
+Margot data makes it easy to create neat and tidy dataframes.
 
-Margot manages data collection, cleaning and assemblance of time series into a nicely
-organised Pandas Dataframe using a clean, declarative API. If you've ever used Django
-you'll find this approach very similar to the Django ORM.
+Margot manages data collection, caching, cleaning, time-series feature generation and
+Pandas Dataframe organisaiton and management using a clean, declarative API. If you've
+ever used Django you'll find this approach similar to the Django ORM.
 
 ## Columns
-Margot can retreive time series data from external sources, like AlphaVantage. To add 
-a time series such as "closing_price" or "volume", we declare a Column.
+The heart of a time-series dataframe is the original data. Margot can retreive time series
+data from external sources (currently AlphaVantage). To add a time series such as
+"closing_price" or "volume", we declare a Column.
 
-e.g. to get closing_price from AlphaVantage:
+e.g. to get closing_price and volume from AlphaVantage:
 
-    adj_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
+    adjusted_close = av.Column(function='historical_daily_adjusted', 
+                               column='adjusted_close')
+
+    daily_volume = av.Column(function='historical_daily_adjusted',
+                             column='volume')
 
 ## Features
-Columns are useful, but we usually want to derived another time series from them, such 
-as "returns" or "SMA20". Margot does this for you; we call them Features.
+Columns are useful, but we usually want to derive new time series from them, such 
+as "log_returns" or "SMA20". Margot does this for you; we've called these derived
+time-series, Features.
 
     simple_returns = feature.SimpleReturns(column='adjusted_close')
     log_returns = feature.LogReturns(column='adjusted_close')
     sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
 
-Margot Data includes many common financial Features, and it's very easy to add more.
+Features can be piled on top of one another. For example, to create a time series of
+realised volatility based on log_returns with a lookback of 30 trading days, simply
+add the following feature:
+
+    realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
+
+Margot includes many common financial Features, and we'll be adding more soon. It's 
+also very easy to add your own.
+
 
 ## Symbols
-Often, you want to make a dataframe combining a number of these columns and features.
-Margot makes this very easy. e.g.
+Often, you want to make a dataframe combining a number of columns and features.
+Margot makes this very easy by providing the Symbol class e.g.
 
     class MyEquity(Symbol):
 
-        adjusted_close = av.Column(function='historical_daily_adjusted', column='adjusted_close')
+        adjusted_close = av.Column(function='historical_daily_adjusted', 
+                                   column='adjusted_close')
         log_returns = feature.LogReturns(column='adjusted_close')
-        realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
-        upper_band = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
-        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
-        lower_band = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
+        realised_vol = feature.RealisedVolatility(column='log_returns', 
+                                                  window=30)
+        upper_band = feature.UpperBollingerBand(column='adjusted_close', 
+                                                window=20, 
+                                                width=2.0)
+        sma20 = feature.SimpleMovingAverage(column='adjusted_close', 
+                                            window=20)
+        lower_band = feature.LowerBollingerBand(column='adjusted_close', 
+                                                window=20, 
+                                                width=2.0)
 
     spy = MyEquity(symbol='SPY')
 
 ## MargotDataFrames
-In systematic trading, you usually you want to look at more than one symbol. That's where
+You usually you want to look at more than one symbol. That's where
 ensembles come in. MargotDataFrame really brings power to margot.data.
 
     class MyEnsemble(MargotDataFrame):
@@ -64,14 +86,17 @@ ensembles come in. MargotDataFrame really brings power to margot.data.
 
     my_df = MyEnsemble().to_pandas() 
 
-# Margot backtest
-**margot.backtest isn't yet included in this release.**
+The above code creates a Pandas DataFrame of both equities, and an additional
+feature that calculates a time-series of the ratio of their respective
+adjusted close prices.
 
-Margot backtest provides a base class to inherit to define your trading algorithm, an
-implementation of a walk-forward backetesting algorithm that produced backtests of
-your algorithm using margot.data. 
+# Margot's other parts
+**not yet released.**
 
-Results from margot backtest can be analysed with pyfolio.
+Margot also provides a simple framework for writing and backtesting trading
+signal generation algorithms using margot.data.
+
+Results from margot's trading algorithms can be analysed with pyfolio.
 
 ## Getting Started
 
