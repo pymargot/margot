@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/github/license/atkinson/margot)](https://github.com/atkinson/margot/blob/master/LICENSE)
 [![build](https://img.shields.io/travis/com/atkinson/margot)](https://travis-ci.com/github/atkinson/margot)
 [![Documentation Status](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
-
+![Coverage](https://img.shields.io/codecov/c/github/atkinson/margot)
 
 
 # An algorithmic trading framework for pydata.
