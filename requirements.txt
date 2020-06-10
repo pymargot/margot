@@ -13,3 +13,6 @@ sphinx-rtd-theme
 trading-calendars
 pyfolio
 pytz
+
+m2r
+versioneer

@@ -20,7 +20,9 @@ setup(
             'pandas',
             'scipy',
             'pyfolio',
-            'trading-calendars'
+            'trading-calendars',
+            'm2r',
+            'versioneer'
         ],
     classifiers=[
         'Development Status :: 3 - Alpha', 
