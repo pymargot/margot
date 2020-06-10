@@ -21,7 +21,7 @@ Django you'll find this approach similar to the Django ORM.
 
 ## Columns
 The heart of any time-series dataframe is the original data. Margot can retrieve
-time-series data from external sources (currently AlphaVantage). To add a time
+time-series data from external sources (currently AlphaVantage). To add a time-
 series from an original source, such as "closing_price" or "volume", we declare
 a *Column*:
 
@@ -42,7 +42,7 @@ time-series, *Features*.
     log_returns = feature.LogReturns(column='adjusted_close')
     sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
 
-Features can be piled on top of one another. For example, to create a time series
+Features can be piled on top of one another. For example, to create a time-series
 of realised volatility based on log_returns with a lookback of 30 trading days,
 simply add the following feature:
 
@@ -76,18 +76,19 @@ Margot makes this very easy by providing the Symbol class e.g.
 
 ## MargotDataFrames
 You usually you want to look at more than one symbol. That's where
-ensembles come in. MargotDataFrame really brings power to margot.data.
+MargotDataFrames come in. MargotDataFrames combine multiple
+Symbols with dataframe-wide Features and Ratios. For example:
 
     class MyEnsemble(MargotDataFrame):
-        spy = Equity(symbol='SPY')
-        iwm = Equity(symbol='IWM')
+        spy = MyEquity(symbol='SPY')
+        iwm = MyEquity(symbol='IWM')
         spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, 
                               denominator=iwm.adjusted_close,
                               label='spy_iwm_ratio')
 
     my_df = MyEnsemble().to_pandas() 
 
-The above code creates a Pandas DataFrame of both equities, and an additional
+The above code creates a Pandas DataFrame of two equities, and an additional
 feature that calculates a time-series of the ratio of their respective
 adjusted close prices.
 

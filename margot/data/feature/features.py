@@ -115,7 +115,7 @@ class SimpleMovingAverage(BaseFeature):
 
 
 class UpperBollingerBand(BaseFeature):
-    """Upper bollinger band of window and standard deviation.
+    """Upper bollinger band with window and standard deviation.
 
     Args:
         window (int): lookback in trading days. Defaults to 20
