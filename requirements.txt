@@ -12,3 +12,4 @@ sphinx-rtd-theme
 
 trading-calendars
 pyfolio
+pytz
