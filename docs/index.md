@@ -8,21 +8,20 @@
 
 # What is margot?
 Margot is a library of components that may be used together or separately. The first
-major component is now availble for public preview. It should be considered early-beta.
-
-- margot.data
+major component. _margot.data_ is now available for public preview. It should be
+considered early-beta. It works, but will have sharp edges.
 
 # Margot data
-Margot data makes it easy to create neat and tidy dataframes.
+Margot data makes it easy to create neat and tidy Pandas dataframes for time-series.
 
-Margot manages data collection, caching, cleaning, time-series feature generation and
-Pandas Dataframe organisaiton and management using a clean, declarative API. If you've
-ever used Django you'll find this approach similar to the Django ORM.
+Margot aims to manage data collection, caching, cleaning, feature generation,
+management and persistence using a clean, declarative API. If you've ever used
+Django you'll find this approach similar to the Django ORM.
 
 ## Columns
-The heart of a time-series dataframe is the original data. Margot can retreive time series
-data from external sources (currently AlphaVantage). To add a time series such as
-"closing_price" or "volume", we declare a Column.
+The heart of a time-series dataframe is the original data. Margot can retrieve
+time series data from external sources (currently AlphaVantage). To add a time
+series such as "closing_price" or "volume", we declare a Column.
 
 e.g. to get closing_price and volume from AlphaVantage:
 
@@ -41,9 +40,9 @@ time-series, Features.
     log_returns = feature.LogReturns(column='adjusted_close')
     sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
 
-Features can be piled on top of one another. For example, to create a time series of
-realised volatility based on log_returns with a lookback of 30 trading days, simply
-add the following feature:
+Features can be piled on top of one another. For example, to create a time series
+of realised volatility based on log_returns with a lookback of 30 trading days,
+simply add the following feature:
 
     realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
 
@@ -93,7 +92,7 @@ adjusted close prices.
 ## Margot's other parts
 **not yet released.**
 
-Margot also provides a simple framework for writing and backtesting trading
+Margot aims to provide a simple framework for writing and backtesting trading
 signal generation algorithms using margot.data.
 
 Results from margot's trading algorithms can be analysed with pyfolio.
@@ -102,7 +101,7 @@ Results from margot's trading algorithms can be analysed with pyfolio.
 
     pip install margot
 
-Next you need to make sure you have a couple of environment variables set:
+Next you need to make sure you have a couple of important environment variables set:
 
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
