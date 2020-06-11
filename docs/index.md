@@ -38,15 +38,15 @@ Columns are useful, but we usually want to derive new time-series from them, suc
 as "log_returns" or "SMA20". Margot does this for you; we've called these derived
 time-series, *Features*.
 
-    simple_returns = feature.SimpleReturns(column='adjusted_close')
-    log_returns = feature.LogReturns(column='adjusted_close')
-    sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
+    simple_returns = finance.SimpleReturns(column='adjusted_close')
+    log_returns = finance.LogReturns(column='adjusted_close')
+    sma20 = finance.SimpleMovingAverage(column='adjusted_close', window=20)
 
 Features can be piled on top of one another. For example, to create a time-series
 of realised volatility based on log_returns with a lookback of 30 trading days,
 simply add the following feature:
 
-    realised_vol = feature.RealisedVolatility(column='log_returns', window=30)
+    realised_vol = finance.RealisedVolatility(column='log_returns', window=30)
 
 Margot includes many common financial Features, and we'll be adding more soon. It's 
 also very easy to add your own.
@@ -60,15 +60,15 @@ Margot makes this very easy by providing the Symbol class e.g.
 
         adjusted_close = av.Column(function='historical_daily_adjusted', 
                                    time_series='adjusted_close')
-        log_returns = feature.LogReturns(column='adjusted_close')
-        realised_vol = feature.RealisedVolatility(column='log_returns', 
+        log_returns = finance.LogReturns(column='adjusted_close')
+        realised_vol = finance.RealisedVolatility(column='log_returns', 
                                                   window=30)
-        upper_band = feature.UpperBollingerBand(column='adjusted_close', 
+        upper_band = finance.UpperBollingerBand(column='adjusted_close', 
                                                 window=20, 
                                                 width=2.0)
-        sma20 = feature.SimpleMovingAverage(column='adjusted_close', 
+        sma20 = finance.SimpleMovingAverage(column='adjusted_close', 
                                             window=20)
-        lower_band = feature.LowerBollingerBand(column='adjusted_close', 
+        lower_band = finance.LowerBollingerBand(column='adjusted_close', 
                                                 window=20, 
                                                 width=2.0)
 
@@ -141,6 +141,6 @@ Margot is licensed for use under Apache 2.0. For details see [the License](https
    notebook.margot.data
    margot.data
    margot.data.column
-   margot.data.feature
+   margot.data.features
 
 ```

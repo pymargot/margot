@@ -1,9 +1,10 @@
 import os
 
+
 def test_symbol():
     from margot.data import Symbol
     from margot.data.column import av
-    from margot.data import feature
+    from margot.data.features import finance
 
     class Equity(Symbol):
         adjusted_close = av.Column(
@@ -13,15 +14,15 @@ def test_symbol():
             function='historical_daily_adjusted',
             time_series='volume')
 
-        simple_returns = feature.SimpleReturns(column='adjusted_close')
-        log_returns = feature.LogReturns(column='adjusted_close')
-        realised_vol = feature.RealisedVolatility(
+        simple_returns = finance.SimpleReturns(column='adjusted_close')
+        log_returns = finance.LogReturns(column='adjusted_close')
+        realised_vol = finance.RealisedVolatility(
             column='log_returns', window=30)
 
-        upper_band = feature.UpperBollingerBand(
+        upper_band = finance.UpperBollingerBand(
             column='adjusted_close', window=20, width=2.0)
-        sma20 = feature.SimpleMovingAverage(column='adjusted_close', window=20)
-        lower_band = feature.LowerBollingerBand(
+        sma20 = finance.SimpleMovingAverage(column='adjusted_close', window=20)
+        lower_band = finance.LowerBollingerBand(
             column='adjusted_close', window=20, width=2.0)
 
     env = {'DATA_CACHE': os.path.join(os.getcwd(), 'data')}
@@ -31,7 +32,7 @@ def test_symbol():
 def test_frame():
     from margot.data import MargotDataFrame, Symbol, Ratio
     from margot.data.column import av
-    from margot.data import feature
+    from margot.data.features import finance
 
     class Index(Symbol):
         adjusted_close = av.Column(
@@ -41,7 +42,10 @@ def test_frame():
     class VXBasis(MargotDataFrame):
         vixm = Index(symbol='VIXM')
         vix3m = Index(symbol='^VXV')
-        vx_basis = Ratio(numerator=vixm.adjusted_close, denominator=vix3m.adjusted_close, label='vx_basis_ratio')
+        vx_basis = Ratio(
+            numerator=vixm.adjusted_close,
+            denominator=vix3m.adjusted_close,
+            label='vx_basis_ratio')
 
     vxbasis = VXBasis()
     vxbasis.to_pandas()
@@ -73,22 +77,24 @@ def test_constructors():
     )
 
 
-def test_features():
+def test_finance_features():
     from margot.data import MargotDataFrame, Symbol, Ratio
     from margot.data.column import av
-    from margot.data import feature
+    from margot.data.features import finance
 
     class Index(Symbol):
         adjusted_close = av.Column(
             function='historical_daily_adjusted',
             time_series='adjusted_close')
 
-        simple_returns = feature.SimpleReturns(column='adjusted_close')
-        log_returns = feature.LogReturns(column='adjusted_close')
-        real_vol = feature.RealisedVolatility(column='log_returns', window=20)
-        sma = feature.SimpleMovingAverage(column='adjusted_close', window=10)
-        upper = feature.UpperBollingerBand(column='adjusted_close', window=20, width=2.0)
-        lower = feature.LowerBollingerBand(column='adjusted_close', window=20, width=2.0)
+        simple_returns = finance.SimpleReturns(column='adjusted_close')
+        log_returns = finance.LogReturns(column='adjusted_close')
+        real_vol = finance.RealisedVolatility(column='log_returns', window=20)
+        sma = finance.SimpleMovingAverage(column='adjusted_close', window=10)
+        upper = finance.UpperBollingerBand(
+            column='adjusted_close', window=20, width=2.0)
+        lower = finance.LowerBollingerBand(
+            column='adjusted_close', window=20, width=2.0)
 
     spy = Index(symbol='SPY')
 

@@ -3,7 +3,7 @@ from inspect import getmembers
 import pandas as pd
 
 from margot.data.column import BaseColumn
-from margot.data.feature import BaseFeature
+from margot.data.features import BaseFeature
 from margot.data.ratio import Ratio
 
 
@@ -48,7 +48,6 @@ class Symbol(object):
             setattr(self, feature, new_feat)
             base_col = getattr(self, base_series_name)
             getattr(self, feature).set_column(base_col)
-
 
         super().__init__()
 

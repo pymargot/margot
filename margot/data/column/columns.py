@@ -32,14 +32,14 @@ class BaseColumn(object):
 
     def clone(self):
         """Return a new instance of oneself."""
-        return self.__class__(self.function, self.time_series) 
+        return self.__class__(self.function, self.time_series)
 
     def setup(self, symbol: str, env: dict = {}):
         """Setup the column.
-        
+
         Called by the Symbol so that the symbol name can be passed.
         """
-        
+
         self.symbol = symbol
         self.env = env
 

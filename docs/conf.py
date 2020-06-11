@@ -33,7 +33,7 @@ author = 'Rich Atkinson'
 
 # The full version, including alpha/beta/rc tags
 release = margot.__version__
-
+version = margot.__version__
 
 # -- General configuration ---------------------------------------------------
 
