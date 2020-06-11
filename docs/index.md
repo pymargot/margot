@@ -141,6 +141,6 @@ Margot is licensed for use under Apache 2.0. For details see [the License](https
    notebook.margot.data
    margot.data
    margot.data.column
-   margot.data.features
+   margot.data.features.finance
 
 ```

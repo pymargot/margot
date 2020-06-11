@@ -7,7 +7,7 @@ Subpackages
 .. toctree::
 
    margot.data.column
-   margot.data.feature
+   margot.data.features
    margot.data.store
 
 Submodules
