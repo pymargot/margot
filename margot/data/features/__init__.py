@@ -44,3 +44,8 @@ class BaseFeature(object):
 
     def feature(self, series: pd.Series):
         raise NotImplementedError("please implement the feature")
+
+    @property
+    def latest(self):
+        """Return the latest value in this series"""
+        return self.get_series().tail(1)[0]

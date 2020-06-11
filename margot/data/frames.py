@@ -46,3 +46,8 @@ class MargotDataFrame(object):
         df2 = pd.DataFrame({('margot', name): getattr(self, name).get_series()
                             for name in self.ratios + self.features})
         return pd.concat([df, df2], axis=1)
+
+    def refresh(self):
+        """Refresh all Symbols in this DataFrame."""
+        for member in self.symbols:
+            getattr(self, member).refresh() 

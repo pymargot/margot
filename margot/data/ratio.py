@@ -30,3 +30,8 @@ class Ratio(object):
 
     def to_pandas(self):
         return self.get_series().to_frame()
+
+    @property
+    def latest(self):
+        """Return the latest value in this series"""
+        return self.get_series().tail(1)[0]

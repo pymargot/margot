@@ -78,10 +78,14 @@ class BaseColumn(object):
         try:
             df = self.load(symbol)
         except (KeyError, FileNotFoundError):
-            df = self.fetch(symbol)
-            df = self.clean(df)
-            self.save(df, symbol)
+            df = self.refresh(symbol)
         return df[self.time_series]
+
+    def refresh(self):
+        df = self.fetch(self.symbol)
+        df = self.clean(df)
+        self.save(df, self.symbol)
+        return df
 
     def fetch(self, symbol: str):
         raise NotImplementedError(
@@ -109,3 +113,8 @@ class BaseColumn(object):
             return self.series
         else:
             return self.series
+
+    @property
+    def latest(self):
+        """Return the latest value in this series"""
+        return self.get_series().tail(1)[0]

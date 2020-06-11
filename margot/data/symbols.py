@@ -58,3 +58,7 @@ class Symbol(object):
 
     def to_pandas(self):
         return pd.DataFrame(self.to_dict())
+
+    def refresh(self):
+        """Refresh all columns in this Symbol."""
+        [getattr(self, member).refresh() for member in self.columns]
