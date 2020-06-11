@@ -78,7 +78,7 @@ class BaseColumn(object):
         try:
             df = self.load(symbol)
         except (KeyError, FileNotFoundError):
-            df = self.refresh(symbol)
+            df = self.refresh()
         return df[self.time_series]
 
     def refresh(self):
