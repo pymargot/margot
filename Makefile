@@ -13,9 +13,9 @@ release:
 	twine upload dist/*
 
 clean:
-	rm -rf build dist docs-build *.egg-info
-	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
-	find . -type d -name .pytest_cache -delete
+	@rm -rf build dist docs-build *.egg-info
+	@find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
+	@find . -type d -name .pytest_cache -delete
 
 apidoc:
 	sphinx-apidoc -feo docs margot

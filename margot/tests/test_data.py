@@ -3,7 +3,7 @@ import os
 
 def test_symbol():
     from margot.data import Symbol
-    from margot.data.column import av
+    from margot.data.column import alphavantage as av
     from margot.data.features import finance
 
     class Equity(Symbol):
@@ -31,7 +31,7 @@ def test_symbol():
 
 def test_frame():
     from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import av
+    from margot.data.column import alphavantage as av
     from margot.data.features import finance
 
     class Index(Symbol):
@@ -60,7 +60,7 @@ def test_frame():
 
 def test_constructors():
     from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import av
+    from margot.data.column import alphavantage as av
 
     class Index(Symbol):
         adjusted_close = av.Column(
@@ -79,7 +79,7 @@ def test_constructors():
 
 def test_finance_features():
     from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import av
+    from margot.data.column import alphavantage as av
     from margot.data.features import finance
 
     class Index(Symbol):

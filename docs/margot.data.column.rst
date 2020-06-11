@@ -6,7 +6,7 @@ Submodules
 
 .. toctree::
 
-   margot.data.column.av
+   margot.data.column.alphavantage
    margot.data.column.columns
 
 Module contents
