@@ -51,7 +51,7 @@ class SimpleReturns(BaseFeature):
     """Simple returns are the percent change from yesterdays close to today's close.
 
     Args:
-        column (pd.Series): A price time series.
+        column (str): The name of a price time series.
     """
 
     label = 'simple_returns'
@@ -64,7 +64,7 @@ class LogReturns(BaseFeature):
     """Log returns can be summed over time.
 
     Args:
-        field (pd.Series): A price time series.
+        column (str): The name of the price time series.
     """
 
     label = 'log_returns'
@@ -78,7 +78,7 @@ class RealisedVolatility(BaseFeature):
 
     Args:
         column (str): The name of a returns time series.
-        window (int): Lookback window in trasing days.
+        window (int): Lookback window in trading days.
 
     Raises:
         AttributeError: A lookback window is required.
@@ -96,10 +96,11 @@ class RealisedVolatility(BaseFeature):
 
 
 class SimpleMovingAverage(BaseFeature):
-    """Simple moving average of lookback, window.
+    """Simple moving average of lookback window.
 
     Args:
-        BaseColumn ([type]): [description]
+        column (str): The name of a returns time series.
+        window (int): Lookback window in trading days.
     """
 
     window = None
@@ -118,6 +119,7 @@ class UpperBollingerBand(BaseFeature):
     """Upper bollinger band with window and standard deviation.
 
     Args:
+        column (str): The name of a returns time series.
         window (int): lookback in trading days. Defaults to 20
         width (float): width in standard deviations. Defaults to 2.0
     """
@@ -135,6 +137,7 @@ class LowerBollingerBand(BaseFeature):
     """Lower bollinger band of window and standard deviation.
 
     Args:
+        column (str): The name of a returns time series.
         window (int): lookback in trading days. Defaults to 20
         width (float): width in standard deviations. Defaults to 2.0
     """

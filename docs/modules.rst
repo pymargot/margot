@@ -1,7 +1,7 @@
-margot API
+margot
 ======
 
 .. toctree::
    :maxdepth: 4
 
-   margot.data
+   margot

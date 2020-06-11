@@ -4,14 +4,9 @@ margot.data.feature package
 Submodules
 ----------
 
-margot.data.feature.features module
------------------------------------
+.. toctree::
 
-.. automodule:: margot.data.feature.features
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
+   margot.data.feature.features
 
 Module contents
 ---------------

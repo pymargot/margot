@@ -138,7 +138,9 @@ Margot is licensed for use under Apache 2.0. For details see [the License](https
    :caption: Contents:
 
    index
-   notebook_margot_data
-   modules
+   notebook.margot.data
+   margot.data
+   margot.data.column
+   margot.data.feature
 
 ```

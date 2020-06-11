@@ -4,14 +4,9 @@ margot.config package
 Submodules
 ----------
 
-margot.config.settings module
------------------------------
+.. toctree::
 
-.. automodule:: margot.config.settings
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
+   margot.config.settings
 
 Module contents
 ---------------
