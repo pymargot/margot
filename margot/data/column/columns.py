@@ -48,7 +48,7 @@ class BaseColumn(object):
         Path(data_cache).mkdir(parents=True, exist_ok=True)
 
         self.hdf5_file = os.path.join(
-            data_cache, '{}.hdf5'.format('strategy'))
+            data_cache, '{}.hdf5'.format(self.symbol))
 
     def clean(self, df):
         """Clean the df."""
@@ -70,10 +70,18 @@ class BaseColumn(object):
         return df
 
     def load_or_fetch_series(self, symbol: str):
-        """[summary]
+        """Load of fetch the Dataframe, return the series.
+
+        In order to return the time-series, first determine if we 
+        have it and can return it, or if we need to fetch it.
+
+        TODO: Test for up-to-dateness (or maybe that happens in Symbol)?
+
+        Args:
+            symbol (str): the name of the symbol to fetch.
 
         Returns:
-            pd.Series: time series of the field
+            pd.Series: time-series of the column
         """
         try:
             df = self.load(symbol)
@@ -82,6 +90,11 @@ class BaseColumn(object):
         return df[self.time_series]
 
     def refresh(self):
+        """Refresh the data from the source.
+
+        Returns:
+            pd.DataFrame: the whole dataframe (cleaned)
+        """
         df = self.fetch(self.symbol)
         df = self.clean(df)
         self.save(df, self.symbol)
@@ -116,5 +129,5 @@ class BaseColumn(object):
 
     @property
     def latest(self):
-        """Return the latest value in this series"""
+        """Return the latest value in this series."""
         return self.get_series().tail(1)[0]

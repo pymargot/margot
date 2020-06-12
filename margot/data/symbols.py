@@ -2,6 +2,8 @@ from inspect import getmembers
 
 import pandas as pd
 
+from trading_calendars import get_calendar
+
 from margot.data.column import BaseColumn
 from margot.data.features import BaseFeature
 from margot.data.ratio import Ratio
@@ -20,10 +22,11 @@ class Symbol(object):
         [type]: [description]
     """
 
-    def __init__(self, symbol: str, env: dict = {}):
+    def __init__(self, symbol: str, trading_calendar: str, env: dict = {}):
         """Initiate."""
         self.symbol = symbol
         self.env = env
+        self.trading_calendar = get_calendar(trading_calendar)
 
         self.columns = [
             member for member,

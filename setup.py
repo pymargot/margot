@@ -22,7 +22,10 @@ setup(
             'pyfolio',
             'trading-calendars',
             'm2r',
-            'versioneer'
+            'versioneer',
+            'pytz',
+            'alpha_vantage',
+            'tables'
         ],
     classifiers=[
         'Development Status :: 3 - Alpha', 

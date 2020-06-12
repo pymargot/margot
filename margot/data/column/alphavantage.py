@@ -17,11 +17,11 @@ class Column(BaseColumn):
 
     def fetch(self, symbol: str):
         """Fetch from remote - this could be the only service specific thing."""
-        print('fetching {}'.format(symbol))
+        print('fetching ({})'.format(symbol))
         ts = TimeSeries(
             key=self.env.get(
                 'ALPHAVANTAGE_API_KEY',
                 os.environ.get('ALPHAVANTAGE_API_KEY')),
             output_format='pandas')
-        df, metadata = ts.get_daily_adjusted(symbol, outputsize='full')
+        df, metadata = ts.get_daily_adjusted(symbol, outputsize='compact')
         return self.clean(df)
