@@ -9,7 +9,7 @@ from alpha_vantage.timeseries import TimeSeries
 from trading_calendars import get_calendar
 
 import pytz
-from margot.periods import DAILY
+from margot.signals.periods import DAILY
 
 
 class BaseAlgo(object):
