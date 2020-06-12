@@ -1,4 +1,5 @@
 import os
+
 from alpha_vantage.timeseries import TimeSeries
 
 from margot.data.column import BaseColumn
@@ -11,7 +12,6 @@ class Column(BaseColumn):
         volume = av.Column(function='historical_daily_adjusted', time_series='volume')
 
     Args:
-        function (str): the name of the function passed to the Alphavantage API
         time_series (str): the name of the time-series that will be returned
     """
 

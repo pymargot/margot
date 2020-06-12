@@ -1,17 +1,19 @@
 import os
 
-from margot.data.column import BaseColumn
 import pandas as pd
+
+from margot.data.column import BaseColumn
 
 
 class Column(BaseColumn):
     """A single OHLC timeiseries from CBOE.
 
+    Currently supports the symbols, 'VIX' and 'VIX3M'.
+
     Example:
-         = cboe.Column(function='historical_daily_adjusted', field='volume')
+         = cboe.Column(time_series='close')
 
     Args:
-        function (str): the name of the function passed to the Alphavantage API
         column (str): the name of the column that will be returned
     """
 
