@@ -47,6 +47,8 @@ def test_frame():
 
     vxbasis = VXBasis()
     vxbasis.to_pandas()
+    vxbasis.vx_basis.latest
+    vxbasis.vx_basis.to_pandas()
 
 
 def test_constructors():
