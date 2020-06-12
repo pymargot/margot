@@ -26,36 +26,27 @@ def test_symbol():
             column='adjusted_close', window=20, width=2.0)
 
     env = {'DATA_CACHE': os.path.join(os.getcwd(), 'data')}
-    spy = Equity(symbol='SPY', env=env)
+    spy = Equity(symbol='SPY', trading_calendar='NYSE', env=env)
 
 
 def test_frame():
     from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import alphavantage as av
+    from margot.data.column import cboe
     from margot.data.features import finance
 
     class Index(Symbol):
-        adjusted_close = av.Column(
-            function='historical_daily_adjusted',
-            time_series='adjusted_close')
+        close = cboe.Column(time_series='close')
 
     class VXBasis(MargotDataFrame):
-        vixm = Index(symbol='VIXM')
-        vix3m = Index(symbol='^VXV')
+        vixm = Index(symbol='VIX3M', trading_calendar='NYSE')
+        vix3m = Index(symbol='VIX', trading_calendar='NYSE')
         vx_basis = Ratio(
-            numerator=vixm.adjusted_close,
-            denominator=vix3m.adjusted_close,
+            numerator=vixm.close,
+            denominator=vix3m.close,
             label='vx_basis_ratio')
 
     vxbasis = VXBasis()
     vxbasis.to_pandas()
-
-    assert(
-        vxbasis.vix3m.to_pandas().tail()[
-            '^VXV',
-            'adjusted_close'].sum() == Index('^VXV').to_pandas().tail()[
-            '^VXV',
-            'adjusted_close'].sum())
 
 
 def test_constructors():
@@ -64,11 +55,10 @@ def test_constructors():
 
     class Index(Symbol):
         adjusted_close = av.Column(
-            function='historical_daily_adjusted',
             time_series='adjusted_close')
 
-    spy = Index(symbol='SPY')
-    vtwo = Index(symbol='VTWO')
+    spy = Index(symbol='SPY', trading_calendar='NYSE')
+    vtwo = Index(symbol='VTWO', trading_calendar='NYSE')
 
     assert(
         spy.to_pandas().tail()[
@@ -84,7 +74,6 @@ def test_finance_features():
 
     class Index(Symbol):
         adjusted_close = av.Column(
-            function='historical_daily_adjusted',
             time_series='adjusted_close')
 
         simple_returns = finance.SimpleReturns(column='adjusted_close')
@@ -96,6 +85,6 @@ def test_finance_features():
         lower = finance.LowerBollingerBand(
             column='adjusted_close', window=20, width=2.0)
 
-    spy = Index(symbol='SPY')
+    spy = Index(symbol='SPY', trading_calendar='NYSE')
 
     spy.to_pandas()

@@ -1,0 +1,59 @@
+import os
+
+from margot.data.column import BaseColumn
+import pandas as pd
+
+
+class Column(BaseColumn):
+    """A single OHLC timeiseries from CBOE.
+
+    Example:
+         = cboe.Column(function='historical_daily_adjusted', field='volume')
+
+    Args:
+        function (str): the name of the function passed to the Alphavantage API
+        column (str): the name of the column that will be returned
+    """
+
+    idx = {
+        'VIX': {
+            'url':'http://www.cboe.com/publish/scheduledtask/mktdata/datahouse/vixcurrent.csv',
+            'skiprows': 1,
+            'index_col': 0
+        },
+        
+        'VIX3M': {
+            'url': 'http://www.cboe.com/publish/scheduledtask/mktdata/datahouse/vix3mdailyprices.csv',
+            'skiprows': 2,
+            'index_col': 0
+        }
+    }
+
+    def clean(self, df):
+        """Additional cleaning for CBOE symbols."""
+        df = df.rename(mapper={
+            'VIX Open': 'open',
+            'VIX High': 'high',
+            'VIX Low': 'low',
+            'VIX Close': 'close',
+            'OPEN': 'open',
+            'HIGH': 'high',
+            'LOW': 'low',
+            'CLOSE': 'close'
+        }, axis='columns')
+
+        return super().clean(df)
+
+    def fetch(self, symbol: str):
+        """Fetch from remote - this could be the only service specific thing."""
+        print('fetching ({})'.format(symbol))
+
+        try:
+            df = pd.read_csv(self.idx[symbol].get('url'), 
+                    skiprows=self.idx[symbol].get('skiprows'), 
+                    index_col=self.idx[symbol].get('index_col'),
+                    parse_dates=True)
+        except KeyError:
+            raise KeyError('The CBOE fetcher doesn\'t know about that symbol.')
+        
+        return self.clean(df)

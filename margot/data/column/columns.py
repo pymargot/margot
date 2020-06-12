@@ -20,9 +20,8 @@ class BaseColumn(object):
 
     INITED = False
 
-    def __init__(self, function, time_series: str):
+    def __init__(self, time_series: str, *args, **kwargs):
         """Initialise; see class for usage."""
-        self.function = function
         self.time_series = time_series
         self.series = None
 
@@ -32,7 +31,7 @@ class BaseColumn(object):
 
     def clone(self):
         """Return a new instance of oneself."""
-        return self.__class__(self.function, self.time_series)
+        return self.__class__(self.time_series)
 
     def setup(self, symbol: str, env: dict = {}):
         """Setup the column.
@@ -51,22 +50,10 @@ class BaseColumn(object):
             data_cache, '{}.hdf5'.format(self.symbol))
 
     def clean(self, df):
-        """Clean the df."""
+        """Clean the data."""
         df = df.sort_index()
-        # Ensure the index is TZ aware.
-        if df.index.tz is None:
+        if not hasattr(df.index, 'tz'):
             df = df.tz_localize(pytz.UTC)
-        # Standardise the column names
-        df = df.rename(mapper={
-            '1. open': 'open',
-            '2. high': 'high',
-            '3. low': 'low',
-            '4. close': 'close',
-            '5. adjusted close': 'adjusted_close',
-            '6. volume': 'volume',
-            '7. dividend amount': 'divident_amount',
-            '8. split coefficient': 'split_coefficient'
-        }, axis='columns')
         return df
 
     def load_or_fetch_series(self, symbol: str):

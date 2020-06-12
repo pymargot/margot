@@ -8,12 +8,27 @@ class Column(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 
     Example:
-        volume = column.AlphaVantage(function='historical_daily_adjusted', field='volume')
+        volume = av.Column(function='historical_daily_adjusted', time_series='volume')
 
     Args:
         function (str): the name of the function passed to the Alphavantage API
-        column (str): the name of the column that will be returned
+        time_series (str): the name of the time-series that will be returned
     """
+
+    def clean(self, df):
+        """Clean the df."""
+        # Standardise the column names
+        df = df.rename(mapper={
+            '1. open': 'open',
+            '2. high': 'high',
+            '3. low': 'low',
+            '4. close': 'close',
+            '5. adjusted close': 'adjusted_close',
+            '6. volume': 'volume',
+            '7. dividend amount': 'divident_amount',
+            '8. split coefficient': 'split_coefficient'
+        }, axis='columns')
+        return super().clean(df)
 
     def fetch(self, symbol: str):
         """Fetch from remote - this could be the only service specific thing."""
