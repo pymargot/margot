@@ -27,11 +27,9 @@ a *Column*:
 
 e.g. Let's get closing_price and volume from AlphaVantage:
 
-    adjusted_close = av.Column(function='historical_daily_adjusted', 
-                               time_series='adjusted_close')
+    adjusted_close = av.Column(time_series='adjusted_close')
 
-    daily_volume = av.Column(function='historical_daily_adjusted',
-                             time_series='volume')
+    daily_volume = av.Column(time_series='volume')
 
 ## Features
 Columns are useful, but we usually want to derive new time-series from them, such 
@@ -58,8 +56,7 @@ Margot makes this very easy by providing the Symbol class e.g.
 
     class MyEquity(Symbol):
 
-        adjusted_close = av.Column(function='historical_daily_adjusted', 
-                                   time_series='adjusted_close')
+        adjusted_close = av.Column(time_series='adjusted_close')
         log_returns = finance.LogReturns(column='adjusted_close')
         realised_vol = finance.RealisedVolatility(column='log_returns', 
                                                   window=30)
@@ -80,8 +77,8 @@ MargotDataFrames come in. MargotDataFrames combine multiple
 Symbols with dataframe-wide Features and Ratios. For example:
 
     class MyEnsemble(MargotDataFrame):
-        spy = MyEquity(symbol='SPY')
-        iwm = MyEquity(symbol='IWM')
+        spy = MyEquity(symbol='SPY', trading_calendar='NYSE')
+        iwm = MyEquity(symbol='IWM', trading_calendar='NYSE')
         spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, 
                               denominator=iwm.adjusted_close,
                               label='spy_iwm_ratio')
@@ -109,14 +106,14 @@ Next you need to make sure you have a couple of important environment variables 
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
 
-Once you've done that, try running the code in the [notebook](https://margot.readthedocs.io/en/latest/notebook.margot.data.html).
+Once you've done that, try running the code in the [notebook](notebook.margot.data).
 
 # Status
 This is still an early stage software project, and should not be used for live trading.
 
 # Documentation
 
-in progress - for examples see the [notebook](https://margot.readthedocs.io/en/latest/notebook.margot.data.html).
+in progress - for examples see the [notebook](notebook.margot.data).
 
 # Contributing
 

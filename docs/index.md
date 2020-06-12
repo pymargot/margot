@@ -27,11 +27,9 @@ a *Column*:
 
 e.g. Let's get closing_price and volume from AlphaVantage:
 
-    adjusted_close = av.Column(function='historical_daily_adjusted', 
-                               time_series='adjusted_close')
+    adjusted_close = av.Column(time_series='adjusted_close')
 
-    daily_volume = av.Column(function='historical_daily_adjusted',
-                             time_series='volume')
+    daily_volume = av.Column(time_series='volume')
 
 ## Features
 Columns are useful, but we usually want to derive new time-series from them, such 
@@ -58,8 +56,7 @@ Margot makes this very easy by providing the Symbol class e.g.
 
     class MyEquity(Symbol):
 
-        adjusted_close = av.Column(function='historical_daily_adjusted', 
-                                   time_series='adjusted_close')
+        adjusted_close = av.Column(time_series='adjusted_close')
         log_returns = finance.LogReturns(column='adjusted_close')
         realised_vol = finance.RealisedVolatility(column='log_returns', 
                                                   window=30)
@@ -80,8 +77,8 @@ MargotDataFrames come in. MargotDataFrames combine multiple
 Symbols with dataframe-wide Features and Ratios. For example:
 
     class MyEnsemble(MargotDataFrame):
-        spy = MyEquity(symbol='SPY')
-        iwm = MyEquity(symbol='IWM')
+        spy = MyEquity(symbol='SPY', trading_calendar='NYSE')
+        iwm = MyEquity(symbol='IWM', trading_calendar='NYSE')
         spy_iwm_ratio = Ratio(numerator=spy.adjusted_close, 
                               denominator=iwm.adjusted_close,
                               label='spy_iwm_ratio')

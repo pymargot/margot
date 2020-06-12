@@ -8,10 +8,8 @@ def test_symbol():
 
     class Equity(Symbol):
         adjusted_close = av.Column(
-            function='historical_daily_adjusted',
             time_series='adjusted_close')
         volume = av.Column(
-            function='historical_daily_adjusted',
             time_series='volume')
 
         simple_returns = finance.SimpleReturns(column='adjusted_close')
