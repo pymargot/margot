@@ -5,9 +5,11 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    margot.config
    margot.data
+   margot.signals
    margot.tests
 
 Module contents

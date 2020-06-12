@@ -1,5 +1,5 @@
-margot.data.features package
-============================
+margot.signals package
+======================
 
 Submodules
 ----------
@@ -7,12 +7,13 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   margot.data.features.finance
+   margot.signals.algos
+   margot.signals.periods
 
 Module contents
 ---------------
 
-.. automodule:: margot.data.features
+.. automodule:: margot.signals
    :members:
    :undoc-members:
    :show-inheritance:
