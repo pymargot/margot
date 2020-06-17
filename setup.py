@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import versioneer
 
 with open('README.md') as f:
@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 setup(
     name = 'margot',
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
