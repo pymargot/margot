@@ -33,7 +33,7 @@ class BaseAlgo(object):
     frequency = DAILY
     data = None
 
-    def __init__(self, env: dict={}, calendar='XNYS'): # noqa: D107
+    def __init__(self, env: dict = {}, calendar='XNYS'):  # noqa: D107
         self.env = env
         self.calendar = calendar
         if not isinstance(self.data, MargotDataFrame):
@@ -51,7 +51,7 @@ class BaseAlgo(object):
 
         :return: a list of Position objects for a given datetime
         """
-        
+
         if not when:
             when = datetime.now(tz=pytz.UTC)
 

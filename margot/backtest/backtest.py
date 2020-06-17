@@ -23,8 +23,7 @@ class BackTest(object):
     algo = None
     symbols = set()
 
-    def __init__(self, algo_class, start_balance=100000):
-        """Construct a Backtest object."""
+    def __init__(self, algo_class, start_balance=100000):   # noqa: D107
         self.start_balance = start_balance
         self.algo_class = algo_class
         self.algo = algo_class()
@@ -35,7 +34,6 @@ class BackTest(object):
                 'returns',
                 'log_returns'],
             dtype='float64')
-
 
     def calc_daily_returns(self, day):
         """Calculate the returns based on yesterdays positions, MoC to MoC.
@@ -101,7 +99,6 @@ class BackTest(object):
         for day in self.algo.index:
             pass
         return None
-
 
     def run(self):
         """Run the backtest.

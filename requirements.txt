@@ -17,5 +17,5 @@ trading-calendars
 pyfolio
 pytz
 
-versioneer
 pytest-cov
+autopep8

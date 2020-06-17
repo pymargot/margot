@@ -20,8 +20,7 @@ class BaseColumn(object):
 
     INITED = False
 
-    def __init__(self, time_series: str, *args, **kwargs):
-        """Initialise; see class for usage."""
+    def __init__(self, time_series: str, *args, **kwargs):  # noqa: D107
         self.time_series = time_series
         self.series = None
 
@@ -61,7 +60,7 @@ class BaseColumn(object):
     def load_or_fetch_series(self, symbol: str):
         """Load of fetch the Dataframe, return the series.
 
-        In order to return the time-series, first determine if we 
+        In order to return the time-series, first determine if we
         have it and can return it, or if we need to fetch it.
 
         TODO: Test for up-to-dateness (or maybe that happens in Symbol)?

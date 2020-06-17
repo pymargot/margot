@@ -8,13 +8,10 @@ def test_algo():
     class Index(Symbol):
         close = cboe.Column(time_series='close')
 
-
     class VXBasis(MargotDataFrame):
         vixm = Index(symbol='VIX', trading_calendar='NYSE')
-
 
     class MyAlgo(algos.BaseAlgo):
         data = MargotDataFrame()
 
-        
     myalgo = MyAlgo(env={})

@@ -14,7 +14,7 @@ class BaseFeature(object):
             raise AttributeError(
                 'Please declare a label attribute for this feature')
 
-    def __init__(self, column: str, *args, **kwargs):
+    def __init__(self, column: str, *args, **kwargs):  # noqa: D107
         self.column = column
         self.__dict__.update(kwargs)
         self.kwargs = kwargs

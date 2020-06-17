@@ -10,10 +10,10 @@ from margot.data.ratio import Ratio
 
 
 class MargotDataFrame(object):
-    """An Ensemble brings together symbols, columns and features.
+    """An MargotDataFrame brings together symbols, columns, features and ratios.
 
     Args:
-        object ([type]): [description]
+        env (dict): optional env dictionary as an alternative to sysenv variables.
 
     Raises:
         NotImplementedError: [description]
@@ -22,8 +22,7 @@ class MargotDataFrame(object):
         [type]: [description]
     """
 
-    def __init__(self, env: dict = {}):
-        """Initiate."""
+    def __init__(self, env: dict = {}):   # noqa: D107
         self.env = env
 
         self.symbols = [
@@ -44,19 +43,20 @@ class MargotDataFrame(object):
 
         Args:
             when (datetime, optional): slice to only show data that was
-            available at when. 
-            That is, the EOD from the previous day.
-            Defaults to None.
+                available at when.
+                That is, the EOD from the previous day.
+                Defaults to None.
 
         Returns:
-            pd.DataFrame: [description]
+            pd.DataFrame: a Pandas dataframe representing all data from
+                the MargotDataFrame
         """
         # Get the elements one at a time, to pandas them and ensemble.
         if len(self.symbols) == 1:
             df1 = self.symbols[0].to_pandas()
         elif len(self.symbols) > 1:
             df1 = pd.concat([getattr(self, name).to_pandas()
-                            for name in self.symbols], axis=1)
+                             for name in self.symbols], axis=1)
         else:
             df1 = pd.DataFrame()
 
@@ -67,20 +67,17 @@ class MargotDataFrame(object):
 
         if when:
             df = df.to_pandas().shift()[:when]
-    
+
         return df
 
     def refresh(self):
         """Refresh all Symbols in this DataFrame."""
         for member in self.symbols:
-            getattr(self, member).refresh() 
+            getattr(self, member).refresh()
 
     @property
     def start_date(self):
-        """Attribute.
-
-        The first available value of the 
-        time-series index.
+        """First Timestamp of the time-series index.
 
         Returns:
             Timestamp: a pandas timestamp.
@@ -89,10 +86,7 @@ class MargotDataFrame(object):
 
     @property
     def end_date(self):
-        """Attribute.
-
-        The last available value of the 
-        time-series index.
+        """Last Timestamp value of the time-series index.
 
         Returns:
             Timestamp: a pandas timestamp.
@@ -101,9 +95,7 @@ class MargotDataFrame(object):
 
     @property
     def index(self):
-        """Attribute.
-
-        The time-series index.
+        """Return the time-series index.
 
         Returns:
             pd.Index: a pandas timeseries index.

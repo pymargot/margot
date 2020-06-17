@@ -3,6 +3,7 @@ import numpy as np
 
 from margot.data.features import BaseFeature
 
+
 class SimpleReturns(BaseFeature):
     """Simple returns are the percent change from yesterdays close to today's close.
 

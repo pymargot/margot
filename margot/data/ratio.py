@@ -12,8 +12,7 @@ class Ratio(object):
         label (str): give it a name for your dataframe. e.g. current_ratio
     """
 
-    def __init__(self, numerator, denominator, label, **kwargs):
-        """Initiate. See class for args."""
+    def __init__(self, numerator, denominator, label, **kwargs):    # noqa: D107
         self.numerator = numerator
         self.denominator = denominator
         self.series = None
