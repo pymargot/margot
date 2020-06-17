@@ -52,8 +52,13 @@ class MargotDataFrame(object):
             pd.DataFrame: [description]
         """
         # Get the elements one at a time, to pandas them and ensemble.
-        df1 = pd.concat([getattr(self, name).to_pandas()
-                        for name in self.symbols], axis=1)
+        if len(self.symbols) == 1:
+            df1 = self.symbols[0].to_pandas()
+        elif len(self.symbols) > 1:
+            df1 = pd.concat([getattr(self, name).to_pandas()
+                            for name in self.symbols], axis=1)
+        else:
+            df1 = pd.DataFrame()
 
         df2 = pd.DataFrame({('margot', name): getattr(self, name).get_series()
                             for name in self.ratios + self.features})
