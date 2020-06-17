@@ -1,10 +1,10 @@
 from setuptools import setup
 import versioneer
 
-
 def generate_readme():
-    from m2r import parse_from_file
-    return parse_from_file('README.md')
+    with open('README.md') as f:
+        md = f.read()
+    return md
 
 setup(
     name = 'margot',
@@ -25,7 +25,6 @@ setup(
             'scipy',
             'pyfolio',
             'trading-calendars',
-            'm2r',
             'versioneer',
             'pytz',
             'alpha_vantage',
