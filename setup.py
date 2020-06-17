@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 setup(
     name = 'margot',
-    packages = ['margot'],
+    packages=setuptools.find_packages(),
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
