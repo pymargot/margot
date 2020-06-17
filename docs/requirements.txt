@@ -3,3 +3,4 @@ recommonmark
 versioneer
 sphinx-rtd-theme
 nbsphinx
+sphinx==3.1.1
