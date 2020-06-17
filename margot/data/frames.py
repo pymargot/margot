@@ -98,3 +98,14 @@ class MargotDataFrame(object):
             Timestamp: a pandas timestamp.
         """
         return self.to_pandas().index.max()
+
+    @property
+    def index(self):
+        """Attribute.
+
+        The time-series index.
+
+        Returns:
+            pd.Index: a pandas timeseries index.
+        """
+        return self.to_pandas().index

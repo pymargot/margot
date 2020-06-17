@@ -98,8 +98,8 @@ class BackTest(object):
         Returns:
             [type]: [description]
         """
-        for day in self.algo.:
-
+        for day in self.algo.index:
+            pass
         return None
 
 
