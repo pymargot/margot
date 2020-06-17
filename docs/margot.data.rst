@@ -14,5 +14,3 @@ Subpackages
 
    margot.data.column
    margot.data.features
-   margot.data.store
-

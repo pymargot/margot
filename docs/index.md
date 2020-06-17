@@ -125,9 +125,6 @@ Dependencies are kept to a minimum. Generally if there's a way to do something i
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
 
-
-
-# API Docs
 ```eval_rst
 
 .. toctree::
