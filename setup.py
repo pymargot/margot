@@ -1,6 +1,10 @@
 from setuptools import setup
-from m2r import parse_from_file
 import versioneer
+
+
+def generate_readme():
+    from m2r import parse_from_file
+    return parse_from_file('README.md')
 
 setup(
     name = 'margot',
@@ -9,7 +13,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
     description = 'An algorithmic trading framework for PyData.',
-    long_description = parse_from_file('README.md'),
+    long_description = generate_readme(),
     author = 'Rich Atkinson',
     author_email = 'rich@airteam.com.au',
     url = 'https://github.com/atkinson/margot',
@@ -38,3 +42,4 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
 )
+
