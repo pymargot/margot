@@ -1,10 +1,8 @@
 from setuptools import setup
 import versioneer
 
-def generate_readme():
-    with open('README.md') as f:
-        md = f.read()
-    return md
+with open('README.md') as f:
+    long_description = f.read()
 
 setup(
     name = 'margot',
@@ -13,8 +11,8 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     license='apache-2.0',
     description = 'An algorithmic trading framework for PyData.',
-    long_description = generate_readme(),
     long_description_content_type='text/markdown',
+    long_description = long_description,
     author = 'Rich Atkinson',
     author_email = 'rich@airteam.com.au',
     url = 'https://github.com/atkinson/margot',
