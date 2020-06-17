@@ -1,7 +1,6 @@
-margot.data.column.cboe module
-==============================
+margot.data.column.cboe
+=======================
 
 .. automodule:: margot.data.column.cboe
    :members:
-   :undoc-members:
-   :show-inheritance:
+

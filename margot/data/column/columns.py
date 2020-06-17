@@ -52,8 +52,10 @@ class BaseColumn(object):
     def clean(self, df):
         """Clean the data."""
         df = df.sort_index()
-        if not hasattr(df.index, 'tz'):
+        # make tz aware if not already
+        if not isinstance(df.index.dtype, pd.DatetimeTZDtype):
             df = df.tz_localize(pytz.UTC)
+
         return df
 
     def load_or_fetch_series(self, symbol: str):

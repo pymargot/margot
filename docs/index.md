@@ -139,5 +139,7 @@ Margot is licensed for use under Apache 2.0. For details see [the License](https
    margot.data
    margot.data.column
    margot.data.features.finance
+   margot.signals
+   margot.backtest
 
 ```

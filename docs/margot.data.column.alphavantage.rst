@@ -1,7 +1,6 @@
-margot.data.column.alphavantage module
-======================================
+margot.data.column.alphavantage
+===============================
 
 .. automodule:: margot.data.column.alphavantage
    :members:
-   :undoc-members:
-   :show-inheritance:
+

@@ -1,7 +1,5 @@
-margot.data.column.columns module
-=================================
+margot.data.column.columns
+==========================
 
 .. automodule:: margot.data.column.columns
    :members:
-   :undoc-members:
-   :show-inheritance:

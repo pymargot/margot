@@ -1,30 +1,18 @@
-margot.data package
-===================
+margot.data
+===========
+
+
+.. automodule:: margot.data
+   :members: MargotDataFrame, Symbol, Ratio
+
 
 Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    margot.data.column
    margot.data.features
    margot.data.store
 
-Submodules
-----------
-
-.. toctree::
-   :maxdepth: 4
-
-   margot.data.frames
-   margot.data.ratio
-   margot.data.symbols
-
-Module contents
----------------
-
-.. automodule:: margot.data
-   :members:
-   :undoc-members:
-   :show-inheritance:

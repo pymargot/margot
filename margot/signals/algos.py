@@ -10,53 +10,40 @@ from trading_calendars import get_calendar
 
 import pytz
 from margot.signals.periods import DAILY
+from margot.data import MargotDataFrame
 
 
 class BaseAlgo(object):
     """A base class to inherit when implementing your trading algorithm.
 
-    You should at least implement return_position() which is the output
+    You should at least implement signal() which is the output
     of a trading algorithm.
-
-    Declare "uses" - which is a list of symbols. These symbols represent
-    instruments that are used by / traded by the algo. By declaring them
-    in "uses" - build_df will collect price history for those symbols
-    and make it available to use in return_position().
 
     Args:
         env (dict): a dictionary of environment variables, e.g. API keys.
                     Overrides anything provided in sys env.
 
     Raises:
-        ValueError: [description]
-        NotImplementedError: [description]
+        ValueError: the attribute, 'data' must be a reference to a MargotDataFrame.
+        NotImplementedError: If your subclass does not implement signal(), you will
+            receive a NotImplementedError.
 
     """
 
-    uses = list()
-    mapper = dict()
-
     frequency = DAILY
+    data = None
 
-    def __init__(self, env: dict, calendar='XNYS'):
-        """Init the AlgoMoC class."""
+    def __init__(self, env: dict={}, calendar='XNYS'): # noqa: D107
         self.env = env
-        self.symbols = dict()
         self.calendar = calendar
+        if not isinstance(self.data, MargotDataFrame):
+            raise ValueError('Please set data to reference a MargotDataFrame')
 
-    def data_at_date(self, when: datetime) -> pd.DataFrame:
-        """Return only the data available on a given trading day.
-
-        That is, the EOD from the previous day.
-        :return: Pandas DataFrame()
-        """
-        return self.df.shift()[:when].copy()
-
-    def return_position(self, df: pd.DataFrame) -> list:
+    def signal(self) -> list:
         """Return a list of Position objects for a given datetime."""
-        raise NotImplementedError("You must implement return_position")
+        raise NotImplementedError("You must implement signal")
 
-    def execute(self, when: datetime = None):
+    def run(self, when: datetime = None):
         """Call to run this algo at a point in time (when).
 
         We store the results of fetch_data() so that we can backtest
@@ -64,9 +51,8 @@ class BaseAlgo(object):
 
         :return: a list of Position objects for a given datetime
         """
+        
         if not when:
             when = datetime.now(tz=pytz.UTC)
 
-        return self.return_position(
-            self.data_at_date(when)
-        )
+        return self.signal()

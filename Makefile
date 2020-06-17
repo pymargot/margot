@@ -18,7 +18,7 @@ clean:
 	@find . -type d -name .pytest_cache -delete
 
 apidoc:
-	sphinx-apidoc -feo docs margot
+	sphinx-apidoc -eo docs margot
 
 
 ##################

@@ -1,19 +1,9 @@
-margot.signals package
-======================
+margot.signals
+==============
 
-Submodules
-----------
-
-.. toctree::
-   :maxdepth: 4
-
-   margot.signals.algos
-   margot.signals.periods
-
-Module contents
----------------
+The margot.signals module contains classes to help you
+construct trading algorithms using the MargotDataFrame
 
 .. automodule:: margot.signals
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :members: Position, BaseAlgo
+

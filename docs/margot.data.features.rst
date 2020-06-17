@@ -1,5 +1,5 @@
-margot.data.features package
-============================
+margot.data.features
+====================
 
 Submodules
 ----------
@@ -14,5 +14,4 @@ Module contents
 
 .. automodule:: margot.data.features
    :members:
-   :undoc-members:
-   :show-inheritance:
+
