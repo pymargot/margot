@@ -13,6 +13,8 @@ class Position(object):
     def __init__(self, symbol: str, weight: float):  # noqa: D107
         self.symbol = symbol
         self.weight = weight
+        if self.weight > 1.0 or self.weight < -1.0:
+            raise ValueError('weight must be a value between -1.0 and +1.0')
 
     def __repr__(self):
         """Represent."""

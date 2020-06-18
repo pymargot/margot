@@ -91,12 +91,12 @@ class BackTest(object):
         return self.positions
 
     def create_position_timeseries(self):
-        """[summary]
+        """Create Position time-series from signals.
 
         Returns:
             [type]: [description]
         """
-        for day in self.algo.index:
+        for day in self.algo.data.index:
             pass
         return None
 

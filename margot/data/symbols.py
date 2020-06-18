@@ -10,16 +10,23 @@ from margot.data.ratio import Ratio
 
 
 class Symbol(object):
-    """A Symbol, that has columns and features.
+    """A Symbol, represents a securitised tradable asset.
+
+    A symbol can contain columns and features as members.
+
+        Usage example:
+
+        class Equity(Symbol):
+            close = av.Column(time_series='adjusted_close')
+
+        spy = Equity(symbol='SPY', trading_calendar='NYSE') 
 
     Args:
-        object ([type]): [description]
+        symbol (str): the code for this symbol
+        trading_calendar (str): ISO Code market identifier
+            uses https://github.com/quantopian/trading_calendars/blob/master/README.md
+        env (dict): Optional - pass in env values rather than use sysenv.
 
-    Raises:
-        NotImplementedError: [description]
-
-    Returns:
-        [type]: [description]
     """
 
     def __init__(self, symbol: str, trading_calendar: str, env: dict = {}):    # noqa: D107
@@ -51,6 +58,8 @@ class Symbol(object):
             base_col = getattr(self, base_series_name)
             getattr(self, feature).set_column(base_col)
 
+        # TODO ratios
+
         super().__init__()
 
     def to_dict(self):
@@ -64,3 +73,15 @@ class Symbol(object):
     def refresh(self):
         """Refresh all columns in this Symbol."""
         [getattr(self, member).refresh() for member in self.columns]
+
+    def simulate(self, when):
+        """Make the Symbol simulate a datetime in history.
+
+        Used for backtesting to simplify the writing of trading
+            algorithms.
+
+        Args:
+            when (tz_aware datetime or pd.Timestamp): when to go back to.
+        """
+        for col in self.columns:
+            getattr(self, col).simulate(when)

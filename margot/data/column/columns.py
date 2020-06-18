@@ -37,7 +37,6 @@ class BaseColumn(object):
 
         Called by the Symbol so that the symbol name can be passed.
         """
-
         self.symbol = symbol
         self.env = env
 
@@ -102,18 +101,22 @@ class BaseColumn(object):
         """Save it."""
         df.to_hdf(self.hdf5_file, key=symbol)
 
-    def get_series(self):
+    def get_series(self, when = None):
         """Get the data series as a pandas series.
+
+        Args:
+            when (datetime): 
 
         Returns:
             pd.Series: time series of the field
         """
         if self.series is None:
             self.series = self.load_or_fetch_series(self.symbol)
-            self.INITED = True
-            return self.series
-        else:
-            return self.series
+
+        self.series = self.series[:when]
+
+        self.INITED = True
+        return self.series
 
     @property
     def latest(self):

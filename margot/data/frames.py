@@ -101,3 +101,21 @@ class MargotDataFrame(object):
             pd.Index: a pandas timeseries index.
         """
         return self.to_pandas().index
+
+    def simulate(self, when):
+        """Create a dataframe simulating a datetime in history.
+
+        Used for backtesting to simplify the writing of trading
+            algorithms.
+
+        After simulating a historical datetime, it is not possible to
+            go back to the future.
+
+        Args:
+            when (tz_aware datetime or pd.Timestamp): when to go back to.
+        """
+        for symbol in self.symbols:
+            getattr(self, symbol).simulate(when)
+
+        for feature in self.features + self.ratios:
+            getattr(self, symbol).recalc()
