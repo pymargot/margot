@@ -2,7 +2,7 @@
 ![](https://img.shields.io/pypi/pyversions/margot)
 ![](https://img.shields.io/pypi/wheel/margot)
 [![](https://img.shields.io/github/license/pymargot/margot)](https://github.com/pymargot/margot/blob/master/LICENSE)
-[![](https://img.shields.io/travis/com/pymargot/margot)](https://travis-ci.com/github/pymargot/margot)
+[![](https://img.shields.io/travis/org/pymargot/margot)](https://travis-ci.org/github/pymargot/margot)
 [![](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
 [![](https://codecov.io/gh/pymargot/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/pymargot/margot)
 
