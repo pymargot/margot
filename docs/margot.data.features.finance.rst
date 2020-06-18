@@ -1,5 +1,5 @@
-margot.data.features.finance module
-===================================
+margot.data.features.finance
+============================
 
 .. automodule:: margot.data.features.finance
    :members:
