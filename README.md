@@ -7,17 +7,17 @@
 [![](https://codecov.io/gh/pymargot/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/pymargot/margot)
 
 # What is margot?
-Margot is a library of components that may be used together or separately. The first
-major component; _margot.data_ is now available for public preview. It should be
-considered an early-beta. It works, but may still have sharp edges.
+Margot is a library of components that may be used together or separately. The
+first major component; *margot.data* is now available for public preview. 
+It should be considered an early-beta. It works, but may still have sharp edges.
 
 # What is margot data?
 Margot data makes it super easy to create neat and tidy Pandas dataframes for 
 time-series analysis.
 
-Margot data aims to manage data collection, caching, cleaning, feature generation,
-management and persistence using a clean, declarative API. If you've ever used
-Django you'll find this approach similar to the Django ORM.
+Margot data aims to manage data collection, caching, cleaning, feature
+generation, management and persistence using a clean, declarative API. If you've
+ever used Django you'll find this approach similar to the Django ORM.
 
 ## Columns
 The heart of any time-series dataframe is the original data. Margot can retrieve
@@ -32,22 +32,22 @@ e.g. Let's get closing_price and volume from AlphaVantage:
     daily_volume = av.Column(time_series='volume')
 
 ## Features
-Columns are useful, but we usually want to derive new time-series from them, such 
-as "log_returns" or "SMA20". Margot does this for you; we've called these derived
-time-series, *Features*.
+Columns are useful, but we usually want to derive new time-series from them,
+such as "log_returns" or "SMA20". Margot does this for you; we've called these
+derived time-series, *Features*.
 
     simple_returns = finance.SimpleReturns(column='adjusted_close')
     log_returns = finance.LogReturns(column='adjusted_close')
     sma20 = finance.SimpleMovingAverage(column='adjusted_close', window=20)
 
-Features can be piled on top of one another. For example, to create a time-series
-of realised volatility based on log_returns with a lookback of 30 trading days,
-simply add the following feature:
+Features can be piled on top of one another. For example, to create a
+time-series of realised volatility based on log_returns with a lookback of 30
+trading days, simply add the following feature:
 
     realised_vol = finance.RealisedVolatility(column='log_returns', window=30)
 
-Margot includes many common financial Features, and we'll be adding more soon. It's 
-also very easy to add your own.
+Margot includes many common financial Features, and we'll be adding more soon.
+It's also very easy to add your own.
 
 
 ## Symbols
@@ -101,7 +101,8 @@ Results from margot's trading algorithms can be analysed with pyfolio.
 
     pip install margot
 
-Next you need to make sure you have a couple of important environment variables set:
+Next you need to make sure you have a couple of important environment variables
+set::
 
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
@@ -109,17 +110,22 @@ Next you need to make sure you have a couple of important environment variables 
 Once you've done that, try running the code in the [notebook](notebook.margot.data).
 
 # Status
-This is still an early stage software project, and should not be used for live trading.
+This is still an early stage software project, and should not be used for live
+trading just yet.
 
 # Documentation
 
-in progress - for examples see the [notebook](notebook.margot.data).
+For examples see the [notebook](notebook.margot.data).
+
+The main documentation is at [readthedocs](https://margot.readthedocs.io/en/latest/).
 
 # Contributing
 
 Feel free to make a pull request or chat about your idea first using [issues](https://github.com/atkinson/margot/issues).
 
-Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
+Dependencies are kept to a minimum. Generally if there's a way to do something
+in the standard library (or numpy / Pandas), let's do it that way rather than
+add another library. 
 
 # License
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
