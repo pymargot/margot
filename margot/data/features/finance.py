@@ -7,6 +7,9 @@ from margot.data.features import BaseFeature
 class SimpleReturns(BaseFeature):
     """Simple returns are the percent change from yesterdays close to today's close.
 
+    Internal implementation::
+        return series.pct_change().fillna(0)
+
     Args:
         column (str): The name of a price time series.
     """
@@ -20,19 +23,25 @@ class SimpleReturns(BaseFeature):
 class LogReturns(BaseFeature):
     """Log returns can be summed over time.
 
+    Internal implementation::
+        return np.log(1 + series.pct_change().fillna(0))
+
     Args:
         column (str): The name of the price time series.
     """
 
     label = 'log_returns'
 
-    def feature(self, series):
+    def feature(self, series): # noqa: D107
         return np.log(1 + series.pct_change().fillna(0))
 
 
 class RealisedVolatility(BaseFeature):
     """Realised volatility measures the variability of returns over a lookback window.
 
+    Internal implementation::
+        return series.rolling(window).std() * np.sqrt(252)
+    
     Args:
         column (str): The name of a returns time series.
         window (int): Lookback window in trading days.
@@ -44,7 +53,7 @@ class RealisedVolatility(BaseFeature):
     label = 'realised_vol'
     window = None
 
-    def feature(self, series):
+    def feature(self, series): # noqa: D107
         if not self.window:
             raise AttributeError(
                 'you must supply a lookback window for RealisedVolatility')
@@ -55,6 +64,9 @@ class RealisedVolatility(BaseFeature):
 class SimpleMovingAverage(BaseFeature):
     """Simple moving average of lookback window.
 
+    Internal implementation::
+        series.rolling(window).mean()
+
     Args:
         column (str): The name of a returns time series.
         window (int): Lookback window in trading days.
@@ -62,10 +74,10 @@ class SimpleMovingAverage(BaseFeature):
 
     window = None
 
-    def get_label(self):
+    def get_label(self): # noqa: D107
         return 'sma{}'.format(self.window)
 
-    def feature(self, series):
+    def feature(self, series): # noqa: D107
         if not self.window:
             raise AttributeError(
                 'you must supply a lookback window for SimpleMovingAverage')
@@ -74,6 +86,11 @@ class SimpleMovingAverage(BaseFeature):
 
 class UpperBollingerBand(BaseFeature):
     """Upper bollinger band with window and standard deviation.
+
+    Internal implementation::
+        return series.rolling(window).mean() + \
+                series.rolling(self.window).mean().std() * \
+                    self.width
 
     Args:
         column (str): The name of a returns time series.
@@ -85,13 +102,18 @@ class UpperBollingerBand(BaseFeature):
     width = 2.0
     label = 'upper_boll_band'
 
-    def feature(self, series):
+    def feature(self, series): # noqa: D107
         return series.rolling(self.window).mean(
         ) + series.rolling(self.window).mean().std() * self.width
 
 
 class LowerBollingerBand(BaseFeature):
     """Lower bollinger band of window and standard deviation.
+
+    Internal implementation::
+        return series.rolling(window).mean() - \
+                series.rolling(self.window).mean().std() * \
+                    self.width
 
     Args:
         column (str): The name of a returns time series.

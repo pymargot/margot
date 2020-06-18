@@ -8,8 +8,10 @@ from margot.data.column import BaseColumn
 class Column(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 
-    Example:
-        volume = av.Column(function='historical_daily_adjusted', time_series='volume')
+    Example::
+        from margot.data.column import alphavantage as av
+
+        volume = av.Column(time_series='adjusted_close')
 
     Args:
         time_series (str): the name of the time-series that will be returned

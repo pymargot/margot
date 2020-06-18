@@ -105,7 +105,9 @@ class BaseColumn(object):
         """Get the data series as a pandas series.
 
         Args:
-            when (datetime): 
+            when (datetime): (optional) used when
+                simulating historical data, typically
+                using margot.backtest.
 
         Returns:
             pd.Series: time series of the field

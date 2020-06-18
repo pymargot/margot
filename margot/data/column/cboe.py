@@ -10,8 +10,13 @@ class Column(BaseColumn):
 
     Currently supports the symbols, 'VIX' and 'VIX3M'.
 
-    Example:
-         = cboe.Column(time_series='close')
+    Collects the time-series: open, high, low, close.
+
+    Example::
+        from margot.data.column import cboe
+
+        open = cboe.Column(time_series='open)
+        close = cboe.Column(time_series='close')
 
     Args:
         column (str): the name of the column that will be returned

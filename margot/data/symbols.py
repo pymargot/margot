@@ -33,7 +33,7 @@ class Symbol(object):
 
     """
 
-    def __init__(self, symbol: str, trading_calendar: str, env: dict = {}):    # noqa: D107
+    def __init__(self, symbol: str, trading_calendar: str, env: dict = {}):  # noqa: D107
         self.symbol = symbol
         self.env = env
         self.trading_calendar = get_calendar(trading_calendar)
