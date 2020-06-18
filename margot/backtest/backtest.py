@@ -11,7 +11,7 @@ import pytz
 class BackTest(object):
     """Backtest an trading algo that's a descendent of BaseAlgo.
 
-    _BackTest is still a work in progress - it probably doesn't even work yet_
+    .. warning:: **BackTest is still a work in progress - it probably doesn't even work yet!**
 
     Attributes:
         algo: A boolean indicating if we like SPAM or not.
