@@ -1,4 +1,5 @@
 import os
+import logging
 
 import pandas as pd
 
@@ -13,6 +14,7 @@ class Column(BaseColumn):
     Collects the time-series: open, high, low, close.
 
     Example::
+
         from margot.data.column import cboe
 
         open = cboe.Column(time_series='open)
@@ -53,7 +55,7 @@ class Column(BaseColumn):
 
     def fetch(self, symbol: str):
         """Fetch from remote - this could be the only service specific thing."""
-        print('fetching ({})'.format(symbol))
+        logging.info('fetching ({})'.format(symbol))
 
         try:
             df = pd.read_csv(self.INDEX[symbol].get('url'),

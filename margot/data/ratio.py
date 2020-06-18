@@ -4,7 +4,13 @@ import pandas as pd
 class Ratio(object):
     """Ratio of two series.
 
-    Ratio = numerator / denomnator of two series.
+    Ratio = numerator / denominator of two time-series.
+
+    Example::
+
+        my_ratio = Ratio(numerator=symbol_1.adj_close, 
+                         denominator=symbol_2.adj_close,
+                         label='s1_s2_ratio')
 
     Args:
         numerator (str): the series to numerate the ratio

@@ -10,8 +10,32 @@ class BaseColumn(object):
 
     This could be adjusted_close, open, volume - etc.
 
-    Example:
-        volume = column.AlphaVantage(function='historical_daily_adjusted', field='adjusted_close')
+    To implement a new type of column, you must implement the
+    'fetch' method.
+
+    Example::
+
+        class MyDataProvider(BaseColumn):
+
+            def fetch(self, symbol):
+                df = get_my_dataframe(symbol)
+                return self.clean(df)
+
+    Optionally, you may need to add additional cleaning to the data, you can
+        do this by extending the clean() method.
+
+    Example::
+
+        class MyDataProvider(BaseColumn):
+
+            def clean(self, df):
+                df = df.rename(mapper={
+                    'Open': 'open',
+                    'High': 'high',
+                    'Low': 'low',
+                    'Close': 'close',
+                }, axis='columns')
+                return super().clean(df)
 
     Args:
         function (str): the name of the function passed to the Alphavantage API

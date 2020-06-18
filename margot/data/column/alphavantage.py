@@ -9,6 +9,7 @@ class Column(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 
     Example::
+    
         from margot.data.column import alphavantage as av
 
         volume = av.Column(time_series='adjusted_close')
