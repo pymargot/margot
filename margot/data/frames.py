@@ -12,14 +12,27 @@ from margot.data.ratio import Ratio
 class MargotDataFrame(object):
     """An MargotDataFrame brings together symbols, columns, features and ratios.
 
+    Example:: 
+
+        class Equity(Symbol):
+            adj_close = av.Column(function='historical_daily_adjusted', 
+                                time_series='adjusted_close')
+            log_returns = finance.LogReturns(column='adj_close')
+            realised_vol = finance.RealisedVolatility(column='log_returns', 
+                                                    window=30)
+                                                    
+        class ExampleDF(MargotDataFrame):
+            spy = Equity(symbol='SPY', trading_calendar='NYSE')
+            vtwo = Equity(symbol='VTWO', trading_calendar='NYSE')
+            spy_russ_ratio = Ratio(numerator=spy.adj_close, 
+                                denominator=vtwo.adj_close, 
+                                label='spy_russ')
+
+        mydf = ExampleDF()
+
     Args:
         env (dict): optional env dictionary as an alternative to sysenv variables.
 
-    Raises:
-        NotImplementedError: [description]
-
-    Returns:
-        [type]: [description]
     """
 
     def __init__(self, env: dict = {}):   # noqa: D107

@@ -14,10 +14,14 @@ class Symbol(object):
 
     A symbol can contain columns and features as members.
 
-        Usage example:
+    Usage example::
 
         class Equity(Symbol):
-            close = av.Column(time_series='adjusted_close')
+            adj_close = av.Column(function='historical_daily_adjusted', 
+                                time_series='adjusted_close')
+            log_returns = finance.LogReturns(column='adj_close')
+            realised_vol = finance.RealisedVolatility(column='log_returns', 
+                                                    window=30)
 
         spy = Equity(symbol='SPY', trading_calendar='NYSE') 
 
