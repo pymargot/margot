@@ -15,7 +15,7 @@ setup(
     long_description_content_type='text/markdown',
     author = 'Rich Atkinson',
     author_email = 'rich@airteam.com.au',
-    url = 'https://github.com/atkinson/margot',
+    url = 'https://github.com/pymargot/margot',
     download_url = '',
     keywords = ['quant', 'trading', 'systematic'],
     install_requires=[
