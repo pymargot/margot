@@ -93,8 +93,8 @@ class UpperBollingerBand(BaseFeature):
 
     Internal implementation::
 
-        return series.rolling(window).mean() + \
-                series.rolling(self.window).mean().std() * \
+        return series.rolling(window).mean() +
+                series.rolling(self.window).mean().std() *
                     self.width
 
     Args:
@@ -117,8 +117,8 @@ class LowerBollingerBand(BaseFeature):
 
     Internal implementation::
 
-        return series.rolling(window).mean() - \
-                series.rolling(self.window).mean().std() * \
+        return series.rolling(window).mean() -
+                series.rolling(self.window).mean().std() *
                     self.width
 
     Args:
