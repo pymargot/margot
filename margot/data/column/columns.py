@@ -6,11 +6,19 @@ import pandas as pd
 
 
 class BaseColumn(object):
-    """A Column represents a single time series of a symbol.
+    """BaseColumn is the super class for implementing Columns.
 
-    This could be adjusted_close, open, volume - etc.
+    Generally, you will only need to extend BaseColumn if you
+    are implementing a new data provider.
+    
+    A Column represents a single time series of a symbol.
 
-    To implement a new type of column, you must implement the
+    Examples of commonly used time-series are adjusted_close, 
+    open, highh, low close, volume. However columns can also
+    be used to represent fundamental time-series, or time-
+    series from alternative sources.
+
+    To implement a new type of Column, you must implement the
     'fetch' method.
 
     Example::
@@ -21,8 +29,9 @@ class BaseColumn(object):
                 df = get_my_dataframe(symbol)
                 return self.clean(df)
 
-    Optionally, you may need to add additional cleaning to the data, you can
-        do this by extending the clean() method.
+    Optionally, you may also need to perform additional cleaning
+    of the data, you can do this by extending the clean() method.
+    Don't forget to call super().clean(df).
 
     Example::
 
@@ -35,11 +44,14 @@ class BaseColumn(object):
                     'Low': 'low',
                     'Close': 'close',
                 }, axis='columns')
+
                 return super().clean(df)
 
+    When using an implementation of a subclass of BaseColumn, users are
+    expected to at least specify the time_series that they want to access.
+    
     Args:
-        function (str): the name of the function passed to the Alphavantage API
-        time_series (str): the name of the time_series that will be returned
+        time_series (str): the name of the time_series that will be returned.
     """
 
     INITED = False

@@ -28,13 +28,21 @@ class Ratio(object):
         if not self.numerator and self.denominator:
             raise AttributeError(
                 "You must supply both a numerator and denominator")
-        self.series = self.numerator.get_series().divide(self.denominator.get_series())
+
+        self.series = self.make_series()
+
+    def make_series(self):
+        return self.numerator.get_series().divide(self.denominator.get_series())
 
     def get_series(self):
         return self.series.rename(self.label)
 
     def to_pandas(self):
         return self.get_series().to_frame()
+
+    def recalc(self):
+        self.series = self.make_series()
+        return self.series
 
     @property
     def latest(self):

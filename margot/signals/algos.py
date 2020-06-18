@@ -44,31 +44,24 @@ class BaseAlgo(object):
         """Return a list of Position objects for a given datetime."""
         raise NotImplementedError("You must implement signal")
 
-    def simulate(self, when: datetime):
+    def simulate_signal(self, when: datetime):
         """Simulate a signal from a point in time.
 
+        Stores the original MargotDataFrame referenced by self. data
+        on a temporary reference so that the data attribute can be
+        used by signal() to calculate positions at a point in history.
+
+        After running signal(), the full dataframe is re-referenced
+        at self.data. 
+
         Args:
-            when (datetime): when to go back to
+            when (datetime): when in history to go back to
 
         Returns:
-            pd.DataFrame: time-series of Positions.
+            list: a list of Position objects.
         """
         self.original_data = deepcopy(self.data)
         self.data.simulate(when)
         positions = self.signal()
         self.data = self.original_data
         return positions
-
-    def run(self, when: datetime = None):
-        """Call to run this algo at a point in time (when).
-
-        We store the results of fetch_data() so that we can backtest
-        without hitting the data provider more than once.
-
-        :return: a list of Position objects for a given datetime
-        """
-
-        if not when:
-            when = datetime.now(tz=pytz.UTC)
-
-        return self.signal()

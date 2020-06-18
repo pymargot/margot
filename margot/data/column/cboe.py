@@ -17,7 +17,7 @@ class Column(BaseColumn):
 
         from margot.data.column import cboe
 
-        open = cboe.Column(time_series='open)
+        open = cboe.Column(time_series='open')
         close = cboe.Column(time_series='close')
 
     Args:

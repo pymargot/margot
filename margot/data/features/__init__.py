@@ -45,7 +45,12 @@ class BaseFeature(object):
     def feature(self, series: pd.Series):
         raise NotImplementedError("please implement the feature")
 
+    def recalc(self):
+        """Recalculate the feature, typically in a simulation."""
+        self.series = None
+        return self.get_series()
+
     @property
     def latest(self):
-        """Return the latest value in this series"""
+        """Return the latest value in this series."""
         return self.get_series().tail(1)[0]

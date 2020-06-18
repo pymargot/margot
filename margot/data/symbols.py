@@ -82,10 +82,10 @@ class Symbol(object):
         """Make the Symbol simulate a datetime in history.
 
         Used for backtesting to simplify the writing of trading
-            algorithms.
+        algorithms.
 
         Args:
             when (tz_aware datetime or pd.Timestamp): when to go back to.
         """
         for col in self.columns:
-            getattr(self, col).simulate(when)
+            getattr(self, col).get_series(when)

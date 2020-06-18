@@ -11,8 +11,7 @@ import pytz
 class BackTest(object):
     """Backtest an trading algo that's a descendent of BaseAlgo.
 
-    Longer class information....
-    Longer class information....
+    _BackTest is still a work in progress - it probably doesn't even work yet_
 
     Attributes:
         algo: A boolean indicating if we like SPAM or not.
@@ -93,12 +92,21 @@ class BackTest(object):
     def create_position_timeseries(self):
         """Create Position time-series from signals.
 
+        Runs through all of the backtest data by default.
+
         Returns:
-            [type]: [description]
+            pd.DataFrame: time-series of Positions
         """
-        for day in self.algo.data.index:
-            pass
-        return None
+        pos = pd.DataFrame()
+        for ts in self.algo.data.index: ### <- index will be a subset
+            mapper = {}
+            pos_list = self.algo.simulate_signal(ts)
+            for p in pos_list:
+                mapper.update(p.as_map())
+            pos = pos.append(
+                pd.DataFrame(mapper, index=[ts])
+            )
+        return pos
 
     def run(self):
         """Run the backtest.
@@ -113,4 +121,4 @@ class BackTest(object):
         # caclulate lookback rolling volatility
         # simulate resizing at trading time, according to a target volatility
         # simulate volatility sized returns.
-        return ('returns', 'trades')
+        return self.positions

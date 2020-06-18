@@ -119,10 +119,8 @@ class MargotDataFrame(object):
         """Create a dataframe simulating a datetime in history.
 
         Used for backtesting to simplify the writing of trading
-            algorithms.
-
-        After simulating a historical datetime, it is not possible to
-            go back to the future.
+        algorithms. After simulating a historical datetime, it is 
+        not possible to go back to the future.
 
         Args:
             when (tz_aware datetime or pd.Timestamp): when to go back to.
@@ -131,4 +129,4 @@ class MargotDataFrame(object):
             getattr(self, symbol).simulate(when)
 
         for feature in self.features + self.ratios:
-            getattr(self, symbol).recalc()
+            getattr(self, feature).recalc()
