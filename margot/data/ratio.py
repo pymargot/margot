@@ -21,7 +21,7 @@ class Ratio(object):
     def __init__(self, numerator, denominator, label, **kwargs):    # noqa: D107
         self.numerator = numerator
         self.denominator = denominator
-        self.series = None
+        self._series = None
         self.label = label
         self.__dict__.update(kwargs)
 
@@ -32,19 +32,23 @@ class Ratio(object):
         self.series = self.make_series()
 
     def make_series(self):
-        return self.numerator.get_series().divide(self.denominator.get_series())
+        return self.numerator.series.divide(self.denominator.series)
 
-    def get_series(self):
-        return self.series.rename(self.label)
+    @property
+    def series(self):
+        return self._series.rename(self.label)
+
+    @series.setter
+    def series(self, series):
+        self._series = series
 
     def to_pandas(self):
-        return self.get_series().to_frame()
+        return self.series.to_frame()
 
-    def recalc(self):
-        self.series = self.make_series()
-        return self.series
+    def simulate(self, when=None):
+        self.series = self.make_series()[:when]
 
     @property
     def latest(self):
         """Return the latest value in this series"""
-        return self.get_series().tail(1)[0]
+        return self.series.tail(1)[0]

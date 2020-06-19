@@ -68,7 +68,7 @@ class Symbol(object):
 
     def to_dict(self):
         elements = self.columns + self.features + self.ratios
-        return {(self.symbol, elt): getattr(self, elt).get_series()
+        return {(self.symbol, elt): getattr(self, elt).series
                 for elt in elements}
 
     def to_pandas(self):
@@ -78,7 +78,7 @@ class Symbol(object):
         """Refresh all columns in this Symbol."""
         [getattr(self, member).refresh() for member in self.columns]
 
-    def simulate(self, when):
+    def simulate(self, when=None):
         """Make the Symbol simulate a datetime in history.
 
         Used for backtesting to simplify the writing of trading
@@ -88,4 +88,10 @@ class Symbol(object):
             when (tz_aware datetime or pd.Timestamp): when to go back to.
         """
         for col in self.columns:
-            getattr(self, col).get_series(when)
+            getattr(self, col).simulate(when)
+
+        for feature in self.features:
+            getattr(self, feature).simulate(when)
+
+        for ratio in self.ratios:
+            getattr(self, ratio).simulate(when)

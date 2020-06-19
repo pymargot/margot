@@ -58,7 +58,8 @@ class BaseColumn(object):
 
     def __init__(self, time_series: str, *args, **kwargs):  # noqa: D107
         self.time_series = time_series
-        self.series = None
+        self._full_series = None
+        self._series = None
 
     def get_label(self):
         """Return the label for this column."""
@@ -137,7 +138,8 @@ class BaseColumn(object):
         """Save it."""
         df.to_hdf(self.hdf5_file, key=symbol)
 
-    def get_series(self, when = None):
+    @property
+    def series(self):
         """Get the data series as a pandas series.
 
         Args:
@@ -148,15 +150,17 @@ class BaseColumn(object):
         Returns:
             pd.Series: time series of the field
         """
-        if self.series is None:
-            self.series = self.load_or_fetch_series(self.symbol)
-
-        self.series = self.series[:when]
+        if self._full_series is None:
+            self._full_series = self.load_or_fetch_series(self.symbol)
+            self._series = self._full_series.copy()
 
         self.INITED = True
-        return self.series
+        return self._series
+
+    def simulate(self, when):
+        self._series = self._full_series[:when]
 
     @property
     def latest(self):
         """Return the latest value in this series."""
-        return self.get_series().tail(1)[0]
+        return self.series.tail(1)[0]

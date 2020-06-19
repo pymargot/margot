@@ -52,7 +52,7 @@ class MargotDataFrame(object):
             ref in getmembers(self, lambda m: isinstance(m, Ratio))]
         super().__init__()
 
-    def to_pandas(self, when: datetime = None) -> pd.DataFrame:
+    def to_pandas(self, when: datetime = None, dropna = True) -> pd.DataFrame:
         """Return a pandas Dataframe representing this MargotDataFrame.
 
         Args:
@@ -74,13 +74,16 @@ class MargotDataFrame(object):
         else:
             df1 = pd.DataFrame()
 
-        df2 = pd.DataFrame({('margot', name): getattr(self, name).get_series()
+        df2 = pd.DataFrame({('margot', name): getattr(self, name).series
                             for name in self.ratios + self.features})
 
         df = pd.concat([df1, df2], axis=1)
 
         if when:
             df = df.to_pandas().shift()[:when]
+
+        if dropna:
+            df = df.dropna()
 
         return df
 
@@ -117,6 +120,14 @@ class MargotDataFrame(object):
         """
         return self.to_pandas().index
 
+    @property
+    def when(self):
+        return self._when
+
+    @when.setter
+    def set_when(self, when): # noqa: D102
+        self._when = when
+
     def simulate(self, when):
         """Create a dataframe simulating a datetime in history.
 
@@ -127,8 +138,25 @@ class MargotDataFrame(object):
         Args:
             when (tz_aware datetime or pd.Timestamp): when to go back to.
         """
+        self._when = when
+
         for symbol in self.symbols:
             getattr(self, symbol).simulate(when)
 
-        for feature in self.features + self.ratios:
-            getattr(self, feature).recalc()
+        for feature in self.features:
+            getattr(self, feature).simulate(when)
+
+        for ratio in self.ratios:
+            getattr(self, ratio).simulate(when)
+
+    def end_simulation(self):
+        self._when = None
+
+        for symbol in self.symbols:
+            getattr(self, symbol).simulate()
+
+        for feature in self.features:
+            getattr(self, feature).simulate()
+
+        for ratio in self.ratios:
+            getattr(self, ratio).simulate()

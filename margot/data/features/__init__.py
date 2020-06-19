@@ -19,7 +19,7 @@ class BaseFeature(object):
         self.__dict__.update(kwargs)
         self.kwargs = kwargs
         self.args = args
-        self.series = None
+        self._series = None
         self.base_column = None
 
     def clone(self):
@@ -32,25 +32,37 @@ class BaseFeature(object):
     def get_column_name(self) -> str:
         return self.column
 
-    def get_series(self):
-        if self.series is None:
+    @property
+    def series(self):
+        if self._series is None:
             # TODO - consider set_column - used after cloning.
-            series = self.feature(self.base_column.get_series())
-            self.series = series.rename(self.get_label())
-        return self.series
+            series = self.feature(self.base_column.series)
+            self._series = series.rename(self.get_label())
+        return self._series
+
+    @series.setter
+    def set_series(self, series):
+        self._series = series
 
     def get_label(self):
+        """Return the label for this feature.
+
+        Override this to customise.
+
+        Returns:
+            str: the label to be used in the pandas column.
+        """
         return self.label
 
-    def feature(self, series: pd.Series):
+    def feature(self, series: pd.Series): # noqa: D102
         raise NotImplementedError("please implement the feature")
 
-    def recalc(self):
+    def simulate(self, when):
         """Recalculate the feature, typically in a simulation."""
-        self.series = None
-        return self.get_series()
+        self._series = None
+        self._series = self.series[:when]
 
     @property
     def latest(self):
         """Return the latest value in this series."""
-        return self.get_series().tail(1)[0]
+        return self.series.tail(1)[0]

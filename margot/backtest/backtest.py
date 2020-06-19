@@ -22,10 +22,9 @@ class BackTest(object):
     algo = None
     symbols = set()
 
-    def __init__(self, algo_class, start_balance=100000):   # noqa: D107
+    def __init__(self, algo, start_balance=100000):   # noqa: D107
         self.start_balance = start_balance
-        self.algo_class = algo_class
-        self.algo = algo_class()
+        self.algo = algo
         self.positions = None
         self.trades = None
         self.returns = pd.DataFrame(
@@ -59,53 +58,26 @@ class BackTest(object):
         self.positions.at[day, 'log_returns'] = np.log(1 + simple_returns)
 
         return self.positions.dropna()
-
-    def walk_forward(self, start: date, end: date):
-        """Backtest the algo, walk forward for every trading day in the date range.
-
-        Calculates the returns from taking the previous days positions.
-
-        Args:
-            start (date): The first day of the backtest.
-            end (date): The last day of the backtest.
-
-        Return:
-            a DataFrame of daily simple returns, and log returns.
-
-        Note: A walk forward backtest is much slower than backtesting a dataframe with shift(),
-        but we can use it on the same algo that is deployed live. It's also a good way to standardise
-        backtesting so that we can keep margot simple, and reuse performance calcs etc.
-        """
-        trading_days = get_calendar(
-            self.algo.calendar).schedule[start:end].index
-
-        for day in trading_days:
-            # TODO simplify this.
-            row = [p.as_dict() for p in self.algo.execute(day)]
-            mapper = {k: v for d in row for k, v in d.items()}
-            self.symbols = self.symbols.union(mapper.keys())
-            self.positions = self.positions.append(
-                pd.DataFrame(mapper, index=[day]))
-            self.calc_daily_returns(day)
-        return self.positions
+  
 
     def create_position_timeseries(self):
         """Create Position time-series from signals.
 
         Runs through all of the backtest data by default.
 
+        Calculates the returns from taking the previous row's positions.
+
         Returns:
             pd.DataFrame: time-series of Positions
         """
         pos = pd.DataFrame()
-        for ts in self.algo.data.index: ### <- index will be a subset
+        for ts in self.algo.data.index: ### TODO allow index subset
             mapper = {}
             pos_list = self.algo.simulate_signal(ts)
             for p in pos_list:
                 mapper.update(p.as_map())
-            pos = pos.append(
-                pd.DataFrame(mapper, index=[ts])
-            )
+
+            pos = pos.append(pd.DataFrame(mapper, index=[ts]))
         return pos
 
     def run(self):
