@@ -17,13 +17,13 @@ class Symbol(object):
     Usage example::
 
         class Equity(Symbol):
-            adj_close = av.Column(function='historical_daily_adjusted', 
+            adj_close = av.Column(function='historical_daily_adjusted',
                                 time_series='adjusted_close')
             log_returns = finance.LogReturns(column='adj_close')
-            realised_vol = finance.RealisedVolatility(column='log_returns', 
+            realised_vol = finance.RealisedVolatility(column='log_returns',
                                                     window=30)
 
-        spy = Equity(symbol='SPY', trading_calendar='NYSE') 
+        spy = Equity(symbol='SPY', trading_calendar='NYSE')
 
     Args:
         symbol (str): the code for this symbol

@@ -1,15 +1,16 @@
 import os
-
+import logging
 from alpha_vantage.timeseries import TimeSeries
 
 from margot.data.column import BaseColumn
 
+logger = logging.getLogger(__name__)
 
 class Column(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 
     Example::
-    
+
         from margot.data.column import alphavantage as av
 
         volume = av.Column(time_series='adjusted_close')
@@ -35,11 +36,11 @@ class Column(BaseColumn):
 
     def fetch(self, symbol: str):
         """Fetch from remote - this could be the only service specific thing."""
-        print('fetching ({})'.format(symbol))
+        logger.info('fetching ({}) from alphavantage'.format(symbol))
         ts = TimeSeries(
             key=self.env.get(
                 'ALPHAVANTAGE_API_KEY',
                 os.environ.get('ALPHAVANTAGE_API_KEY')),
             output_format='pandas')
-        df, metadata = ts.get_daily_adjusted(symbol, outputsize='compact')
+        df, metadata = ts.get_daily_adjusted(symbol, outputsize='full')
         return self.clean(df)

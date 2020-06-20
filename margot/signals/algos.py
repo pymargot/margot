@@ -52,7 +52,7 @@ class BaseAlgo(object):
         used by signal() to calculate positions at a point in history.
 
         After running signal(), the full dataframe is re-referenced
-        at self.data. 
+        at self.data.
 
         Args:
             when (datetime): when in history to go back to

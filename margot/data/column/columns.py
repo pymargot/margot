@@ -10,10 +10,10 @@ class BaseColumn(object):
 
     Generally, you will only need to extend BaseColumn if you
     are implementing a new data provider.
-    
+
     A Column represents a single time series of a symbol.
 
-    Examples of commonly used time-series are adjusted_close, 
+    Examples of commonly used time-series are adjusted_close,
     open, highh, low close, volume. However columns can also
     be used to represent fundamental time-series, or time-
     series from alternative sources.
@@ -49,7 +49,7 @@ class BaseColumn(object):
 
     When using an implementation of a subclass of BaseColumn, users are
     expected to at least specify the time_series that they want to access.
-    
+
     Args:
         time_series (str): the name of the time_series that will be returned.
     """
@@ -124,7 +124,7 @@ class BaseColumn(object):
         self.save(df, self.symbol)
         return df
 
-    def fetch(self, symbol: str): # noqa: D102
+    def fetch(self, symbol: str):  # noqa: D102
         raise NotImplementedError(
             'This is implementation specific to the data provider.')
 

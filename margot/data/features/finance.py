@@ -17,7 +17,7 @@ class SimpleReturns(BaseFeature):
 
     label = 'simple_returns'
 
-    def feature(self, series): # noqa: D102
+    def feature(self, series):  # noqa: D102
         return series.pct_change().fillna(0)
 
 
@@ -34,7 +34,7 @@ class LogReturns(BaseFeature):
 
     label = 'log_returns'
 
-    def feature(self, series): # noqa: D102
+    def feature(self, series):  # noqa: D102
         return np.log(1 + series.pct_change().fillna(0))
 
 
@@ -44,7 +44,7 @@ class RealisedVolatility(BaseFeature):
     Internal implementation::
 
         return series.rolling(window).std() * np.sqrt(252)
-    
+
     Args:
         column (str): The name of a returns time series.
         window (int): Lookback window in trading days.
@@ -56,7 +56,7 @@ class RealisedVolatility(BaseFeature):
     label = 'realised_vol'
     window = None
 
-    def feature(self, series): # noqa: D102
+    def feature(self, series):  # noqa: D102
         if not self.window:
             raise AttributeError(
                 'you must supply a lookback window for RealisedVolatility')
@@ -78,10 +78,10 @@ class SimpleMovingAverage(BaseFeature):
 
     window = None
 
-    def get_label(self): # noqa: D102
+    def get_label(self):  # noqa: D102
         return 'sma{}'.format(self.window)
 
-    def feature(self, series): # noqa: D102
+    def feature(self, series):  # noqa: D102
         if not self.window:
             raise AttributeError(
                 'you must supply a lookback window for SimpleMovingAverage')
@@ -107,7 +107,7 @@ class UpperBollingerBand(BaseFeature):
     width = 2.0
     label = 'upper_boll_band'
 
-    def feature(self, series): # noqa: D102
+    def feature(self, series):  # noqa: D102
         return series.rolling(self.window).mean(
         ) + series.rolling(self.window).mean().std() * self.width
 
@@ -131,6 +131,6 @@ class LowerBollingerBand(BaseFeature):
     width = 2.0
     label = 'lower_boll_band'
 
-    def feature(self, series): # noqa: D102
+    def feature(self, series):  # noqa: D102
         return series.rolling(self.window).mean(
         ) - series.rolling(self.window).mean().std() * self.width

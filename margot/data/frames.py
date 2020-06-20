@@ -12,20 +12,20 @@ from margot.data.ratio import Ratio
 class MargotDataFrame(object):
     """A MargotDataFrame brings together symbols, columns, features and ratios.
 
-    Example:: 
+    Example::
 
         class Equity(Symbol):
-            adj_close = av.Column(function='historical_daily_adjusted', 
+            adj_close = av.Column(function='historical_daily_adjusted',
                                   time_series='adjusted_close')
             log_returns = finance.LogReturns(column='adj_close')
-            realised_vol = finance.RealisedVolatility(column='log_returns', 
+            realised_vol = finance.RealisedVolatility(column='log_returns',
                                                       window=30)
-                                                    
+
         class ExampleDF(MargotDataFrame):
             spy = Equity(symbol='SPY', trading_calendar='NYSE')
             vtwo = Equity(symbol='VTWO', trading_calendar='NYSE')
-            spy_russ_ratio = Ratio(numerator=spy.adj_close, 
-                                   denominator=vtwo.adj_close, 
+            spy_russ_ratio = Ratio(numerator=spy.adj_close,
+                                   denominator=vtwo.adj_close,
                                    label='spy_russ')
 
         mydf = ExampleDF()
@@ -52,14 +52,11 @@ class MargotDataFrame(object):
             ref in getmembers(self, lambda m: isinstance(m, Ratio))]
         super().__init__()
 
-    def to_pandas(self, when: datetime = None, dropna = True) -> pd.DataFrame:
+    def to_pandas(self, periods: int = None, dropna=True) -> pd.DataFrame:
         """Return a pandas Dataframe representing this MargotDataFrame.
 
         Args:
-            when (datetime, optional): slice to only show data that was
-                available at when.
-                That is, the EOD from the previous day.
-                Defaults to None.
+            periods (int, optional): only return the tail n periods.
 
         Returns:
             pd.DataFrame: a Pandas dataframe representing all data from
@@ -79,11 +76,11 @@ class MargotDataFrame(object):
 
         df = pd.concat([df1, df2], axis=1)
 
-        if when:
-            df = df.to_pandas().shift()[:when]
-
         if dropna:
             df = df.dropna()
+
+        if periods:
+            df = df.tail(periods)
 
         return df
 
@@ -125,14 +122,14 @@ class MargotDataFrame(object):
         return self._when
 
     @when.setter
-    def set_when(self, when): # noqa: D102
+    def set_when(self, when):  # noqa: D102
         self._when = when
 
     def simulate(self, when):
         """Create a dataframe simulating a datetime in history.
 
         Used for backtesting to simplify the writing of trading
-        algorithms. After simulating a historical datetime, it is 
+        algorithms. After simulating a historical datetime, it is
         not possible to go back to the future.
 
         Args:

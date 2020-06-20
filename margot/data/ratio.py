@@ -8,7 +8,7 @@ class Ratio(object):
 
     Example::
 
-        my_ratio = Ratio(numerator=symbol_1.adj_close, 
+        my_ratio = Ratio(numerator=symbol_1.adj_close,
                          denominator=symbol_2.adj_close,
                          label='s1_s2_ratio')
 

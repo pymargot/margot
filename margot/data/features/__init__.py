@@ -54,7 +54,7 @@ class BaseFeature(object):
         """
         return self.label
 
-    def feature(self, series: pd.Series): # noqa: D102
+    def feature(self, series: pd.Series):  # noqa: D102
         raise NotImplementedError("please implement the feature")
 
     def simulate(self, when):

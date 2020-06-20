@@ -59,17 +59,49 @@ class BackTest(object):
         self.positions.at[day, 'log_returns'] = np.log(1 + simple_returns)
 
         return self.positions.dropna()
-  
-    def create_trades_timeseries(self):
-        pos = self.positions.diff().replace(0, np.nan).dropna(how='all')
-        return pos
+
+    def calculate_returns(self):
+        """Calculate returns.
+
+        Assumes the trade is made the next period after a signal is generated.
+
+        You should construct your MargotDataFrame to be indexed by the trading
+        periods (e.g. days).
+        """
+        #TODO Remove the assumption about log_returns
+
+        returns = self.positions.shift()
+        for column in returns.columns: 
+            returns.loc[:, column] = self.algo.data.to_pandas(
+            ).loc[:, (column, 'log_returns')] * returns.loc[:, column]
+
+        returns.loc[:, 'log_returns'] = returns.sum(axis=1)
+        return returns
+
+    def create_trade_signals_timeseries(self):
+        """Create time-series of when position changes occur.
+
+        Return the subset of the positions time-series to indicate positions
+            when signals indicate trade should be placed.
+
+        Returns:
+            pd.DataFrame: A dataframe of signals when changes to positions are
+                suggested.
+        """
+        # We must start with an uninvested position.
+        self.positions.head(1).replace([1.0, -1.0], 0, inplace=True)
+        return self.positions.diff().replace(0, np.nan).dropna(how='all')
 
     def create_position_timeseries(self, periods):
         """Create Position time-series from signals.
 
-        Runs through all of the backtest data by default.
+        Runs through all of the backtest data, generating position indicating
+        signals.
 
-        Calculates the returns from taking the previous row's positions.
+        Args:
+            periods (int): the number of periods to backtest over,
+                counted back from the end of the dataset. If no value is
+                supplied then the whole dataset is used.
 
         Returns:
             pd.DataFrame: time-series of Positions
@@ -77,7 +109,7 @@ class BackTest(object):
         pos = pd.DataFrame()
 
         if periods:
-            index = self.algo.data.to_pandas().tail(periods).index #TODO this can be done more efficiently in to_pandas
+            index = self.algo.data.to_pandas(periods).index
         else:
             index = self.algo.data.index
 
@@ -99,11 +131,14 @@ class BackTest(object):
         # first calculate the positions time series
         self.positions = self.create_position_timeseries(periods)
         # deduce the trades; simulate entry and exit prices.
-        self.trades = self.create_trades_timeseries()
+        self.trade_signals = self.create_trade_signals_timeseries()
+
         # Consider the algo being run on 1st day of month e.g. RP
         # can calculate returns daily based on positions held - and
         #   schedule algo runs on e.g. 1st of month.
+
         # calculate the returns.
+        self.returns = self.calculate_returns()
         # caclulate lookback rolling volatility
         # simulate resizing at trading time, according to a target volatility
         # simulate volatility sized returns.

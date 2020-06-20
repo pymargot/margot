@@ -5,6 +5,8 @@ import pandas as pd
 
 from margot.data.column import BaseColumn
 
+logger = logging.getLogger(__name__)
+
 
 class Column(BaseColumn):
     """A single OHLC timeiseries from CBOE.
@@ -55,7 +57,7 @@ class Column(BaseColumn):
 
     def fetch(self, symbol: str):
         """Fetch from remote - this could be the only service specific thing."""
-        logging.info('fetching ({})'.format(symbol))
+        logger.info('fetching ({}) from cboe'.format(symbol))
 
         try:
             df = pd.read_csv(self.INDEX[symbol].get('url'),
