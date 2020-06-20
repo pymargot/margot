@@ -124,7 +124,7 @@ class BaseColumn(object):
         self.save(df, self.symbol)
         return df
 
-    def fetch(self, symbol: str):
+    def fetch(self, symbol: str): # noqa: D102
         raise NotImplementedError(
             'This is implementation specific to the data provider.')
 
@@ -142,11 +142,6 @@ class BaseColumn(object):
     def series(self):
         """Get the data series as a pandas series.
 
-        Args:
-            when (datetime): (optional) used when
-                simulating historical data, typically
-                using margot.backtest.
-
         Returns:
             pd.Series: time series of the field
         """
@@ -158,6 +153,13 @@ class BaseColumn(object):
         return self._series
 
     def simulate(self, when):
+        """Simulate a time ub history.
+
+        Args:
+            when (datetime): (optional) used when
+                simulating historical data, typically
+                using margot.backtest.
+        """
         self._series = self._full_series[:when]
 
     @property

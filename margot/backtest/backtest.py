@@ -11,7 +11,8 @@ import pytz
 class BackTest(object):
     """Backtest an trading algo that's a descendent of BaseAlgo.
 
-    .. warning:: **BackTest is still a work in progress - it probably doesn't even work yet!**
+    .. warning:: **BackTest is still a work in progress - it probably doesn't
+        even work yet!**
 
     Attributes:
         algo: A boolean indicating if we like SPAM or not.
@@ -59,8 +60,11 @@ class BackTest(object):
 
         return self.positions.dropna()
   
+    def create_trades_timeseries(self):
+        pos = self.positions.diff().replace(0, np.nan).dropna(how='all')
+        return pos
 
-    def create_position_timeseries(self):
+    def create_position_timeseries(self, periods):
         """Create Position time-series from signals.
 
         Runs through all of the backtest data by default.
@@ -71,7 +75,13 @@ class BackTest(object):
             pd.DataFrame: time-series of Positions
         """
         pos = pd.DataFrame()
-        for ts in self.algo.data.index: ### TODO allow index subset
+
+        if periods:
+            index = self.algo.data.to_pandas().tail(periods).index #TODO this can be done more efficiently in to_pandas
+        else:
+            index = self.algo.data.index
+
+        for ts in index:
             mapper = {}
             pos_list = self.algo.simulate_signal(ts)
             for p in pos_list:
@@ -80,15 +90,19 @@ class BackTest(object):
             pos = pos.append(pd.DataFrame(mapper, index=[ts]))
         return pos
 
-    def run(self):
+    def run(self, periods=None):
         """Run the backtest.
 
         Returns:
             [type]: [description]
         """
         # first calculate the positions time series
-        self.positions = self.create_position_timeseries()
+        self.positions = self.create_position_timeseries(periods)
         # deduce the trades; simulate entry and exit prices.
+        self.trades = self.create_trades_timeseries()
+        # Consider the algo being run on 1st day of month e.g. RP
+        # can calculate returns daily based on positions held - and
+        #   schedule algo runs on e.g. 1st of month.
         # calculate the returns.
         # caclulate lookback rolling volatility
         # simulate resizing at trading time, according to a target volatility
