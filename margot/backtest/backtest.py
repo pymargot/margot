@@ -34,32 +34,6 @@ class BackTest(object):
                 'log_returns'],
             dtype='float64')
 
-    def calc_daily_returns(self, day):
-        """Calculate the returns based on yesterdays positions, MoC to MoC.
-
-        Args:
-            day (date): the date for which we calculate returns.
-
-        Daily returns are the difference between yesterdays adjusted_close
-        and todays adjusted_close.
-        """
-        simple_returns = 0.0
-
-        for symbol in self.symbols:
-            # simple_returns = yesterdays_positions * todays_pct_change
-            try:
-                todays_pct_change = self.algo.symbols[symbol].data.pct_change(
-                ).loc[day].adjusted_close
-                yesterdays_position = self.positions.shift().loc[day, symbol]
-                simple_returns = simple_returns + \
-                    (todays_pct_change * yesterdays_position)
-            except KeyError:
-                pass
-        self.positions.at[day, 'returns'] = simple_returns
-        self.positions.at[day, 'log_returns'] = np.log(1 + simple_returns)
-
-        return self.positions.dropna()
-
     def calculate_returns(self):
         """Calculate returns.
 
