@@ -30,7 +30,7 @@ class BackTest(object):
         self.trades = None
         self.returns = pd.DataFrame(
             columns=[
-                'returns',
+                'simple_returns',
                 'log_returns'],
             dtype='float64')
 
@@ -42,15 +42,16 @@ class BackTest(object):
         You should construct your MargotDataFrame to be indexed by the trading
         periods (e.g. days).
         """
-        #TODO Remove the assumption about log_returns. i reckon look for the
+        #TODO Remove the assumption about simple_returns. i reckon look for the
         # column, then derive simple then log returns.
 
         returns = self.positions.shift()
         for column in returns.columns: 
             returns.loc[:, column] = self.algo.data.to_pandas(
-            ).loc[:, (column, 'log_returns')] * returns.loc[:, column]
+            ).loc[:, (column, 'simple_returns')] * returns.loc[:, column]
 
-        returns.loc[:, 'log_returns'] = returns.sum(axis=1)
+        returns.loc[:, 'simple_returns'] = returns.sum(axis=1)
+        returns['log_returns'] = np.log(1 + returns['simple_returns'])
         return returns
 
     def create_trade_signals_timeseries(self):
