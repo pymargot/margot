@@ -42,7 +42,8 @@ class BackTest(object):
         You should construct your MargotDataFrame to be indexed by the trading
         periods (e.g. days).
         """
-        #TODO Remove the assumption about log_returns
+        #TODO Remove the assumption about log_returns. i reckon look for the
+        # column, then derive simple then log returns.
 
         returns = self.positions.shift()
         for column in returns.columns: 
@@ -116,4 +117,4 @@ class BackTest(object):
         # caclulate lookback rolling volatility
         # simulate resizing at trading time, according to a target volatility
         # simulate volatility sized returns.
-        return self.positions
+        return self.returns

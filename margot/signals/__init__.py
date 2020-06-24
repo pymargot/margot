@@ -1,6 +1,5 @@
 from margot.signals.algos import BaseAlgo
 
-
 class Position(object):
     """Represents a Position with a symbol and a weight.
 
@@ -10,9 +9,10 @@ class Position(object):
             the weight of this symbol in the position list.
     """
 
-    def __init__(self, symbol: str, weight: float):  # noqa: D107
+    def __init__(self, symbol: str, weight: float, order_type: str):  # noqa: D107
         self.symbol = symbol
         self.weight = weight
+        # TODO order_type should be checked.
         if self.weight > 1.0 or self.weight < -1.0:
             raise ValueError('weight must be a value between -1.0 and +1.0')
 

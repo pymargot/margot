@@ -8,7 +8,6 @@
 
 * pairs trading
 * decouple positions + returns from rebalancing
-* add 3DMA filter back to the vix basis
 * risk management
 * live trading
 * accounting
