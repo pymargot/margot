@@ -42,7 +42,7 @@ class BackTest(object):
         You should construct your MargotDataFrame to be indexed by the trading
         periods (e.g. days).
         """
-        #TODO Remove the assumption about simple_returns. i reckon look for the
+        #TODO: Remove the assumption about simple_returns. i reckon look for the
         # column, then derive simple then log returns.
 
         returns = self.positions.shift()
@@ -52,7 +52,7 @@ class BackTest(object):
 
         returns.loc[:, 'simple_returns'] = returns.sum(axis=1)
         returns['log_returns'] = np.log(1 + returns['simple_returns'])
-        return returns
+        return returns.replace(np.nan, 0)
 
     def create_trade_signals_timeseries(self):
         """Create time-series of when position changes occur.
@@ -119,3 +119,16 @@ class BackTest(object):
         # simulate resizing at trading time, according to a target volatility
         # simulate volatility sized returns.
         return self.returns
+
+    def volatility(self, days=30, periods=252):
+        """Return a single float value for realised historical volatility.
+
+        TODO: Change the periods parameter to instead examine the data.
+        Args:
+            days (int, optional): Days to lookback. Defaults to 30.
+        """
+        # TODO: tail(days) assumes daily.
+        return self.returns.log_returns.tail(days).std() * np.sqrt(252)
+
+
+
