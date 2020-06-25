@@ -1,4 +1,5 @@
 from margot.signals.algos import BaseAlgo
+from margot.signals.backtest import BackTest
 
 class Position(object):
     """Represents a Position with a symbol and a weight.

@@ -12,7 +12,7 @@ complexity, making the act of defining trading algorithms as declarative and
 as simple as possible.
 
 .. automodule:: margot.data
-   :members: MargotDataFrame, Symbol, Ratio
+   :members: MargotDataFrame, Symbol, Ratio, alphavantage, cboe, finance
 
 
 Subpackages
