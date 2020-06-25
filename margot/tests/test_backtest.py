@@ -5,8 +5,7 @@ import pytz
 from margot.data import Symbol, MargotDataFrame, Ratio
 from margot.data.column import cboe, alphavantage as av
 from margot.data.features import finance
-from margot.signals import Position, BaseAlgo
-from margot.backtest import BackTest
+from margot.signals import Position, BaseAlgo, BackTest
 
 
 class Index(Symbol):
@@ -17,7 +16,7 @@ class Index(Symbol):
 
 class Equity(Symbol):
     close = av.Column(time_series='adjusted_close')
-    log_returns = finance.LogReturns(column='close')
+    simple_returns = finance.SimpleReturns(column='close')
 
 
 class VXBasisDF(MargotDataFrame):
@@ -35,9 +34,9 @@ class VXBasisTrade(BaseAlgo):
     def signal(self):
         if self.data.ratio.latest <= 1.0 and \
             self.data.vix.close.latest <= self.data.vix.sma.latest:
-            return [Position(symbol='ZIV', weight=1.0)]
+            return [Position('ZIV', 1.0, self.MOC)]
         else:
-            return [Position(symbol='ZIV', weight=0.0)]
+            return [Position('ZIV', 0.0, self.MOC)]
 
                     
 def test_simulation():
