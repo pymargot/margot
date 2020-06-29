@@ -4,6 +4,8 @@ from pathlib import Path
 import pytz
 import pandas as pd
 
+logger = logging.getLogger(__name__)
+
 
 class BaseColumn(object):
     """BaseColumn is the super class for implementing Columns.

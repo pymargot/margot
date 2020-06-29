@@ -7,13 +7,6 @@ class BaseFeature(object):
 
     INITED = False
 
-    def get_label(self):
-        try:
-            return self.label
-        except AttributeError:
-            raise AttributeError(
-                'Please declare a label attribute for this feature')
-
     def __init__(self, column: str, *args, **kwargs):  # noqa: D107
         self.column = column
         self.__dict__.update(kwargs)

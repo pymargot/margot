@@ -3,7 +3,6 @@ from datetime import datetime
 
 import pandas as pd
 
-from margot.data.column import BaseColumn
 from margot.data.features import BaseFeature
 from margot.data.symbols import Symbol
 from margot.data.ratio import Ratio

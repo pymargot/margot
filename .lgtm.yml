@@ -1,0 +1,10 @@
+path_classifiers:
+    test:
+      - versioneer.py
+      - margot/_version.py
+      - test
+
+extraction:
+    python:
+      python_setup:
+        version: 3

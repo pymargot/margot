@@ -1,12 +1,8 @@
-import os
 import logging
-import itertools
 from datetime import date, datetime, timedelta
-from copy import deepcopy
 
 import pandas as pd
-import numpy as np
-from alpha_vantage.timeseries import TimeSeries
+
 from trading_calendars import get_calendar
 
 import pytz
@@ -14,6 +10,7 @@ import pytz
 from margot.signals.order_types import MOC, MKT, LMT
 from margot import MargotDataFrame
 
+logger = logging.getLogger(__name__)
 
 class BaseAlgo(object):
     """A base class to inherit when implementing your trading algorithm.

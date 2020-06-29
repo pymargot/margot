@@ -1,4 +1,3 @@
-import pandas as pd
 
 
 class Ratio(object):
