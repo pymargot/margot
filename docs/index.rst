@@ -1,5 +1,5 @@
 ===============
-What is margot?
+Margot Documentation
 ===============
 
 .. image:: https://img.shields.io/pypi/v/margot
@@ -29,7 +29,7 @@ considered an early-beta. It works, but may still have sharp edges.
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    about
