@@ -1,10 +1,8 @@
 import os
-
+from margot import Symbol, MargotDataFrame, Ratio, BaseAlgo, Position, BackTest
+from margot import finance, cboe, alphavantage as av
 
 def test_symbol():
-    from margot.data import Symbol
-    from margot.data.column import alphavantage as av
-    from margot.data.features import finance
 
     class Equity(Symbol):
         adjusted_close = av.Column(
@@ -28,9 +26,6 @@ def test_symbol():
 
 
 def test_frame():
-    from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import cboe
-    from margot.data.features import finance
 
     class Index(Symbol):
         close = cboe.Column(time_series='close')
@@ -50,8 +45,6 @@ def test_frame():
 
 
 def test_constructors():
-    from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import alphavantage as av
 
     class Index(Symbol):
         adjusted_close = av.Column(
@@ -68,9 +61,6 @@ def test_constructors():
 
 
 def test_finance_features():
-    from margot.data import MargotDataFrame, Symbol, Ratio
-    from margot.data.column import alphavantage as av
-    from margot.data.features import finance
 
     class Index(Symbol):
         adjusted_close = av.Column(

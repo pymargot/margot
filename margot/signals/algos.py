@@ -12,7 +12,7 @@ from trading_calendars import get_calendar
 import pytz
 
 from margot.signals.order_types import MOC, MKT, LMT
-from margot.data import MargotDataFrame
+from margot import MargotDataFrame
 
 
 class BaseAlgo(object):

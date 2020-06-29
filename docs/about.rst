@@ -1,17 +1,9 @@
-[![](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
-![](https://img.shields.io/pypi/pyversions/margot)
-![](https://img.shields.io/pypi/wheel/margot)
-[![](https://img.shields.io/github/license/pymargot/margot)](https://github.com/pymargot/margot/blob/master/LICENSE)
-[![](https://travis-ci.org/pymargot/margot.svg?branch=master)](https://travis-ci.org/github/pymargot/margot)
-[![](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
-[![](https://codecov.io/gh/pymargot/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/pymargot/margot)
+============
+About margot
+============
 
-# What is margot?
-Margot is a library of components that may be used together or separately. The first
-major component; _margot.data_ is now available for public preview. It should be
-considered an early-beta. It works, but may still have sharp edges.
-
-# What is margot data?
+What is margot data?
+====================
 Margot data makes it super easy to create neat and tidy Pandas dataframes for 
 time-series analysis.
 
@@ -19,7 +11,8 @@ Margot data aims to manage data collection, caching, cleaning, feature generatio
 management and persistence using a clean, declarative API. If you've ever used
 Django you'll find this approach similar to the Django ORM.
 
-## Columns
+Columns
+=======
 The heart of any time-series dataframe is the original data. Margot can retrieve
 time-series data from external sources (currently AlphaVantage). To add a time-
 series from an original source, such as "closing_price" or "volume", we declare
@@ -31,7 +24,8 @@ e.g. Let's get closing_price and volume from AlphaVantage:
 
     daily_volume = av.Column(time_series='volume')
 
-## Features
+Features
+========
 Columns are useful, but we usually want to derive new time-series from them, such 
 as "log_returns" or "SMA20". Margot does this for you; we've called these derived
 time-series, *Features*.
@@ -49,8 +43,8 @@ simply add the following feature:
 Margot includes many common financial Features, and we'll be adding more soon. It's 
 also very easy to add your own.
 
-
-## Symbols
+Symbols
+=======
 Often, you want to make a dataframe combining a number of columns and features.
 Margot makes this very easy by providing the Symbol class e.g.
 
@@ -71,7 +65,8 @@ Margot makes this very easy by providing the Symbol class e.g.
 
     spy = MyEquity(symbol='SPY')
 
-## MargotDataFrames
+MargotDataFrames
+================
 You usually you want to look at more than one symbol. That's where
 MargotDataFrames come in. MargotDataFrames combine multiple
 Symbols with dataframe-wide Features and Ratios. For example:
@@ -89,15 +84,15 @@ The above code creates a Pandas DataFrame of two equities, and an additional
 feature that calculates a time-series of the ratio of their respective
 adjusted close prices.
 
-## Margot's other parts
-**not yet released.**
+
 
 Margot aims to provide a simple framework for writing and backtesting trading
 signal generation algorithms using margot.data.
 
 Results from margot's trading algorithms can be analysed with pyfolio.
 
-# Getting Started
+Getting Started
+===============
 
     pip install margot
 
@@ -108,35 +103,23 @@ Next you need to make sure you have a couple of important environment variables 
 
 Once you've done that, try running the code in the [notebook](notebook.margot.data).
 
-# Status
+Status
+======
 This is still an early stage software project, and should not be used for live trading.
 
-# Documentation
+Documentation
+=============
 
 in progress - for examples see the [notebook](notebook.margot.data).
 
-# Contributing
-
+Contributing
+============
 Feel free to make a pull request or chat about your idea first using [issues](https://github.com/atkinson/margot/issues).
 
 Dependencies are kept to a minimum. Generally if there's a way to do something in the standard library (or numpy / Pandas), let's do it that way rather than add another library. 
 
-# License
+License
+=======
 Margot is licensed for use under Apache 2.0. For details see [the License](https://github.com/atkinson/margot/blob/master/LICENSE).
 
-
-```eval_rst
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   index
-   notebook.margot.data
-   margot.data
-   margot.data.column
-   margot.data.features.finance
-   margot.signals
-   margot.backtest
-
-```
+.. contents::

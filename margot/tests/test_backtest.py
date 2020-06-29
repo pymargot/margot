@@ -2,16 +2,14 @@ from datetime import datetime
 
 import pytz
 
-from margot.data import Symbol, MargotDataFrame, Ratio
-from margot.data.column import cboe, alphavantage as av
-from margot.data.features import finance
-from margot.signals import Position, BaseAlgo, BackTest
+from margot import Symbol, MargotDataFrame, Ratio, BaseAlgo, Position, BackTest
+from margot import finance, cboe, alphavantage as av
 
 
 class Index(Symbol):
     close = cboe.Column(time_series='close')
     sma = finance.SimpleMovingAverage(column='close',
-                                        window=3)
+                                      window=3)
 
 
 class Equity(Symbol):
@@ -23,8 +21,8 @@ class VXBasisDF(MargotDataFrame):
     vix = Index('VIX', trading_calendar='NYSE')
     vix3m = Index('VIX3M', trading_calendar='NYSE')
     ratio = Ratio(numerator=vix.close,
-                    denominator=vix3m.close,
-                    label='vxbasis')
+                  denominator=vix3m.close,
+                  label='vxbasis')
     ziv = Equity('ZIV', trading_calendar='NYSE')
 
 

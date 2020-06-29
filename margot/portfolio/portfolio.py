@@ -1,4 +1,4 @@
-from margot.backtest import BackTest
+from margot import BackTest
 
 
 class Strategy(object):
