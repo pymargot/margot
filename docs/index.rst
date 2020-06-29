@@ -12,7 +12,7 @@ Margot Documentation
 .. image:: https://img.shields.io/github/license/pymargot/margot
    :target: https://github.com/pymargot/margot/blob/master/LICENSE
 
-.. image:: https://travis-ci.org/pymargot/margot.svg?branch=master
+.. image:: https://travis-ci.org/pymargot/margot.svg
    :target: https://travis-ci.org/github/pymargot/margot
 
 .. image:: https://readthedocs.org/projects/margot/badge/?version=latest
