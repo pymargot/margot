@@ -13,10 +13,6 @@
 import os
 import sys
 
-import recommonmark
-from recommonmark.transform import AutoStructify
-from recommonmark.parser import CommonMarkParser
-
 import margot
 
 # before pulling hair out, see: https://pypi.org/project/sphinxcontrib-apidoc/
@@ -44,7 +40,6 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'nbsphinx',
-    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -72,16 +67,3 @@ html_static_path = ['_static']
 autoclass_content = "both"
 master_doc = 'index'
 autodoc_member_order = 'bysource'
-
-
-# Markdown support -----------------------------------------------------------
-
-github_doc_root = 'https://github.com/atkinson/margot/tree/master/docs'
-
-def setup(app):
-    app.add_config_value('recommonmark_config', {
-            'url_resolver': lambda url: github_doc_root + url,
-            'auto_toc_tree_section': 'Contents',
-            'enable_eval_rst': True,
-            }, True)
-    app.add_transform(AutoStructify)

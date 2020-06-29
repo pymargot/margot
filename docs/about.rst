@@ -18,17 +18,16 @@ time-series data from external sources (currently AlphaVantage). To add a time-
 series from an original source, such as "closing_price" or "volume", we declare
 a *Column*:
 
-e.g. Let's get closing_price and volume from AlphaVantage:
+e.g. Let's get closing_price and volume from AlphaVantage::
 
     adjusted_close = av.Column(time_series='adjusted_close')
-
     daily_volume = av.Column(time_series='volume')
 
 Features
 ========
 Columns are useful, but we usually want to derive new time-series from them, such 
 as "log_returns" or "SMA20". Margot does this for you; we've called these derived
-time-series, *Features*.
+time-series, *Features*::
 
     simple_returns = finance.SimpleReturns(column='adjusted_close')
     log_returns = finance.LogReturns(column='adjusted_close')
@@ -36,9 +35,9 @@ time-series, *Features*.
 
 Features can be piled on top of one another. For example, to create a time-series
 of realised volatility based on log_returns with a lookback of 30 trading days,
-simply add the following feature:
+simply add the following feature::
 
-    realised_vol = finance.RealisedVolatility(column='log_returns', window=30)
+    real_vol = finance.RealisedVolatility(column='log_returns', window=30)
 
 Margot includes many common financial Features, and we'll be adding more soon. It's 
 also very easy to add your own.
@@ -46,7 +45,7 @@ also very easy to add your own.
 Symbols
 =======
 Often, you want to make a dataframe combining a number of columns and features.
-Margot makes this very easy by providing the Symbol class e.g.
+Margot makes this very easy by providing the Symbol class e.g::
 
     class MyEquity(Symbol):
 
@@ -69,7 +68,9 @@ MargotDataFrames
 ================
 You usually you want to look at more than one symbol. That's where
 MargotDataFrames come in. MargotDataFrames combine multiple
-Symbols with dataframe-wide Features and Ratios. For example:
+Symbols with dataframe-wide Features and Ratios. 
+
+For example::
 
     class MyEnsemble(MargotDataFrame):
         spy = MyEquity(symbol='SPY', trading_calendar='NYSE')
@@ -84,8 +85,6 @@ The above code creates a Pandas DataFrame of two equities, and an additional
 feature that calculates a time-series of the ratio of their respective
 adjusted close prices.
 
-
-
 Margot aims to provide a simple framework for writing and backtesting trading
 signal generation algorithms using margot.data.
 
@@ -94,9 +93,11 @@ Results from margot's trading algorithms can be analysed with pyfolio.
 Getting Started
 ===============
 
+Install using pip::
+
     pip install margot
 
-Next you need to make sure you have a couple of important environment variables set:
+Next you need to make sure you have a couple of important environment variables set::
 
     export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
     export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES

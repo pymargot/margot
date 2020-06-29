@@ -1,6 +1,6 @@
-===============
+====================
 Margot Documentation
-===============
+====================
 
 .. image:: https://img.shields.io/pypi/v/margot
    :target: https://pypi.org/project/margot/

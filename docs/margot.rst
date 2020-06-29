@@ -1,6 +1,6 @@
-======
+=====================
 Margot API  Reference
-======
+=====================
 
 .. contents::
 
@@ -22,42 +22,55 @@ Reference
 =========
 
 BackTest
---------
+========
 
 .. autoclass:: margot.BackTest
    :members:
 
 
 BaseAlgo
---------
+========
 
 .. autoclass:: margot.BaseAlgo
    :members:
 
 
 MargotDataFrame
---------
+===============
 
 .. autoclass:: margot.MargotDataFrame
    :members:
 
 
 Position
---------
+========
 
 .. autoclass:: margot.Position
    :members:
 
 
 Ratio
---------
+=====
 
 .. autoclass:: margot.Ratio
    :members:
 
 
 Symbol
---------
+======
 
 .. autoclass:: margot.Symbol
    :members:
+
+
+Alphavantage
+============
+
+.. automodule:: margot.alphavantage
+   :members: Column
+
+Financial features
+==================
+
+.. automodule:: margot.finance
+   :members: SimpleReturns, LogReturns, RealisedVolatility, SimpleMovingAverage, UpperBollingerBand, LowerBollingerBand
