@@ -49,5 +49,5 @@ class Ratio(object):
 
     @property
     def latest(self):
-        """Return the latest value in this series"""
+        """Return the latest value in this series."""
         return self.series.tail(1)[0]
