@@ -2,7 +2,7 @@ import logging
 
 import pandas as pd
 
-from margot.data.column.columns import BaseColumn
+from margot.data.columns import BaseColumn
 
 logger = logging.getLogger(__name__)
 

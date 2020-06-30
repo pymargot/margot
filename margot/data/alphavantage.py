@@ -1,8 +1,11 @@
 import os
 import logging
+from datetime import datetime
+import pytz
+
 from alpha_vantage.timeseries import TimeSeries
 
-from margot.data.column.columns import BaseColumn
+from margot.data.columns import BaseColumn
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +37,10 @@ class Column(BaseColumn):
             '8. split coefficient': 'split_coefficient'
         }, axis='columns')
         return super().clean(df)
+
+    def stale(self):
+        now = datetime.now(tz=pytz.UTC)
+        last_complete_trading_day = self.trading_calendar.previous_close()
 
     def fetch(self, symbol: str):
         """Fetch from remote - this could be the only service specific thing."""

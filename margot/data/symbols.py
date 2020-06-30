@@ -1,10 +1,11 @@
 from inspect import getmembers
+from datetime import datetime
 
 import pandas as pd
-
+import pytz
 from trading_calendars import get_calendar
 
-from margot.data.column.columns import BaseColumn
+from margot.data.columns import BaseColumn
 from margot.data.features import BaseFeature
 from margot.data.ratio import Ratio
 

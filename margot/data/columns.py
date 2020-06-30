@@ -72,13 +72,12 @@ class BaseColumn(object):
         """Return a new instance of oneself."""
         return self.__class__(self.time_series)
 
-    def setup(self, symbol: str, env: dict = dict()):
+    def setup(self, symbol: str, env: dict):
         """
         Setup the column.
 
         Called by the Symbol so that the symbol name can be passed.
         """
-
         self.symbol = symbol
         self.env = env
 
@@ -114,7 +113,6 @@ class BaseColumn(object):
         Returns:
             pd.Series: time-series of the column
         """
-
         try:
             df = self.load(symbol)
         except (KeyError, FileNotFoundError):
@@ -128,7 +126,6 @@ class BaseColumn(object):
         Returns:
             pd.DataFrame: the whole dataframe (cleaned)
         """
-
         df = self.fetch(self.symbol)
         df = self.clean(df)
         self.save(df, self.symbol)
@@ -156,7 +153,6 @@ class BaseColumn(object):
         Returns:
             pd.Series: time series of the field
         """
-
         if self._full_series is None:
             self._full_series = self.load_or_fetch_series(self.symbol)
             self._series = self._full_series.copy()
@@ -173,7 +169,6 @@ class BaseColumn(object):
                 simulating historical data, typically
                 using margot.backtest.
         """
-
         self._series = self._full_series[:when]
 
     @property

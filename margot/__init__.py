@@ -33,7 +33,7 @@ Todo:
 from margot.data.frames import MargotDataFrame  # noqa
 from margot.data.symbols import Symbol  # noqa
 from margot.data.ratio import Ratio  # noqa
-from margot.data.column import alphavantage, cboe  # noqa
+from margot.data import alphavantage, cboe  # noqa
 from margot.data.features import finance  # noqa
 from margot.signals.algos import BaseAlgo  # noqa
 from margot.signals.backtest import BackTest  # noqa
