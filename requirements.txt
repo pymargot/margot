@@ -19,3 +19,4 @@ pytz
 
 pytest-cov
 autopep8
+codacy-coverage

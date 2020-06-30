@@ -76,7 +76,8 @@ class Symbol(object):
 
     def refresh(self):
         """Refresh all columns in this Symbol."""
-        [getattr(self, member).refresh() for member in self.columns]
+        for member in self.columns:
+            getattr(self, member).refresh()
 
     def simulate(self, when=None):
         """Make the Symbol simulate a datetime in history.
