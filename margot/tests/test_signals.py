@@ -11,6 +11,6 @@ def test_algo():
         vixm = Index(symbol='VIX', trading_calendar='NYSE')
 
     class MyAlgo(BaseAlgo):
-        data = MargotDataFrame()
+        data = VXBasis()
 
     myalgo = MyAlgo(env={})
