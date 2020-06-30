@@ -2,6 +2,9 @@
 Margot Documentation
 ====================
 
+.. image:: https://api.codacy.com/project/badge/Grade/1d42c486297a49158494e5f31b25793b
+   :target: https://app.codacy.com/manual/pymargot/margot?utm_source=github.com&utm_medium=referral&utm_content=pymargot/margot&utm_campaign=Badge_Grade_Dashboard
+
 .. image:: https://img.shields.io/pypi/v/margot
    :target: https://pypi.org/project/margot/
 
@@ -23,10 +26,29 @@ Margot Documentation
 
 
 
-Margot is a library of components that may be used together or separately. The first
-major component; _margot.data_ is now available for public preview. It should be
-considered an early-beta. It works, but may still have sharp edges.
+Margot makes it super easy to backtest trading elgorithms. Firstly, Margot makes
+it super easy tocreate neat and tidy Pandas dataframes for time-series analysis.
 
+Margot manages data collection, caching, cleaning, feature generation,
+management and persistence using a clean, declarative API. If you've
+ever used Django you will find this approach similar to the Django ORM.
+
+Margot also provides a simple framework for writing and backtesting systematic
+trading algorithms.
+
+Results from margot's trading algorithms can be analysed using pyfolio.
+
+To get started::
+
+    pip install margot
+
+Next you need to make sure you have a couple of important environment variables
+set::
+
+    export ALPHAVANTAGE_API_KEY=YOUR_API_KEY
+    export DATA_CACHE=PATH_TO_FOLDER_TO_STORE_HDF5_FILES
+
+Once you've done that, try running the code in the notebook.
 
 .. toctree::
    :maxdepth: 2
