@@ -5,13 +5,6 @@ Margot Documentation
 .. image:: https://api.codacy.com/project/badge/Grade/1d42c486297a49158494e5f31b25793b
    :target: https://app.codacy.com/manual/pymargot/margot?utm_source=github.com&utm_medium=referral&utm_content=pymargot/margot&utm_campaign=Badge_Grade_Dashboard
 
-.. image:: https://img.shields.io/pypi/v/margot
-   :target: https://pypi.org/project/margot/
-
-.. image:: https://img.shields.io/pypi/pyversions/margot
-
-.. image:: https://img.shields.io/pypi/wheel/margot
-
 .. image:: https://img.shields.io/github/license/pymargot/margot
    :target: https://github.com/pymargot/margot/blob/master/LICENSE
 
@@ -24,6 +17,12 @@ Margot Documentation
 .. image:: https://codecov.io/gh/pymargot/margot/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/pymargot/margot
 
+.. image:: https://img.shields.io/pypi/wheel/margot
+
+.. image:: https://img.shields.io/pypi/pyversions/margot
+
+.. image:: https://img.shields.io/pypi/v/margot
+   :target: https://pypi.org/project/margot/
 
 
 Margot makes it super easy to backtest trading elgorithms. Firstly, Margot makes

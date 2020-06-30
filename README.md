@@ -1,11 +1,12 @@
 [![](https://api.codacy.com/project/badge/Grade/1d42c486297a49158494e5f31b25793b)](https://app.codacy.com/manual/pymargot/margot?utm_source=github.com&utm_medium=referral&utm_content=pymargot/margot&utm_campaign=Badge_Grade_Dashboard)
-[![](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 [![](https://travis-ci.org/pymargot/margot.svg?branch=master)](https://travis-ci.org/github/pymargot/margot)
 [![](https://readthedocs.org/projects/margot/badge/?version=latest)](https://margot.readthedocs.io/en/latest/?badge=latest)
 [![](https://codecov.io/gh/pymargot/margot/branch/master/graph/badge.svg)](https://codecov.io/gh/pymargot/margot)
 [![](https://img.shields.io/github/license/pymargot/margot)](https://github.com/pymargot/margot/blob/master/LICENSE)
-![](https://img.shields.io/pypi/pyversions/margot)
 ![](https://img.shields.io/pypi/wheel/margot)
+![](https://img.shields.io/pypi/pyversions/margot)
+[![](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
+
 
 # What is margot?
 Margot makes it super easy to backtest trading elgorithms. Firstly, Margot makes
