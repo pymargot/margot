@@ -51,9 +51,7 @@ class DailyAdjusted(BaseColumn, DailyMixin):
         """
         logger.info('fetching ({}) from alphavantage'.format(symbol))
         ts = TimeSeries(
-            key=self.env.get(
-                'ALPHAVANTAGE_API_KEY',
-                os.environ.get('ALPHAVANTAGE_API_KEY')),
+            key=os.environ.get('ALPHAVANTAGE_API_KEY'),
             output_format='pandas')
         df, _ = ts.get_daily_adjusted(symbol, outputsize='full')
         return self.clean(df)
