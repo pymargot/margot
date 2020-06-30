@@ -13,4 +13,4 @@ def test_algo():
     class MyAlgo(BaseAlgo):
         data = VXBasis()
 
-    myalgo = MyAlgo(env={})
+    myalgo = MyAlgo()

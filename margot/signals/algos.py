@@ -45,8 +45,7 @@ class BaseAlgo(object):
 
     data = None
 
-    def __init__(self, env: dict = {}, market='XNYS'):  # noqa: D107
-        self.env = env
+    def __init__(self, market='XNYS'):  # noqa: D107
         self.market = get_calendar(market)
         self.when = None
         if not isinstance(self.data, MargotDataFrame):
