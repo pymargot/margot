@@ -1,8 +1,6 @@
 from inspect import getmembers
-from datetime import datetime
 
 import pandas as pd
-import pytz
 from trading_calendars import get_calendar
 
 from margot.data.columns import BaseColumn
@@ -30,13 +28,10 @@ class Symbol(object):
         symbol (str): the code for this symbol
         trading_calendar (str): ISO Code market identifier
             uses https://github.com/quantopian/trading_calendars/blob/master/README.md
-        env (dict): Optional - pass in env values rather than use sysenv.
-
     """
 
-    def __init__(self, symbol: str, trading_calendar: str, env: dict = {}):  # noqa: D107
+    def __init__(self, symbol: str, trading_calendar: str):  # noqa: D107
         self.symbol = symbol
-        self.env = env
         self.trading_calendar = get_calendar(trading_calendar)
 
         self.columns = [
@@ -58,8 +53,7 @@ class Symbol(object):
                 self,
                 col).setup(
                 symbol=symbol,
-                trading_calendar=self.trading_calendar,
-                env=self.env)
+                trading_calendar=self.trading_calendar)
 
         for feature in self.features:
             base_series_name = getattr(self, feature).get_column_name()

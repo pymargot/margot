@@ -23,7 +23,7 @@ def test_symbol():
             column='adjusted_close', window=20, width=2.0)
 
     env = {'DATA_CACHE': os.path.join(os.getcwd(), 'data')}
-    spy = Equity(symbol='SPY', trading_calendar='NYSE', env=env)
+    spy = Equity(symbol='SPY', trading_calendar='NYSE')
 
 
 def test_frame():

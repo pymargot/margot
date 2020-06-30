@@ -28,15 +28,9 @@ class MargotDataFrame(object):
 
         mydf = ExampleDF()
 
-    Args:
-        env (dict): optional env dictionary as an alternative to sysenv
-            variables.
-
     """
 
-    def __init__(self, env: dict = dict()):   # noqa: D107 W0102
-        self.env = env
-
+    def __init__(self):   # noqa: D107
         self.symbols = [
             name for name,
             ref in getmembers(self, lambda m: isinstance(m, Symbol))]
