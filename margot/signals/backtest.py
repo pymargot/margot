@@ -7,6 +7,7 @@ import numpy as np
 
 logger = logging.getLogger(__name__)
 
+
 class BackTest(object):
     """Backtest an trading algo that's a descendent of BaseAlgo.
 
@@ -41,7 +42,7 @@ class BackTest(object):
         You should construct your MargotDataFrame to be indexed by the trading
         periods (e.g. days).
         """
-        #TODO: Remove the assumption about simple_returns. i reckon look for the
+        # TODO: Remove the assumption about simple_returns. i reckon look for the
         # column, then derive simple then log returns.
 
         returns = self.positions.shift()
@@ -128,6 +129,3 @@ class BackTest(object):
         """
         # TODO: tail(days) assumes daily.
         return self.returns.log_returns.tail(days).std() * np.sqrt(252)
-
-
-

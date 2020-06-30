@@ -6,6 +6,7 @@ from margot.data.column.columns import BaseColumn
 
 logger = logging.getLogger(__name__)
 
+
 class Column(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 

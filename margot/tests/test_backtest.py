@@ -31,12 +31,12 @@ class VXBasisTrade(BaseAlgo):
 
     def signal(self):
         if self.data.ratio.latest <= 1.0 and \
-            self.data.vix.close.latest <= self.data.vix.sma.latest:
+                self.data.vix.close.latest <= self.data.vix.sma.latest:
             return [Position('ZIV', 1.0, self.MOC)]
         else:
             return [Position('ZIV', 0.0, self.MOC)]
 
-                    
+
 def test_simulation():
     vxa = VXBasisDF()
     vxb = vxa.to_pandas().copy()
@@ -45,7 +45,7 @@ def test_simulation():
     assert(vxb[:when].equals(vxa.to_pandas()))
 
 
-def test_backtest(): 
-    vx = VXBasisTrade()   
+def test_backtest():
+    vx = VXBasisTrade()
     bt = BackTest(vx)
     bt.run(periods=100)

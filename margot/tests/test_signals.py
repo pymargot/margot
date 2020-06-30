@@ -1,6 +1,7 @@
 from margot import Symbol, MargotDataFrame, Ratio, BaseAlgo, Position, BackTest
 from margot import finance, cboe, alphavantage as av
 
+
 def test_algo():
 
     class Index(Symbol):

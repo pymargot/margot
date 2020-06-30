@@ -12,6 +12,7 @@ from margot import MargotDataFrame
 
 logger = logging.getLogger(__name__)
 
+
 class BaseAlgo(object):
     """A base class to inherit when implementing your trading algorithm.
 
@@ -92,8 +93,8 @@ class BaseAlgo(object):
         """
         return self.market.next_close(
             getattr(self, 'when',
-            pd.Timestamp(datetime.now(tz=pytz.UTC)))
-            )
+                    pd.Timestamp(datetime.now(tz=pytz.UTC)))
+        )
 
     def signal(self) -> list:
         """Return a list of Position objects for a given datetime."""

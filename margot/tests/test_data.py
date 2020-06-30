@@ -2,6 +2,7 @@ import os
 from margot import Symbol, MargotDataFrame, Ratio, BaseAlgo, Position, BackTest
 from margot import finance, cboe, alphavantage as av
 
+
 def test_symbol():
 
     class Equity(Symbol):
