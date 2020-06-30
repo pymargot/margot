@@ -4,7 +4,7 @@ from margot import BackTest
 class Strategy(object):
     """
     A trading Strategy.
-    
+
     Represents a backtested algo, with a recent realised volatility
     and a target volatility for postfolio sizing.
 

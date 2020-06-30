@@ -34,7 +34,7 @@ class MargotDataFrame(object):
 
     """
 
-    def __init__(self, env: dict = dict()):   # noqa: D107
+    def __init__(self, env: dict = dict()):   # noqa: D107 W0102
         self.env = env
 
         self.symbols = [

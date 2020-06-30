@@ -89,7 +89,8 @@ class BaseColumn(object):
         self.hdf5_file = os.path.join(
             data_cache, '{}.hdf5'.format(self.symbol))
 
-    def clean(self, df):
+    @classmethod
+    def clean(cls, df):
         """Clean the data."""
         df = df.sort_index()
         # make tz aware if not already
@@ -172,7 +173,7 @@ class BaseColumn(object):
                 simulating historical data, typically
                 using margot.backtest.
         """
-        
+
         self._series = self._full_series[:when]
 
     @property
