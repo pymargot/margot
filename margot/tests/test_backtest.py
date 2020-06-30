@@ -13,7 +13,7 @@ class Index(Symbol):
 
 
 class Equity(Symbol):
-    close = av.Column(time_series='adjusted_close')
+    close = av.DailyAdjusted(time_series='adjusted_close')
     simple_returns = finance.SimpleReturns(column='close')
 
 

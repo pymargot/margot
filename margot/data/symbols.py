@@ -54,7 +54,12 @@ class Symbol(object):
         for col in self.columns:
             new_col = getattr(self, col).clone()
             setattr(self, col, new_col)
-            getattr(self, col).setup(symbol=symbol, env=self.env)
+            getattr(
+                self,
+                col).setup(
+                symbol=symbol,
+                trading_calendar=self.trading_calendar,
+                env=self.env)
 
         for feature in self.features:
             base_series_name = getattr(self, feature).get_column_name()
@@ -63,7 +68,7 @@ class Symbol(object):
             base_col = getattr(self, base_series_name)
             getattr(self, feature).set_column(base_col)
 
-        # TODO ratios
+        # TODO: ratios
 
         super().__init__()
 

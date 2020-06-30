@@ -6,9 +6,9 @@ from margot import finance, cboe, alphavantage as av
 def test_symbol():
 
     class Equity(Symbol):
-        adjusted_close = av.Column(
+        adjusted_close = av.DailyAdjusted(
             time_series='adjusted_close')
-        volume = av.Column(
+        volume = av.DailyAdjusted(
             time_series='volume')
 
         simple_returns = finance.SimpleReturns(column='adjusted_close')
@@ -48,7 +48,7 @@ def test_frame():
 def test_constructors():
 
     class Index(Symbol):
-        adjusted_close = av.Column(
+        adjusted_close = av.DailyAdjusted(
             time_series='adjusted_close')
 
     spy = Index(symbol='SPY', trading_calendar='NYSE')
@@ -64,7 +64,7 @@ def test_constructors():
 def test_finance_features():
 
     class Index(Symbol):
-        adjusted_close = av.Column(
+        adjusted_close = av.DailyAdjusted(
             time_series='adjusted_close')
 
         simple_returns = finance.SimpleReturns(column='adjusted_close')

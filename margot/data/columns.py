@@ -72,14 +72,16 @@ class BaseColumn(object):
         """Return a new instance of oneself."""
         return self.__class__(self.time_series)
 
-    def setup(self, symbol: str, env: dict):
+    def setup(self, symbol: str, trading_calendar, env: dict):
         """
-        Setup the column.
-
-        Called by the Symbol so that the symbol name can be passed.
+        Called by Symbol after it is instantiated.
+        
+        Ensures that this column knows the context in which it operates, 
+        including what Symbol we are using and what the trading_calendar is.
         """
         self.symbol = symbol
         self.env = env
+        self.trading_calendar = trading_calendar
 
         # TODO File names should be managed in a central configuration
         data_cache = env.get('DATA_CACHE', os.environ.get('DATA_CACHE'))

@@ -67,7 +67,7 @@ Alphavantage
 ============
 
 .. automodule:: margot.alphavantage
-   :members: Column
+   :members: DailyAdjusted
 
 Financial features
 ==================

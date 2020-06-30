@@ -10,7 +10,7 @@ from margot.data.columns import BaseColumn
 logger = logging.getLogger(__name__)
 
 
-class Column(BaseColumn):
+class DailyAdjusted(BaseColumn):
     """A single Symbol time series from AlphaVantage.
 
     Example::

@@ -6,6 +6,7 @@ from margot.data.columns import BaseColumn
 class BaseFeature(object):
 
     INITED = False
+    label = None
 
     def __init__(self, column: str, *args, **kwargs):  # noqa: D107
         self.column = column
@@ -38,7 +39,8 @@ class BaseFeature(object):
         self._series = series
 
     def get_label(self):
-        """Return the label for this feature.
+        """
+        Return the label for this feature.
 
         Override this to customise.
 
