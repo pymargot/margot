@@ -1,1 +1,1 @@
-from margot.portfolio.portfolio import Portfolio
+from margot.portfolio.portfolio import Portfolio # noqa

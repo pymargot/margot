@@ -1,5 +1,4 @@
 from inspect import getmembers
-from datetime import datetime
 
 import pandas as pd
 
@@ -35,7 +34,7 @@ class MargotDataFrame(object):
 
     """
 
-    def __init__(self, env: dict = {}):   # noqa: D107
+    def __init__(self, env: dict = dict()):   # noqa: D107
         self.env = env
 
         self.symbols = [

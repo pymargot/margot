@@ -1,5 +1,5 @@
 import logging
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 import pandas as pd
 import numpy as np
@@ -45,7 +45,7 @@ class BackTest(object):
         # column, then derive simple then log returns.
 
         returns = self.positions.shift()
-        for column in returns.columns: 
+        for column in returns.columns:
             returns.loc[:, column] = self.algo.data.to_pandas(
             ).loc[:, (column, 'simple_returns')] * returns.loc[:, column]
 

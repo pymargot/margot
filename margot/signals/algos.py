@@ -1,5 +1,5 @@
 import logging
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 import pandas as pd
 
@@ -91,7 +91,7 @@ class BaseAlgo(object):
             pd.Timestamp: Timestamp of the next close of cash session in UTC.
         """
         return self.market.next_close(
-            getattr(self, 'when', 
+            getattr(self, 'when',
             pd.Timestamp(datetime.now(tz=pytz.UTC)))
             )
 

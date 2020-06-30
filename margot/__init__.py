@@ -30,14 +30,14 @@ Todo:
 
 """
 
-from margot.data.frames import MargotDataFrame # NOQA
-from margot.data.symbols import Symbol # NOQA
-from margot.data.ratio import Ratio # NOQA
-from margot.data.column import alphavantage, cboe # NOQA
-from margot.data.features import finance # NOQA
-from margot.signals.algos import BaseAlgo # NOQA
-from margot.signals.backtest import BackTest # NOQA
-from margot.signals import Position # NOQA
+from margot.data.frames import MargotDataFrame # noqa
+from margot.data.symbols import Symbol # noqa
+from margot.data.ratio import Ratio # noqa
+from margot.data.column import alphavantage, cboe # noqa
+from margot.data.features import finance # noqa
+from margot.signals.algos import BaseAlgo # noqa
+from margot.signals.backtest import BackTest # noqa
+from margot.signals import Position # noqa
 
 
 from ._version import get_versions
