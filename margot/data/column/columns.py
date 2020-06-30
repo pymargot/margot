@@ -8,7 +8,8 @@ logger = logging.getLogger(__name__)
 
 
 class BaseColumn(object):
-    """BaseColumn is the super class for implementing Columns.
+    """
+    BaseColumn is the super class for implementing Columns.
 
     Generally, you will only need to extend BaseColumn if you
     are implementing a new data provider.
@@ -72,7 +73,8 @@ class BaseColumn(object):
         return self.__class__(self.time_series)
 
     def setup(self, symbol: str, env: dict = {}):
-        """Setup the column.
+        """
+        Setup the column.
 
         Called by the Symbol so that the symbol name can be passed.
         """
@@ -96,7 +98,8 @@ class BaseColumn(object):
         return df
 
     def load_or_fetch_series(self, symbol: str):
-        """Load of fetch the Dataframe, return the series.
+        """
+        Load of fetch the Dataframe, return the series.
 
         In order to return the time-series, first determine if we
         have it and can return it, or if we need to fetch it.
@@ -116,7 +119,8 @@ class BaseColumn(object):
         return df[self.time_series]
 
     def refresh(self):
-        """Refresh the data from the source.
+        """
+        Refresh the data from the source.
 
         Returns:
             pd.DataFrame: the whole dataframe (cleaned)
@@ -142,7 +146,8 @@ class BaseColumn(object):
 
     @property
     def series(self):
-        """Get the data series as a pandas series.
+        """
+        Get the data series as a pandas series.
 
         Returns:
             pd.Series: time series of the field
@@ -155,7 +160,8 @@ class BaseColumn(object):
         return self._series
 
     def simulate(self, when):
-        """Simulate a time ub history.
+        """
+        Simulate a time in history.
 
         Args:
             when (datetime): (optional) used when

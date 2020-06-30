@@ -2,7 +2,7 @@ import os
 import logging
 from alpha_vantage.timeseries import TimeSeries
 
-from margot.data.column import BaseColumn
+from margot.data.column.columns import BaseColumn
 
 logger = logging.getLogger(__name__)
 

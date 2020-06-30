@@ -1,6 +1,7 @@
 
 class Position(object):
-    """Represents a Position with a symbol and a weight.
+    """
+    Represents a Position with a symbol and a weight.
 
     Arguments:
         symbol (str): The identifier of the symbol. e.g. 'SPY'.

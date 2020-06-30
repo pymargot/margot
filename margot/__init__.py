@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Example Google style docstrings.
+"""
+Example Google style docstrings.
 
 Example:
     Examples can be given using either the ``Example`` or ``Examples``
@@ -29,14 +30,14 @@ Todo:
 
 """
 
-from margot.data.frames import MargotDataFrame
-from margot.data.symbols import Symbol
-from margot.data.ratio import Ratio
-from margot.data.column import alphavantage, cboe
-from margot.data.features import finance
-from margot.signals.algos import BaseAlgo
-from margot.signals.backtest import BackTest
-from margot.signals import Position
+from margot.data.frames import MargotDataFrame # NOQA
+from margot.data.symbols import Symbol # NOQA
+from margot.data.ratio import Ratio # NOQA
+from margot.data.column import alphavantage, cboe # NOQA
+from margot.data.features import finance # NOQA
+from margot.signals.algos import BaseAlgo # NOQA
+from margot.signals.backtest import BackTest # NOQA
+from margot.signals import Position # NOQA
 
 
 from ._version import get_versions

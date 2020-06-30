@@ -4,7 +4,7 @@ import pandas as pd
 
 from trading_calendars import get_calendar
 
-from margot.data.column import BaseColumn
+from margot.data.column.columns import BaseColumn
 from margot.data.features import BaseFeature
 from margot.data.ratio import Ratio
 
