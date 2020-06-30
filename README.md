@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1d42c486297a49158494e5f31b25793b)](https://app.codacy.com/manual/pymargot/margot?utm_source=github.com&utm_medium=referral&utm_content=pymargot/margot&utm_campaign=Badge_Grade_Dashboard)
 [![](https://img.shields.io/pypi/v/margot)](https://pypi.org/project/margot/)
 ![](https://img.shields.io/pypi/pyversions/margot)
 ![](https://img.shields.io/pypi/wheel/margot)
