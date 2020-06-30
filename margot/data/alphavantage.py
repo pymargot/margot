@@ -1,31 +1,34 @@
 import os
 import logging
-from datetime import datetime
-import pytz
 
 from alpha_vantage.timeseries import TimeSeries
 
-from margot.data.columns import BaseColumn
+from margot.data.columns import BaseColumn, DailyMixin
 
 logger = logging.getLogger(__name__)
 
 
-class DailyAdjusted(BaseColumn):
-    """A single Symbol time series from AlphaVantage.
+class DailyAdjusted(BaseColumn, DailyMixin):
+    """A daily time series from AlphaVantage.
 
     Example::
 
-        from margot.data.column import alphavantage as av
+        from margot import alphavantage as av
 
-        volume = av.Column(time_series='adjusted_close')
+        volume = av.DailyAdjusted(time_series='adjusted_close')
 
     Args:
-        time_series (str): the name of the time-series that will be returned
+        time_series (str): the name of the time-series that will be returned.
+            Can be one of: 'open', 'high', 'low', 'close', 'adjusted_close',
+            'volume', 'dividend_amount' or 'split_coefficient'.
     """
 
     def clean(self, df):
-        """Clean the df."""
-        # Standardise the column names
+        """
+        Clean the dataframe.
+
+        Alphavantage has odd column names, so we'll fix those.
+        """
         df = df.rename(mapper={
             '1. open': 'open',
             '2. high': 'high',
@@ -38,12 +41,14 @@ class DailyAdjusted(BaseColumn):
         }, axis='columns')
         return super().clean(df)
 
-    def stale(self):
-        now = datetime.now(tz=pytz.UTC)
-        last_complete_trading_day = self.trading_calendar.previous_close()
-
     def fetch(self, symbol: str):
-        """Fetch from remote - this could be the only service specific thing."""
+        """
+        Fetch from remote - this could be the only service specific thing.
+
+        Args:
+            symbol (str): the name of the symbol to fetch
+
+        """
         logger.info('fetching ({}) from alphavantage'.format(symbol))
         ts = TimeSeries(
             key=self.env.get(

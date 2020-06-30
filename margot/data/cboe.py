@@ -2,12 +2,11 @@ import logging
 
 import pandas as pd
 
-from margot.data.columns import BaseColumn
-
+from margot.data.columns import BaseColumn, DailyMixin
 logger = logging.getLogger(__name__)
 
 
-class Column(BaseColumn):
+class Column(BaseColumn, DailyMixin):
     """A single OHLC timeiseries from CBOE.
 
     Currently supports the symbols, 'VIX' and 'VIX3M'.

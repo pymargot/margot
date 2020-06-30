@@ -1,10 +1,23 @@
 import os
 import logging
+from datetime import datetime
 from pathlib import Path
+
 import pytz
 import pandas as pd
 
 logger = logging.getLogger(__name__)
+
+
+class DailyMixin(object):
+
+    @property
+    def stale(self):
+        """Check if we think there might be new data, and if so - update.
+        """
+        now = pd.Timestamp(datetime.now(tz=pytz.UTC))
+        if self._full_series.index.max().date() < self.trading_calendar.previous_close(now).date():
+            return True
 
 
 class BaseColumn(object):
@@ -75,15 +88,15 @@ class BaseColumn(object):
     def setup(self, symbol: str, trading_calendar, env: dict):
         """
         Called by Symbol after it is instantiated.
-        
-        Ensures that this column knows the context in which it operates, 
+
+        Ensures that this column knows the context in which it operates,
         including what Symbol we are using and what the trading_calendar is.
         """
         self.symbol = symbol
         self.env = env
         self.trading_calendar = trading_calendar
 
-        # TODO File names should be managed in a central configuration
+        # TODO: File names should be managed in a central configuration
         data_cache = env.get('DATA_CACHE', os.environ.get('DATA_CACHE'))
         Path(data_cache).mkdir(parents=True, exist_ok=True)
 
@@ -106,8 +119,6 @@ class BaseColumn(object):
 
         In order to return the time-series, first determine if we
         have it and can return it, or if we need to fetch it.
-
-        TODO: Test for up-to-dateness (or maybe that happens in Symbol)?
 
         Args:
             symbol (str): the name of the symbol to fetch.
@@ -157,6 +168,9 @@ class BaseColumn(object):
         """
         if self._full_series is None:
             self._full_series = self.load_or_fetch_series(self.symbol)
+            if self.stale:
+                self.refresh()
+                self.load(self.symbol)
             self._series = self._full_series.copy()
 
         self.INITED = True
