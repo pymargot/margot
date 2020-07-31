@@ -1,0 +1,7 @@
+[general]
+user_home = '.margot'
+
+[ibkr]
+port = 1234
+ip_address = 127.0.0.1
+
