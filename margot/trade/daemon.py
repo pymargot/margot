@@ -6,4 +6,5 @@ def init(config, logger):
     # load portfolio definition
     # connect to brokers
     # eventloop
+    logger.debug('Daemonising margot')
     pass

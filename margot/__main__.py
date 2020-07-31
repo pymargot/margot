@@ -15,10 +15,10 @@ def main(args):
     # version
     if args.version: 
         print('margot version {}'.format(get_versions()['version']))
-        exit
+        return
 
     # logging
-    loglevel = logging.DEBUG if args.verbose else logging.INFO
+    loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logger = logging.getLogger('margot')
     logger.info('starting margot version {}'.format(get_versions()['version']))
@@ -26,7 +26,7 @@ def main(args):
     # load config
     config_file = args.config if args.config else DEFAULT_CONFIG_FILE
     config = configparser.ConfigParser()
-    logger.info('loading config from {}'.format(config_file))
+    logger.debug('loading config from {}'.format(config_file))
     config.read(config_file)
 
     daemon.init(config, logger)
@@ -42,17 +42,18 @@ if __name__ == '__main__':
     parser.add_argument(
         "-c",
         "--config",
-        help="Specify a configuration file to use instead of the default.",)
+        help="Specify a configuration file to use, instead of the default.",)
 
     parser.add_argument(
-        "-v",
-        "--verbose",
-        help="increase output verbosity",
+        "-d",
+        "--debug",
+        help="increase output verbosity for debugging",
         action="store_true")
 
     parser.add_argument(
+        "-v",
         "--version",
-        help="Print margot version.",
+        help="Print margot version then exit.",
         action="store_true")
 
     # parser.add_argument(
