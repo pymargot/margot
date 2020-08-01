@@ -4,4 +4,3 @@ base_folder = .margot
 [ibkr]
 port = 1234
 ip_address = 127.0.0.1
-

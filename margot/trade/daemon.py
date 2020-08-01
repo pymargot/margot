@@ -1,4 +1,5 @@
 from pathlib import Path
+import configparser
 
 def init(config, logger):
 
@@ -19,8 +20,22 @@ def init(config, logger):
             folder.mkdir()
 
     # load any algos
-    algo_files = list(algo_folder.glob('**/*.py'))
-    logger.info('found {} algos in {}'.format(len(algo_files), algo_folder))
+    algo_files = list(algo_folder.glob('*.cfg'))
+    logger.info('found {} cfg files in {}'.format(len(algo_files), algo_folder))
+
+    for algo in algo_files:
+        logger.debug('using {}'.format(algo))
+        algo_config = configparser.ConfigParser()
+        algo_config.read(algo)
+        try:
+            algo_name = algo_config.get('algorithm', 'name')
+            algo_subdir = algo_config.get('algorithm', 'subdir')
+            logger.info('found algorithm, "{}" in directory {}'.format(algo_name, algo_subdir))
+        except configparser.NoOptionError as err:
+            logger.error('unable to load {}'.format(algo))
+            logger.error(err)
+            return
+        # register algo in registry
 
     # load portfolio definition
     # eventloop
