@@ -31,7 +31,7 @@ def init(config, logger):
             algo_name = algo_config.get('algorithm', 'name')
             algo_subdir = algo_config.get('algorithm', 'subdir')
             logger.info('found algorithm, "{}" in directory {}'.format(algo_name, algo_subdir))
-        except configparser.NoOptionError as err:
+        except configparser.NoOptionError as err:   
             logger.error('unable to load {}'.format(algo))
             logger.error(err)
             return
