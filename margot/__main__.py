@@ -21,13 +21,16 @@ def main(args):
     loglevel = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logger = logging.getLogger('margot')
-    logger.info('starting margot version {}'.format(get_versions()['version']))
+    logger.info('starting margot (version {})'.format(get_versions()['version']))
 
     # load config
     config_file = args.config if args.config else DEFAULT_CONFIG_FILE
     config = configparser.ConfigParser()
     logger.debug('loading config from {}'.format(config_file))
     config.read(config_file)
+    if not config.sections():
+        logger.info('config not found.')
+        return
 
     daemon.init(config, logger)
 

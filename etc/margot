@@ -1,5 +1,5 @@
-[general]
-user_home = '.margot'
+[paths]
+base_folder = .margot
 
 [ibkr]
 port = 1234
