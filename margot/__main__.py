@@ -5,7 +5,7 @@ import argparse
 import configparser
 import logging
 
-from margot.trade import daemon
+from margot.trade import manager, worker
 
 from ._version import get_versions
 
@@ -18,9 +18,9 @@ def main(args):
         return
 
     # logging
-    loglevel = logging.DEBUG if args.debug else logging.INFO
+    loglevel = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
-    logger = logging.getLogger('margot')
+    logger = logging.getLogger('margot') # unless worker
     logger.info('starting margot (version {})'.format(get_versions()['version']))
 
     # load config
@@ -32,13 +32,16 @@ def main(args):
         logger.info('config not found.')
         return
 
-    daemon.init(config, logger)
+    if args.worker:
+        worker.init(config, logger)
+    else:
+        manager.init(config, logger)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='margot',
-        description="Makes the complex simple",
+        description="Schedule and execute trading strategies.",
         epilog="As an alternative to the commandline, params can be placed in a file, one per line, and specified on the commandline like '%(prog)s @params.conf'.",
         fromfile_prefix_chars='@')
 
@@ -48,28 +51,20 @@ if __name__ == '__main__':
         help="Specify a configuration file to use, instead of the default.",)
 
     parser.add_argument(
-        "-d",
-        "--debug",
+        "-w",
+        "--worker",
+        help="A worker runs an algorithm, usually invoked by the manager.",)    
+
+    parser.add_argument(
+        "-v",
+        "--verbose",
         help="increase output verbosity for debugging",
         action="store_true")
 
     parser.add_argument(
-        "-v",
         "--version",
         help="Print margot version then exit.",
         action="store_true")
-
-    # parser.add_argument(
-    #     "-i",
-    #     "--info",
-    #     help="Print lots of useful information. Versions, configuration and state",
-    #     action="store_true")
-
-    # parser.add_argument(
-    #     "-t",
-    #     "--test",
-    #     help="Don’t run, just test the configuration file. Checks configuration for correct syntax and then try to open files referred in configuration.",
-    #     action="store_true")
 
     main(parser.parse_args())
 

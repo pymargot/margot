@@ -1,5 +1,6 @@
 [paths]
 base_folder = .margot
+manager_python = /usr/bin/python3
 
 [ibkr]
 port = 1234
