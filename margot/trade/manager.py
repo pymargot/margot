@@ -1,6 +1,8 @@
 from pathlib import Path
+import asyncio
 
 from .algos import load_algo
+from . import scheduler
 
 def init(config, logger):
 
@@ -25,17 +27,29 @@ def init(config, logger):
             logger.info('creating new directory {}'.format(folder))
             folder.mkdir()
 
+    # start the scheduler
+    sched = scheduler.init(logger)
 
     # look for algos
     algo_files = list(paths['algo_folder'].glob('*.cfg'))
     logger.info('found {} cfg files in {}'.format(len(algo_files), paths['algo_folder']))
 
     for algo in algo_files:
-        load_algo(algo, config, paths, logger)
+        load_algo(algo, config, paths, logger, sched)
 
 
     # load portfolio definition
     # eventloop
     # connect to brokers
-
+    try:
+        logger.info('running forever')
+        asyncio.get_event_loop().run_forever()
+    except (KeyboardInterrupt, SystemExit):
+        logger.info('manager has been killed')
+        scheduler.close(logger)
+        pass
+    except (Exception):
+        logger.info('something went wrong - cleaning up lockfile')
+        scheduler.close(logger)
+        raise Exception
     
