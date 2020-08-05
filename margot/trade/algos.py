@@ -1,6 +1,8 @@
 import configparser
 import subprocess
 
+from margot.config import settings
+
 
 def add_job(algo_config, venv, logger, sched, verbose=True):
     cmd = 'cd {} && {}/bin/python -m margot -v -w {}'.format(
@@ -47,7 +49,7 @@ def load_algo(algo, config, paths, logger, sched):
         logger.info('algorithm, "{}" uses {}'.format(algo_name, lang))
 
         # does the venv exist?
-        venv = paths['venv_folder'].joinpath(algo_config.get('python', 'venv'))
+        venv = settings.paths['venv_folder'].joinpath(algo_config.get('python', 'venv'))
         if not venv.exists():
             logger.info('creating venv {}'.format(venv))
             venv.mkdir()

@@ -29,7 +29,9 @@ Todo:
    http://google.github.io/styleguide/pyguide.html
 
 """
+from margot import config
 
+# TODO move these into the sub modules
 from margot.data.frames import MargotDataFrame  # noqa
 from margot.data.symbols import Symbol  # noqa
 from margot.data.ratio import Ratio  # noqa

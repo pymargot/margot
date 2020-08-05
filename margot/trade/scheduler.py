@@ -1,12 +1,13 @@
 from pathlib import Path
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-LOCKFILE = '/tmp/.margot'
+LOCKFILE = '/tmp/.margot-lockfile' # TODO move all this to a global config registry
 
 def init(logger):
     if not Path(LOCKFILE).exists():
         scheduler = AsyncIOScheduler()
         scheduler.start()
+        # We use a lockfile to prevent multiple servers running
         Path(LOCKFILE).touch()
         return scheduler
     else:

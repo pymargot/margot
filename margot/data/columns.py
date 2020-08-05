@@ -6,6 +6,8 @@ from pathlib import Path
 import pytz
 import pandas as pd
 
+from margot.config import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -96,7 +98,7 @@ class BaseColumn(object):
         self.trading_calendar = trading_calendar
 
         # TODO: File names should be managed in a central configuration
-        data_cache = os.environ.get('DATA_CACHE')
+        data_cache = settings.paths['cache']
         Path(data_cache).mkdir(parents=True, exist_ok=True)
 
         self.hdf5_file = os.path.join(
