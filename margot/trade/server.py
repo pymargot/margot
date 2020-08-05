@@ -8,6 +8,7 @@ def handle_message(reader, writer):
     data = yield from reader.read()
     message = data.decode()
     logger.info('received: {}'.format(message))
+    # it now goes to the portfolio manager
 
 
 def init(logger):

@@ -7,9 +7,10 @@ from margot.config import settings
 
 def init(config, logger):
     logger.debug('initialising manager')
-    # start the scheduler
+    # the scheduler runs algos on their schedule
+
     sched = scheduler.init(logger)
-    # start the server to receive trading messages from algos
+    # the server receives trading messages from algos
     server.init(logger)
 
     # look for algos
@@ -21,10 +22,9 @@ def init(config, logger):
     for algo in algo_files:
         load_algo(algo, config, settings.paths, logger, sched)
 
-
-    # load portfolio definition
-    # eventloop
     # connect to brokers
+    # load portfolio definition
+
     try:
         logger.info('running forever')
         asyncio.get_event_loop().run_forever()
@@ -33,7 +33,7 @@ def init(config, logger):
         scheduler.close(logger)
         pass
     except (Exception):
-        logger.info('something went wrong - cleaning up lockfile')
+        logger.info('guru meditatiton - cleaning up lockfile')
         scheduler.close(logger)
         raise Exception
     

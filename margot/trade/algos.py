@@ -8,7 +8,7 @@ def add_job(algo_config, venv, logger, sched, verbose=True):
     cmd = 'cd {} && {}/bin/python -m margot -v -w {}'.format(
         algo_config.get('python', 'working_dir'),
         venv,
-        algo_config.get('python', 'algo')
+        algo_config.get('python', 'file')
     )
 
     logger.info('adding job: {}'.format(cmd))
