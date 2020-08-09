@@ -29,7 +29,7 @@ Todo:
    http://google.github.io/styleguide/pyguide.html
 
 """
-from margot import config
+from margot import config # noqa this is to init the settings
 
 # TODO move these into the sub modules
 from margot.data.frames import MargotDataFrame  # noqa

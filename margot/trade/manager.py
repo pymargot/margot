@@ -6,10 +6,9 @@ from . import scheduler, server
 from margot.config import settings
 
 def init(config, logger):
-    logger.debug('initialising manager')
     # the scheduler runs algos on their schedule
-
     sched = scheduler.init(logger)
+    
     # the server receives trading messages from algos
     server.init(logger)
 

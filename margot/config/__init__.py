@@ -17,10 +17,9 @@ def init():
 
     if len(config.sections()):
         for section in config.sections():
-            setattr(settings, section, (config.items(section)))
-
-        setattr(settings, 'INITED', True)
-    else:
+            for key, val in config.items(section):
+                setattr(settings, key, val)
+    else:       
         logger.warning('config not found at: {}.'.format(CONFIG_FILE))
         return
 

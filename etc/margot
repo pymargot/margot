@@ -1,7 +1,11 @@
 [paths]
 base_folder = .margot
+
+[sys]
 manager_python = /usr/bin/python3
+socket = /tmp/.margot-socket
+lockfile = /tmp/.margot-lockfile
 
 [ibkr]
-port = 1234
-ip_address = 127.0.0.1
+ib_port = 1234
+ib_ip = 127.0.0.1
