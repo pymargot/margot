@@ -5,6 +5,8 @@ from alpha_vantage.timeseries import TimeSeries
 
 from margot.data.columns import BaseColumn, DailyMixin
 
+from margot.config import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -51,7 +53,7 @@ class DailyAdjusted(BaseColumn, DailyMixin):
         """
         logger.info('fetching ({}) from alphavantage'.format(symbol))
         ts = TimeSeries(
-            key=os.environ.get('ALPHAVANTAGE_API_KEY'),
+            key=settings.env['ALPHAVANTAGE_API_KEY'],
             output_format='pandas')
         df, _ = ts.get_daily_adjusted(symbol, outputsize='full')
         return self.clean(df)

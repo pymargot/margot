@@ -41,11 +41,20 @@ class BackTest(object):
         You should construct your MargotDataFrame to be indexed by the trading
         periods (e.g. days).
         """
+
+        # check we have data for the Symbols before we try calculating the returns:
+        for column in [col.lower() for col in self.positions.columns]:
+            if column not in [sym.lower() for sym in self.algo.data.symbols]:
+                raise Exception(
+                    'DataFrame does not contain the symbol {} \n Symbols: {}'
+                    .format(column, self.algo.data.symbols))
+
         # TODO: Remove the assumption about simple_returns. i reckon look for the
         # column, then derive simple then log returns.
 
         returns = self.positions.shift()
         for column in returns.columns:
+            # log returns np.log(1 + series.pct_change().fillna(0))
             returns.loc[:, column] = self.algo.data.to_pandas(
             ).loc[:, (column, 'simple_returns')] * returns.loc[:, column]
 

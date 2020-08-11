@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import logging
 import configparser
@@ -70,6 +71,12 @@ def init():
             logger.warning('config not found at: {}.'.format(CONFIG_FILE))
             return
 
+    # lets collect up the os environment variables here too.
+    if not hasattr(settings, 'env'):
+        settings.env = dict()
+
+    for key in os.environ:
+        settings.env[key] = os.environ[key]
 
 if not settings.INITED: 
     init()
