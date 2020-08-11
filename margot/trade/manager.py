@@ -6,25 +6,18 @@ from . import scheduler, server
 from margot.config import settings
 
 def init(config, logger):
-    # the scheduler runs algos on their schedule
-    sched = scheduler.init(logger)
-    
-    # the server receives trading messages from algos
-    server.init(logger)
-
-    # look for algos
-    algo_files = list(settings.paths['algo_folder'].glob('*.cfg'))
-    logger.info('found {} cfg files in {}'.format(
-        len(algo_files), 
-        settings.paths['algo_folder']))
-    
-    for algo in algo_files:
-        load_algo(algo, config, settings.paths, logger, sched)
-        
-    # connect to brokers
-    # load portfolio definition
-
     try:
+        # the scheduler runs algos on their schedule
+        sched = scheduler.init(logger)
+        
+        # the server receives trading messages from algos
+        server.init(logger)
+    
+        for algo in settings.algos.keys():
+            load_algo(settings.algos[algo], logger, sched)
+            # connect to brokers
+            # load portfolio definition
+
         logger.info('running forever')
         asyncio.get_event_loop().run_forever()
     except (KeyboardInterrupt, SystemExit):

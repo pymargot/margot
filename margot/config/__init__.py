@@ -11,20 +11,21 @@ def init():
     logger = logging.getLogger('margot config') # unless worker
     
     # load config
-    config = configparser.ConfigParser()
+    cfg = configparser.ConfigParser()
     logger.debug('loading config from {}'.format(CONFIG_FILE))
-    config.read(CONFIG_FILE)
+    cfg.read(CONFIG_FILE)
 
-    if len(config.sections()):
-        for section in config.sections():
-            for key, val in config.items(section):
-                setattr(settings, key, val)
+    if len(cfg.sections()):
+        for section in cfg.sections():
+            setattr(settings, section, dict())
+            for key, val in cfg.items(section):
+                getattr(settings, section)[key] = val
     else:       
         logger.warning('config not found at: {}.'.format(CONFIG_FILE))
         return
 
     # find home folder
-    base_folder = config.get('paths', 'base_folder')
+    base_folder = settings.paths.get('base_folder')
     home = Path.home().joinpath(base_folder)
     logger.debug('using margot_home {}'.format(home))
 
@@ -42,8 +43,33 @@ def init():
             logger.info('creating new directory {}'.format(folder))
             folder.mkdir()
 
+
+    # look for algos
+    algo_files = list(settings.paths['algo_folder'].glob('*.cfg'))
+    logger.info('found {} cfg files in {}'.format(
+        len(algo_files), 
+        settings.paths['algo_folder']))
+
     # create a dict to hold the algo configs (ConfigParser objects)
     settings.algos = dict()
+
+    for algo_file in algo_files:
+        logger.debug('parsing {}'.format(algo_file))
+        algo_config = configparser.ConfigParser()
+        algo_config.read(algo_file)
+        algo_name = algo_config.get('python', 'file')
+
+        settings.algos[algo_name] = dict()
+
+        if len(algo_config.sections()):
+            for section in algo_config.sections():
+                settings.algos[algo_name][section] = dict()
+                for key, val in algo_config.items(section):
+                    settings.algos[algo_name][section][key] = val
+        else:       
+            logger.warning('config not found at: {}.'.format(CONFIG_FILE))
+            return
+
 
 if not settings.INITED: 
     init()
