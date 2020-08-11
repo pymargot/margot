@@ -17,10 +17,10 @@ def init(config, logger):
     logger.info('found {} cfg files in {}'.format(
         len(algo_files), 
         settings.paths['algo_folder']))
-
+    
     for algo in algo_files:
         load_algo(algo, config, settings.paths, logger, sched)
-
+        
     # connect to brokers
     # load portfolio definition
 
@@ -31,8 +31,8 @@ def init(config, logger):
         logger.info('manager has been killed')
         scheduler.close(logger)
         pass
-    except (Exception):
+    except:
         logger.info('guru meditatiton - cleaning up lockfile')
         scheduler.close(logger)
-        raise Exception
+        raise
     

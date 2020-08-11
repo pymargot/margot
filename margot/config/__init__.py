@@ -41,7 +41,9 @@ def init():
         if not folder.exists():
             logger.info('creating new directory {}'.format(folder))
             folder.mkdir()
-    
+
+    # create a dict to hold the algo configs (ConfigParser objects)
+    settings.algos = dict()
 
 if not settings.INITED: 
     init()

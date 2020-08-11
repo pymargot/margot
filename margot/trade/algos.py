@@ -48,6 +48,9 @@ def load_algo(algo, config, paths, logger, sched):
         lang = algo_config.get('algorithm', 'lang')
         logger.info('algorithm, "{}" uses {}'.format(algo_name, lang))
 
+        # store the config in settings
+        settings.algos[algo_name] = algo_config
+
         # does the venv exist?
         venv = settings.paths['venv_folder'].joinpath(algo_config.get('python', 'venv'))
         if not venv.exists():

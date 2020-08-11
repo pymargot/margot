@@ -11,6 +11,7 @@ from margot import config # noqa this is to init the settings
 from margot.config import settings
 
 from margot.trade import manager, worker, backtest
+from margot.trade.algos import load_algo
 
 
 def main(args):
@@ -18,19 +19,18 @@ def main(args):
     # logging
     loglevel = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
+    logger = logging.getLogger('margot')
 
     if args.config:
         # reload config from new file
         settings.CONFIG_FILE = args.config
         config.init()
 
-
     if args.version: 
         print('margot version {}'.format(get_versions()['version']))
         return
     
     if args.backtest:
-        logger = logging.getLogger('margot')
         backtest.init(args.backtest, settings, logger)
 
     elif args.worker:
