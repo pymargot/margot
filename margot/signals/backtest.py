@@ -52,14 +52,16 @@ class BackTest(object):
         # TODO: Remove the assumption about simple_returns. i reckon look for the
         # column, then derive simple then log returns.
 
+        # for each symbol that has a position, generate a returns profile
+
         returns = self.positions.shift()
         for column in returns.columns:
             # log returns np.log(1 + series.pct_change().fillna(0))
             returns.loc[:, column] = self.algo.data.to_pandas(
-            ).loc[:, (column, 'simple_returns')] * returns.loc[:, column]
+            ).loc[:, (column, 'returns')] * returns.loc[:, column]
 
-        returns.loc[:, 'simple_returns'] = returns.sum(axis=1)
-        returns['log_returns'] = np.log(1 + returns['simple_returns'])
+        returns.loc[:, 'returns'] = returns.sum(axis=1)
+        returns['log_returns'] = np.log(1 + returns['returns'])
         return returns.replace(np.nan, 0)
 
     def create_trade_signals_timeseries(self):
@@ -72,8 +74,8 @@ class BackTest(object):
             pd.DataFrame: A dataframe of signals when changes to positions are
                 suggested.
         """
-        # We must start with an uninvested position.
-        self.positions.head(1).replace([1.0, -1.0], 0, inplace=True)
+        # We must start with an unvested position.
+        self.positions.iloc[0] = 0
         return self.positions.diff().replace(0, np.nan).dropna(how='all')
 
     def create_position_timeseries(self, periods):

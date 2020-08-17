@@ -1,6 +1,8 @@
 import socket
 import json
 
+from math import sqrt
+
 from margot.config import settings
 from margot.signals import BackTest
 from margot import BaseAlgo
@@ -13,7 +15,7 @@ def ipc_request(msg, logger):
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         sock.connect(settings.sys.get('socket'))
         sock.sendall(msg.encode())  
-        logger.debug('Message sent')
+        logger.debug('Message sent: {}'.format(msg))
         data = sock.recv(4096)
         sock.close()
         reply = data.decode()
@@ -38,6 +40,7 @@ def init(algo_name, settings, logger):
             algo = cls()
             bt = BackTest(algo=algo)
             rets = bt.run(periods=30)
+            vol = rets.log_returns.std() * sqrt(252)
+            logger.debug('Annualised vol at {}'.format(vol))
 
     # need to store the backtests for each algo so that we have volatility etc.
-    

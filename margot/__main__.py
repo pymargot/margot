@@ -13,6 +13,9 @@ from margot.config import settings
 from margot.trade import manager, worker, backtest
 from margot.trade.algos import load_algo
 
+import warnings
+warnings.filterwarnings('error')
+
 
 def main(args):
     
