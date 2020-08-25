@@ -18,7 +18,8 @@ class DailyMixin(object):
         """Check if we think there might be new data, and if so - update.
         """
         now = pd.Timestamp(datetime.now(tz=pytz.UTC))
-        if self._full_series.index.max().date() < self.trading_calendar.previous_close(now).date():
+        if self._full_series.index.max().date(
+        ) < self.trading_calendar.previous_close(now).date():
             return True
 
 

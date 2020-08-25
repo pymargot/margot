@@ -19,12 +19,12 @@ def add_job(algo, logger, sched, verbose=True):
             subprocess.run,
             args=[cmd],
             kwargs={'shell': True},
-            trigger = 'cron',
-            day_of_week = algo['schedule'].get('day_of_week'),
-            hour = algo['schedule'].get('hour'),
-            minute = algo['schedule'].get('minute'),
-            second = algo['schedule'].get('second'),
-            jitter = int(algo['schedule'].get('jitter'))
+            trigger='cron',
+            day_of_week=algo['schedule'].get('day_of_week'),
+            hour=algo['schedule'].get('hour'),
+            minute=algo['schedule'].get('minute'),
+            second=algo['schedule'].get('second'),
+            jitter=int(algo['schedule'].get('jitter'))
         )
 
     if trigger == 'interval':
@@ -32,9 +32,10 @@ def add_job(algo, logger, sched, verbose=True):
             subprocess.run,
             args=[cmd],
             kwargs={'shell': True},
-            trigger = 'interval',
-            minutes = algo['schedule'].get('minutes'),
+            trigger='interval',
+            minutes=algo['schedule'].get('minutes'),
         )
+
 
 def load_algo(algo, logger, sched):
     """
@@ -42,7 +43,8 @@ def load_algo(algo, logger, sched):
     """
 
     # does the venv exist?
-    algo['venv'] = settings.paths['venv_folder'].joinpath(algo['python']['venv'])
+    algo['venv'] = settings.paths['venv_folder'].joinpath(
+        algo['python']['venv'])
 
     if not algo['venv'].exists():
         logger.info('creating venv {}'.format(algo['venv']))
@@ -51,15 +53,14 @@ def load_algo(algo, logger, sched):
         logger.info(subprocess.run(
             '{} -m venv {}'.format(python3, algo['venv']),
             shell=True))
-        
+
         # and install requirements
         for req, ver in algo['requirements'].items():
             logger.debug('installing requirement {} {}'.format(req, ver))
             logger.info(subprocess.run(
                 '{}/bin/pip install {} {}'.format(algo['venv'], req, ver),
                 shell=True))
-    
-    add_job(algo, logger, sched)
 
+    add_job(algo, logger, sched)
 
     # register algo in registry

@@ -1,6 +1,7 @@
 import socket
 from pathlib import Path
-import importlib, inspect
+import importlib
+import inspect
 import configparser
 
 from margot import BaseAlgo
@@ -17,13 +18,15 @@ def send_message(msg):
         logger.info('Sent to manager.')
     except FileNotFoundError:
         logger.error('Unable to connect to server. Is it running?')
-        raise OSError('Unable to connect to {}'.format(settings.sys.get('socket')))
+        raise OSError(
+            'Unable to connect to {}'.format(
+                settings.sys.get('socket')))
 
 
 def init(algo_file, config, logger):
     logger.debug('initialising worker for {}'.format(algo_file))
     for name, cls in inspect.getmembers(
-            importlib.import_module(algo_file), 
+            importlib.import_module(algo_file),
             inspect.isclass):
 
         if issubclass(cls, BaseAlgo) and cls != BaseAlgo:

@@ -42,7 +42,8 @@ class BackTest(object):
         periods (e.g. days).
         """
 
-        # check we have data for the Symbols before we try calculating the returns:
+        # check we have data for the Symbols before we try calculating the
+        # returns:
         for column in [col.lower() for col in self.positions.columns]:
             if column not in [sym.lower() for sym in self.algo.data.symbols]:
                 raise Exception(

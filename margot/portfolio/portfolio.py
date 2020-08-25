@@ -1,5 +1,8 @@
-from margot import BackTest
+from math import sqrt
+import configparser
 
+from margot import BackTest
+from margot.config import settings
 
 class Strategy(object):
     """
@@ -37,23 +40,19 @@ class Portfolio(object):
         target_vol (float): Target volatility for the portfolio as a whole.
     """
 
-    def __init__(self, account_size, target_vol):  # noqa: D107
-        self.account_size = account_size
-        self.target_vol = target_vol
-        self.strategies = list()
+    CONFIG_FILE = settings.paths.get('home').joinpath('portfolio.cfg')
 
-    def add_strategy(self, algo, target_vol):
-        """Add a strategy to the portfolio.
+    def __init__(self):  # noqa: D107
+        # load config
+        self.cfg = configparser.ConfigParser()
+        self.cfg.read(self.CONFIG_FILE)
 
-        Args:
-            algo (Algo): A Margot Trading Algorithm
-            target_vol (float): the vol were aiming for
-        """
-        bt = BackTest(algo)
+    def calibrate(self, cls, algo_name, logger):
+        bt = BackTest(algo=cls())
+        rets = bt.run(periods=30)
+        vol = rets.log_returns.std() * sqrt(252)
+        self.cfg.set('margot_calculated', '{}.realised_vol'.format(algo_name), str(vol))
+        
+        self.cfg.write(self.CONFIG_FILE.open('w'))
 
-        # TODO: periods assumes we're looking at days.
-        bt.run(periods=30)
-
-        self.strategies.append(
-            Strategy(algo, bt.volatility(), target_vol)
-        )
+        logger.info('Annualised vol at {}'.format(vol))

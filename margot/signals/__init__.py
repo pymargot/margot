@@ -1,4 +1,5 @@
-from .backtest import BackTest # noqa
+from .backtest import BackTest  # noqa
+
 
 class Position(object):
     """

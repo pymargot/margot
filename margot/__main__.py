@@ -7,18 +7,18 @@ import logging
 
 from ._version import get_versions
 
-from margot import config # noqa this is to init the settings
+from margot import config  # noqa this is to init the settings
 from margot.config import settings
 
-from margot.trade import manager, worker, backtest
+from margot.trade import manager, worker, calibrate
 from margot.trade.algos import load_algo
 
 import warnings
-warnings.filterwarnings('error')
+# warnings.filterwarnings('error')
 
 
 def main(args):
-    
+
     # logging
     loglevel = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
@@ -29,12 +29,12 @@ def main(args):
         settings.CONFIG_FILE = args.config
         config.init()
 
-    if args.version: 
+    if args.version:
         print('margot version {}'.format(get_versions()['version']))
         return
-    
-    if args.backtest:
-        backtest.init(args.backtest, settings, logger)
+
+    if args.calibrate:
+        calibrate.init(args.calibrate, settings, logger)
 
     elif args.worker:
         logger = logging.getLogger(args.worker)
@@ -42,7 +42,9 @@ def main(args):
 
     elif args.server:
         logger = logging.getLogger('margot')
-        logger.info('starting margot manager (version {})'.format(get_versions()['version']))
+        logger.info(
+            'starting margot manager (version {})'.format(
+                get_versions()['version']))
         manager.init(settings, logger)
 
     else:
@@ -60,7 +62,7 @@ if __name__ == '__main__':
         "--version",
         help="Print margot version then exit.",
         action="store_true")
-    
+
     parser.add_argument(
         "-v",
         "--verbose",
@@ -68,30 +70,26 @@ if __name__ == '__main__':
         action="store_true")
 
     parser.add_argument(
-        "-c",
         "--config",
         metavar="inifile",
         help="Specify a configuration file to use, instead of the default.",)
-   
+
     parser.add_argument(
-        "-b",
-        "--backtest",
+        "-c",
+        "--calibrate",
         metavar="algofile",
-        help="Backtest an algorithm",)     
-   
+        help="Calibrate an algorithm by measuring it's recent realised volatility",)
+
     parser.add_argument(
         "-w",
         "--worker",
         help="A worker runs an algorithm, usually invoked by the manager.",
-        metavar="algofile",)  
+        metavar="algofile",)
 
     parser.add_argument(
         "-s",
         "--server",
         help="Server & manager eventloop. Schedules workers and manages trade execution.",
-        action="store_true")      
-
+        action="store_true")
 
     main(parser.parse_args())
-
-

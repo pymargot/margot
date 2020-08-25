@@ -1,7 +1,9 @@
 from pathlib import Path
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-LOCKFILE = '/tmp/.margot-lockfile' # TODO move all this to a global config registry
+# TODO move all this to a global config registry
+LOCKFILE = '/tmp/.margot-lockfile'
+
 
 def init(logger):
     if not Path(LOCKFILE).exists():
@@ -13,6 +15,7 @@ def init(logger):
     else:
         logger.error('A manager is already running')
         raise Exception('A manager is already running')
+
 
 def close(logger):
     logger.info('Shutting down the scheduler')

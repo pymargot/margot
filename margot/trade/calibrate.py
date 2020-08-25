@@ -6,15 +6,18 @@ from math import sqrt
 from margot.config import settings
 from margot.signals import BackTest
 from margot import BaseAlgo
+from margot.portfolio import Portfolio
 
-import importlib, inspect
+import importlib
+import inspect
+
 
 def ipc_request(msg, logger):
     # requst the manager for something
     try:
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         sock.connect(settings.sys.get('socket'))
-        sock.sendall(msg.encode())  
+        sock.sendall(msg.encode())
         logger.debug('Message sent: {}'.format(msg))
         data = sock.recv(4096)
         sock.close()
@@ -24,23 +27,22 @@ def ipc_request(msg, logger):
 
     except FileNotFoundError:
         logger.error('Unable to connect to server. Is it running?')
-        raise OSError('Unable to connect to {}'.format(settings.sys.get('socket')))
+        raise OSError(
+            'Unable to connect to {}'.format(
+                settings.sys.get('socket')))
+
 
 def init(algo_name, settings, logger):
     algo = ipc_request('GETALGO {} \n'.format(algo_name), logger)
-
-    logger.info('Backtesting {}'.format(algo.get('algorithm').get('name')))
+    logger.info('Inspecting {}'.format(algo.get('algorithm').get('name')))
 
     for name, cls in inspect.getmembers(
-            importlib.import_module(algo.get('python').get('file')), 
+            importlib.import_module(algo.get('python').get('file')),
             inspect.isclass):
-
+        logger.debug('Inspecting {}'.format(cls))
         if issubclass(cls, BaseAlgo) and cls != BaseAlgo:
-            logger.debug('Found algo {}'.format(cls))
-            algo = cls()
-            bt = BackTest(algo=algo)
-            rets = bt.run(periods=30)
-            vol = rets.log_returns.std() * sqrt(252)
-            logger.debug('Annualised vol at {}'.format(vol))
+            logger.info('Found algo class {}'.format(cls))
+            pf = Portfolio()
+            pf.calibrate(cls, algo_name, logger)
 
     # need to store the backtests for each algo so that we have volatility etc.

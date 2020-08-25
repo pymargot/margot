@@ -24,7 +24,11 @@ def handle_message(reader, writer):
     tokens = msg.split()
 
     if tokens[0] == 'GETALGO':
-        reply = json.dumps(settings.algos.get(tokens[1], 'NONE'), cls=MargotJSONEncoder)
+        reply = json.dumps(
+            settings.algos.get(
+                tokens[1],
+                'NONE'),
+            cls=MargotJSONEncoder)
         writer.write(reply.encode())
         writer.close()
         logger.debug('Sent reply: {}'.format(reply))
@@ -34,8 +38,8 @@ def init(logger):
     logger.info('starting server')
     loop = asyncio.get_event_loop()
     coro = asyncio.start_unix_server(
-        handle_message, 
-        path = settings.sys.get('socket'),
-        loop = loop
-        )
+        handle_message,
+        path=settings.sys.get('socket'),
+        loop=loop
+    )
     return loop.run_until_complete(coro)

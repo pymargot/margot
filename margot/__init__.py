@@ -29,7 +29,7 @@ Todo:
    http://google.github.io/styleguide/pyguide.html
 
 """
-from margot import config # noqa this is to init the settings
+from margot import config  # noqa this is to init the settings
 
 # TODO move these into the sub modules
 from margot.data.frames import MargotDataFrame  # noqa
@@ -45,4 +45,3 @@ from margot.signals import Position  # noqa
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
-

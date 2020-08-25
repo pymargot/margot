@@ -5,12 +5,13 @@ import configparser
 
 from . import settings
 
-CONFIG_FILE ='/etc/margot'
+CONFIG_FILE = '/etc/margot'
+
 
 def init():
     # logging
-    logger = logging.getLogger('margot config') # unless worker
-    
+    logger = logging.getLogger('margot config')  # unless worker
+
     # load config
     cfg = configparser.ConfigParser()
     logger.debug('loading config from {}'.format(CONFIG_FILE))
@@ -21,7 +22,7 @@ def init():
             setattr(settings, section, dict())
             for key, val in cfg.items(section):
                 getattr(settings, section)[key] = val
-    else:       
+    else:
         logger.warning('config not found at: {}.'.format(CONFIG_FILE))
         return
 
@@ -31,6 +32,7 @@ def init():
     logger.debug('using margot_home {}'.format(home))
 
     settings.paths = {
+        "home": home,
         "algo_folder": home.joinpath('algos'),
         "log_folder": home.joinpath('logs'),
         "journal_folder": home.joinpath('journal'),
@@ -44,11 +46,10 @@ def init():
             logger.info('creating new directory {}'.format(folder))
             folder.mkdir()
 
-
     # look for algos
     algo_files = list(settings.paths['algo_folder'].glob('*.cfg'))
     logger.info('found {} cfg files in {}'.format(
-        len(algo_files), 
+        len(algo_files),
         settings.paths['algo_folder']))
 
     # create a dict to hold the algo configs (ConfigParser objects)
@@ -67,7 +68,7 @@ def init():
                 settings.algos[algo_name][section] = dict()
                 for key, val in algo_config.items(section):
                     settings.algos[algo_name][section][key] = val
-        else:       
+        else:
             logger.warning('config not found at: {}.'.format(CONFIG_FILE))
             return
 
@@ -78,5 +79,6 @@ def init():
     for key in os.environ:
         settings.env[key] = os.environ[key]
 
-if not settings.INITED: 
+
+if not settings.INITED:
     init()
