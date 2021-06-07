@@ -27,7 +27,8 @@ setup(
             'versioneer',
             'pytz',
             'alpha_vantage',
-            'tables'
+            'tables',
+            'ftx'
         ],
     classifiers=[
         'Development Status :: 3 - Alpha', 
