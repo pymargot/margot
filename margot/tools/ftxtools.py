@@ -12,10 +12,7 @@ class LeveragedToken(FTXObject):
     
     def calc_pending_rebalance(self):
         """
-        When a rebalance is triggered (currently 00:02 UTC), 
-        FTX calculates the number of units of the underlying the 
-        LT needs to buy/sell to return to 3x leverage, marked to 
-        prices at that time.
+        Calculate pending rebalance.
         """
         desired_position = float(self.leverage) * \
         self.totalNav / self.underlyingMark
@@ -50,7 +47,7 @@ class Future(FTXObject):
     @property
     def market_impact(self):
         """
-        Basic metric for market impact of the rebalance.
+        Basic metric for market impact.
         """
         return self.rebal_size / self.hourly_volume
 

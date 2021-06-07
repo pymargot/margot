@@ -49,3 +49,6 @@ from margot import finance, cboe, alphavantage as av
 #     vx = VXBasisTrade()
 #     bt = BackTest(vx)
 #     bt.run(periods=100)
+
+def dummy_test():
+    assert True
