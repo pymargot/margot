@@ -4,7 +4,6 @@ import json
 from math import sqrt
 
 from margot.config import settings
-from margot.signals import BackTest
 from margot import BaseAlgo
 from margot.portfolio import Portfolio
 

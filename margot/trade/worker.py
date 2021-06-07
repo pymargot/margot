@@ -1,8 +1,6 @@
 import socket
-from pathlib import Path
 import importlib
 import inspect
-import configparser
 
 from margot import BaseAlgo
 from margot.config import settings

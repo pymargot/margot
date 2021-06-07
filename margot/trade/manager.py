@@ -1,4 +1,3 @@
-from pathlib import Path
 import asyncio
 
 from .algos import load_algo
