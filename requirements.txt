@@ -14,7 +14,7 @@ sphinx-autobuild
 recommonmark
 sphinx-rtd-theme
 
-trading-calendars
+exchange_calendars
 pyfolio
 pytz
 

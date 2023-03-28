@@ -1,7 +1,7 @@
 from inspect import getmembers
 
 import pandas as pd
-from trading_calendars import get_calendar
+from exchange_calendars import get_calendar
 
 from margot.data.columns import BaseColumn
 from margot.data.features import BaseFeature
@@ -35,25 +35,30 @@ class Symbol(object):
         self.trading_calendar = get_calendar(trading_calendar)
 
         self.columns = [
-            member for member,
-            ref in getmembers(self, lambda m: isinstance(m, BaseColumn))]
+            member
+            for member, ref in getmembers(
+                self, lambda m: isinstance(m, BaseColumn)
+            )
+        ]
 
         self.features = [
-            member for member,
-            ref in getmembers(self, lambda m: isinstance(m, BaseFeature))]
+            member
+            for member, ref in getmembers(
+                self, lambda m: isinstance(m, BaseFeature)
+            )
+        ]
 
         self.ratios = [
-            member for member,
-            ref in getmembers(self, lambda m: isinstance(m, Ratio))]
+            member
+            for member, ref in getmembers(self, lambda m: isinstance(m, Ratio))
+        ]
 
         for col in self.columns:
             new_col = getattr(self, col).clone()
             setattr(self, col, new_col)
-            getattr(
-                self,
-                col).setup(
-                symbol=symbol,
-                trading_calendar=self.trading_calendar)
+            getattr(self, col).setup(
+                symbol=symbol, trading_calendar=self.trading_calendar
+            )
 
         for feature in self.features:
             base_series_name = getattr(self, feature).get_column_name()
@@ -68,8 +73,9 @@ class Symbol(object):
 
     def to_dict(self):
         elements = self.columns + self.features + self.ratios
-        return {(self.symbol, elt): getattr(self, elt).series
-                for elt in elements}
+        return {
+            (self.symbol, elt): getattr(self, elt).series for elt in elements
+        }
 
     def to_pandas(self):
         return pd.DataFrame(self.to_dict())
