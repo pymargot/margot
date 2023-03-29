@@ -27,7 +27,7 @@ class Symbol(object):
     Args:
         symbol (str): the code for this symbol
         trading_calendar (str): ISO Code market identifier
-            uses https://github.com/quantopian/trading_calendars/blob/master/README.md
+            uses https://github.com/gerrymanoim/exchange_calendars
     """
 
     def __init__(self, symbol: str, trading_calendar: str):  # noqa: D107
