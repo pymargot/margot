@@ -5,7 +5,21 @@ import configparser
 
 from . import settings
 
-CONFIG_FILE = "./etc/margot"
+CONFIG_FILE = "/etc/margot"
+
+DEFAULT_CONFIG = """
+[paths]
+base_folder = .margot
+
+[sys]
+manager_python = /usr/bin/python3
+socket = /tmp/.margot-socket
+lockfile = /tmp/.margot-lockfile
+
+[ibkr]
+ib_port = 1234
+ib_ip = 127.0.0.1
+"""
 
 
 def init():
@@ -17,14 +31,16 @@ def init():
     logger.info("loading config from {}".format(CONFIG_FILE))
     cfg.read(CONFIG_FILE)
 
-    if len(cfg.sections()):
-        for section in cfg.sections():
-            setattr(settings, section, dict())
-            for key, val in cfg.items(section):
-                getattr(settings, section)[key] = val
-    else:
+    if not len(cfg.sections()):
         logger.warning("config not found at: {}.".format(CONFIG_FILE))
-        return
+        logger.warning("Please create a config file /etc/margot")
+        logger.warning("loading defaults")
+        cfg.read_string(DEFAULT_CONFIG)
+
+    for section in cfg.sections():
+        setattr(settings, section, dict())
+        for key, val in cfg.items(section):
+            getattr(settings, section)[key] = val
 
     # find home folder
     base_folder = settings.paths.get("base_folder")

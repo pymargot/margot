@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pandas as pd
 
-from trading_calendars import get_calendar
+from exchange_calendars import get_calendar
 
 import pytz
 
@@ -35,21 +35,21 @@ class BaseAlgo(object):
     MKT = MKT
     LMT = LMT
 
-    MONDAY = 'MON'
-    TUESDAY = 'TUE'
-    WEDNESDAY = 'WED'
-    THURSDAY = 'THU'
-    FRIDAY = 'FRI'
-    SATURDAY = 'SAT'
-    SUNDAY = 'SUN'
+    MONDAY = "MON"
+    TUESDAY = "TUE"
+    WEDNESDAY = "WED"
+    THURSDAY = "THU"
+    FRIDAY = "FRI"
+    SATURDAY = "SAT"
+    SUNDAY = "SUN"
 
     data = None
 
-    def __init__(self, market='XNYS'):  # noqa: D107
+    def __init__(self, market="XNYS"):  # noqa: D107
         self.market = get_calendar(market)
         self.when = None
         if not isinstance(self.data, MargotDataFrame):
-            raise ValueError('Please set data to reference a MargotDataFrame')
+            raise ValueError("Please set data to reference a MargotDataFrame")
 
     def weekday(self, dt):
         """Return a human readable three letter day of week.
@@ -79,7 +79,7 @@ class BaseAlgo(object):
             3: self.THURSDAY,
             4: self.FRIDAY,
             5: self.SATURDAY,
-            6: self.SUNDAY
+            6: self.SUNDAY,
         }
         return days.get(dt.weekday())
 
@@ -91,8 +91,7 @@ class BaseAlgo(object):
             pd.Timestamp: Timestamp of the next close of cash session in UTC.
         """
         return self.market.next_close(
-            getattr(self, 'when',
-                    pd.Timestamp(datetime.now(tz=pytz.UTC)))
+            getattr(self, "when", pd.Timestamp(datetime.now(tz=pytz.UTC)))
         )
 
     def signal(self) -> list:
